@@ -38,6 +38,17 @@ h1. API
 
 I wanted to make DOMBuilder as chainable as possible. All methods return <code>this</code> except for the <code>html()</code> method.
 
-* <code>DOMBuilder(tag, attributes)</code>
-** <code>tag</code>: (String) The HTML tag to generate.
-** <code>attributes</code>: (Hash) A JSON hash (associative array) containing the attributes to apply to the HTML tag.
+h3. DOMBuilder(elem, attr)
+
+h4. Description
+
+DOMBuilder generates DOM nodes with an object-oriented syntax.
+
+h4. Parameters
+
+* <code>elem</code> - <String> (Required) The name of the element to generate.
+* <code>attr</code> - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
+
+h4. Returns
+
+* <HTMLElement> - A DOM node that can be appended with the standard DOM methods.
