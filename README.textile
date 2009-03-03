@@ -6,11 +6,11 @@ h1. Usage
 
 Here's the HTML we want to generate:
 
-<pre>&lt;div class="location_select_control"&gt;
-	&lt;a href="" class="location_select_label"&gt;
-		&lt;label&gt;This is my label&lt;/label&gt;
-	&lt;/a&gt;
-&lt;/div&gt;</pre>
+<pre><div class="location_select_control">
+	<a href="" class="location_select_label">
+		<label>This is my label</label>
+	</a>
+</div></pre>
 
 Here is how we'd do it with the standard DOM:
 
