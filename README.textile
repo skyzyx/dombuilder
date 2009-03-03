@@ -49,7 +49,7 @@ h3. Parameters
 
 h3. Returns
 
-* {DOMBuilder} - A DOMBuilder object.
+* {DOMBuilder} - The original DOMBuilder object.
 
 h2. child(obj) - _Method_
 
@@ -63,3 +63,22 @@ h3. Returns
 
 * {DOMBuilder} - The original DOMBuilder object.
 
+h2. innerHTML(text) - _Method_
+
+Set a value via innerHTML.
+
+h3. Parameters
+
+* <code>str</code> - {String} (Required) The string to assign via innerHTML.
+
+h3. Returns
+
+* {DOMBuilder} - The original DOMBuilder object.
+
+h2. html() - _Method_
+
+Return the DOM element for DOMBuilder that can be used with standard DOM methods. This is optional when passed into a DOMBuilder.child() method. This is required as the last method in the chain when passing to a native DOM method.
+
+h3. Returns
+
+* {HTMLElement} - The entire DOMBuilder DOM object.
