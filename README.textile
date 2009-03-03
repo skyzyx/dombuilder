@@ -1,0 +1,34 @@
+h1. DOMBuilder
+Copyright (c) Ryan Parman <http://ryanparman.com/labs/>
+BSD Licensed <http://creativecommons.org/licenses/BSD/>
+
+h1. Usage
+
+Here's the HTML we want to generate:
+
+<pre>&lt;div class="location_select_control"&gt;
+	&lt;a href="" class="location_select_label"&gt;
+		&lt;label&gt;This is my label&lt;/label&gt;
+	&lt;/a&gt;
+&lt;/div&gt;</pre>
+
+Here is how we'd do it with the standard DOM:
+
+<pre>control_div = document.createElement('div');
+control_div.className = "location_select_control";
+control_link = document.createElement('a');
+control_link.href = "";
+control_link.className = "location_select_label";
+control_label = document.createElement('label');
+control_label.innerHTML = "This is my label";
+control_link.appendChild(control_label);
+control_div.appendChild(control_link);
+document.body.appendChild(control_div);</pre>
+
+Lastly, here's how we'd do it with DOMBuilder:
+
+<pre>document.body.appendChild(new DOMBuilder('div', { class:'location_select_control' }).child(
+	new DOMBuilder('a', { href:'', class:'location_select_label' }).child(
+		new DOMBuilder('label').innerHTML('This is my label')
+	)
+).html());</pre>
