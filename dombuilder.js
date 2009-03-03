@@ -3,7 +3,7 @@
  * 
  * @param elem - <String> (Required) The name of the element to generate.
  * @param attr - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
- * @returns <HTMLElement> - A DOM node that can be appended with the standard DOM methods.
+ * @returns <DOMBuilder> - A DOMBuilder object.
  */
 
 /**

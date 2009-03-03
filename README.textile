@@ -40,15 +40,13 @@ I wanted to make DOMBuilder as chainable as possible. All methods return <code>t
 
 h3. DOMBuilder(elem, attr)
 
-h4. Description
-
 DOMBuilder generates DOM nodes with an object-oriented syntax.
 
 h4. Parameters
 
-* <code>elem</code> - <String> (Required) The name of the element to generate.
-* <code>attr</code> - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
+* <code>elem</code> - {String} (Required) The name of the element to generate.
+* <code>attr</code> - {Hash} (Optional) A JSON Hash of the attributes to apply to the element.
 
 h4. Returns
 
-* <HTMLElement> - A DOM node that can be appended with the standard DOM methods.
+* {DOMBuilder} - A DOMBuilder object.
