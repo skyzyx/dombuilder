@@ -1,10 +1,11 @@
 h1. DOMBuilder
-Copyright (c) Ryan Parman <http://ryanparman.com/labs/>
-BSD Licensed <http://creativecommons.org/licenses/BSD/>
+
+* Copyright (c) Ryan Parman <http://ryanparman.com/labs/>
+* BSD Licensed <http://creativecommons.org/licenses/BSD/>
 
 h1. Usage
 
-Here's the HTML we want to generate:
+h3. Here's the HTML we want to generate:
 
 <pre><div class="location_select_control">
 	<a href="" class="location_select_label">
@@ -12,7 +13,7 @@ Here's the HTML we want to generate:
 	</a>
 </div></pre>
 
-Here is how we'd do it with the standard DOM:
+h3. Here is how we'd do it with the standard DOM:
 
 <pre>control_div = document.createElement('div');
 control_div.className = "location_select_control";
@@ -25,10 +26,18 @@ control_link.appendChild(control_label);
 control_div.appendChild(control_link);
 document.body.appendChild(control_div);</pre>
 
-Lastly, here's how we'd do it with DOMBuilder:
+h3. Lastly, here's how we'd do it with DOMBuilder:
 
 <pre>document.body.appendChild(new DOMBuilder('div', { class:'location_select_control' }).child(
 	new DOMBuilder('a', { href:'', class:'location_select_label' }).child(
 		new DOMBuilder('label').innerHTML('This is my label')
 	)
 ).html());</pre>
+
+h1. API
+
+I wanted to make DOMBuilder as chainable as possible. All methods return <code>this</code> except for the <code>html()</code> method.
+
+* <code>DOMBuilder(tag, attributes)</code>
+** <code>tag</code>: (String) The HTML tag to generate.
+** <code>attributes</code>: (Hash) A JSON hash (associative array) containing the attributes to apply to the HTML tag.
