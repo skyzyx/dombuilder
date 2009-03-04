@@ -75,10 +75,18 @@ h3. Returns
 
 * {DOMBuilder} - The original DOMBuilder object.
 
-h2. html() - _Method_
+h2. asDOM() - _Method_
 
 Return the DOM element for DOMBuilder that can be used with standard DOM methods. This is optional when passed into a DOMBuilder.child() method. This is required as the last method in the chain when passing to a native DOM method.
 
 h3. Returns
 
-* {HTMLElement} - The entire DOMBuilder DOM object.
+* {HTMLElement} - The entire DOMBuilder object as a DOM node.
+
+h2. asHTML() - _Method_
+
+Return the DOMBuilder object as an HTML string.
+
+h3. Returns
+
+* {String} - The entire DOMBuilder object as a string of HTML.

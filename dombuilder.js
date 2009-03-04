@@ -5,22 +5,6 @@
  * @param attr - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
  * @returns <DOMBuilder> - A DOMBuilder object.
  */
-
-/**
- * Usage:
- * 
-$('domHook').appendChild(new DOMBuilder('ul', { class:'list', id:'primary' }).child([
-	new DOMBuilder('li', { class:'one' }).child(
-		new DOMBuilder('a', { href:'#', rel:'favorite' }).innerHTML('This is my linked text.')
-	),
-	new DOMBuilder('li', { class:'two' }).child(document.createTextNode('Standard DOM text node.')),
-	new DOMBuilder('li', { class:'three' }).innerHTML('innerHTML\'d text.'),
-	hook = new DOMBuilder('li', { class:'four' }).html(),
-]).html());
-
-hook.appendChild(new DOMBuilder('a', { href:'#' }).innerHTML('This is the hooked element.').html());
- */
-
 function DOMBuilder(elem, attr) {
 
 	// Construct the element and add attributes
@@ -30,6 +14,63 @@ function DOMBuilder(elem, attr) {
 			this.element.setAttribute(key, attr[key]);
 		}
 	}
+
+	/**
+	 * Append one or more child nodes.
+	 * 
+	 * @param obj - <HTMLElement|DOMBuilder|Array> (Required) A DOM element, a DOMBuilder object, or an array of these for multiple children.
+	 * @returns <DOMBuilder> - The original DOMBuilder object.
+	 */
+	this.child = function(obj) {
+
+		if (this.typeOf(obj) != 'array') {
+			obj = [obj];
+		}
+
+		for (var i = 0, max = obj.length; i < max; i++) {
+			if (this.isDOMBuilder(obj[i])) {
+				this.element.appendChild(obj[i].asDOM());
+			}
+			else {
+				this.element.appendChild(obj[i]);
+			}
+		}
+
+		return this;
+	};
+
+	/**
+	 * Set a value via innerHTML.
+	 * 
+	 * @param str - <String> (Required) The string to assign via innerHTML.
+	 * @returns <DOMBuilder> - The original DOMBuilder object.
+	 */
+	this.innerHTML = function(str) {
+		this.element.innerHTML = str;
+		return this;
+	};
+
+	/**
+	 * Return the DOM element for DOMBuilder that can be used with standard DOM methods.
+	 * This is optional when passed into a DOMBuilder.child() method. This is required 
+	 * as the last method in the chain when passing to a native DOM method.
+	 * 
+	 * @returns <HTMLElement> - The entire DOMBuilder object as a DOM node.
+	 */
+	this.asDOM = function() {
+		return this.element;
+	};
+
+	/**
+	 * Return the DOMBuilder object as an HTML string.
+	 * 
+	 * @returns <String> - The entire DOMBuilder object as a string of HTML.
+	 */
+	this.asHTML = function() {
+		var t = document.createElement('div');
+		t.appendChild(this.element);
+		return t.innerHTML;
+	};
 
 	/**
 	 * Determine the typeOf value of an object. Works better than JavaScript's built-in typeof operator.
@@ -62,51 +103,12 @@ function DOMBuilder(elem, attr) {
 		return (obj.constructor.toString().indexOf('DOMBuilder') != -1);
 	};
 
-	/**
-	 * Append one or more child nodes.
-	 * 
-	 * @param obj - <HTMLElement|DOMBuilder|Array> (Required) A DOM element, a DOMBuilder object, or an array of these for multiple children.
-	 * @returns <DOMBuilder> - The original DOMBuilder object.
-	 */
-	this.child = function(obj) {
-
-		if (this.typeOf(obj) != 'array') {
-			obj = [obj];
-		}
-
-		for (var i = 0, max = obj.length; i < max; i++) {
-			if (this.isDOMBuilder(obj[i])) {
-				this.element.appendChild(obj[i].html());
-			}
-			else {
-				this.element.appendChild(obj[i]);
-			}
-		}
-
-		return this;
-	};
-
-	/**
-	 * Set a value via innerHTML.
-	 * 
-	 * @param str - <String> (Required) The string to assign via innerHTML.
-	 * @returns <DOMBuilder> - The original DOMBuilder object.
-	 */
-	this.innerHTML = function(str) {
-		this.element.innerHTML = str;
-		return this;
-	};
-
-	/**
-	 * Return the DOM element for DOMBuilder that can be used with standard DOM methods.
-	 * This is optional when passed into a DOMBuilder.child() method. This is required 
-	 * as the last method in the chain when passing to a native DOM method.
-	 * 
-	 * @returns <HTMLElement> - The entire DOMBuilder DOM object.
-	 */
-	this.html = function() {
-		return this.element;
-	};
-
 	return this;
+}
+
+/**
+ * Shortened wrapper for the DOMBuilder class.
+ */
+function $dom(elem, attr) {
+	return new DOMBuilder(elem, attr);
 }
