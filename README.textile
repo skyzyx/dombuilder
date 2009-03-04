@@ -36,7 +36,7 @@ h3. Lastly, here's how we'd do it with DOMBuilder:
 
 h1. API
 
-I wanted to make DOMBuilder as chainable as possible. All methods return <code>this</code> except for the <code>html()</code> method.
+I wanted to make DOMBuilder as chainable as possible. All methods return <code>this</code> except for the <code>asDOM()</code> and <code>asHTML()</code> methods.
 
 h2. DOMBuilder(elem, attr) - _Constructor_
 
@@ -50,6 +50,10 @@ h3. Parameters
 h3. Returns
 
 * {DOMBuilder} - The original DOMBuilder object.
+
+h3. Aliases
+
+* <code>$dom(elem, attr)</code> is a shortened wrapper around <code>new DOMBuilder(elem, attr)</code>.
 
 h2. child(obj) - _Method_
 
