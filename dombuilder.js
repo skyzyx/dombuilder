@@ -72,6 +72,10 @@ function DOMBuilder(elem, attr) {
 		return t.innerHTML;
 	};
 
+
+	/************************************************************************************/
+	// PRIVATE
+
 	/**
 	 * Determine the typeOf value of an object. Works better than JavaScript's built-in typeof operator.
 	 * 
