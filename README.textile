@@ -1,7 +1,7 @@
 h1. DOMBuilder
 
-* Copyright (c) Ryan Parman <http://ryanparman.com/labs/>
-* BSD Licensed <http://creativecommons.org/licenses/BSD/>
+* (c) Ryan Parman - http://ryanparman.com/labs/
+* BSD Licensed - http://creativecommons.org/licenses/BSD/
 
 h1. Usage
 
