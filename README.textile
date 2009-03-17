@@ -10,6 +10,7 @@ h3. Here's the HTML we want to generate:
 <pre><div class="location_select_control">
 	<a href="" class="location_select_label">
 		<label>This is my label</label>
+		<label>This is another label</label>
 	</a>
 </div></pre>
 
@@ -22,7 +23,10 @@ control_link.href = "";
 control_link.className = "location_select_label";
 control_label = document.createElement('label');
 control_label.innerHTML = "This is my label";
+control_label2 = document.createElement('label');
+control_label2.innerHTML = "This is another label";
 control_link.appendChild(control_label);
+control_link.appendChild(control_label2);
 control_div.appendChild(control_link);
 document.body.appendChild(control_div);</pre>
 
@@ -30,9 +34,10 @@ h3. Lastly, here's how we'd do it with DOMBuilder:
 
 <pre>document.body.appendChild(
 	$dom('div', { class:'location_select_control' }).child(
-		$dom('a', { href:'', class:'location_select_label' }).child(
-			$dom('label').innerHTML('This is my label')
-		)
+		$dom('a', { href:'', class:'location_select_label' }).child([
+			$dom('label').innerHTML('This is my label'),
+			$dom('label').innerHTML('This is another label')
+		])
 	).asDOM()
 );</pre>
 
@@ -51,7 +56,7 @@ h3. Parameters
 
 h3. Returns
 
-* {DOMBuilder} - The original DOMBuilder object.
+* <code>DOMBuilder</code> - The original DOMBuilder object.
 
 h3. Aliases
 
@@ -67,7 +72,7 @@ h3. Parameters
 
 h3. Returns
 
-* {DOMBuilder} - The original DOMBuilder object.
+* <code>DOMBuilder</code> - The original DOMBuilder object.
 
 h2. innerHTML(text) - _Method_
 
@@ -79,7 +84,7 @@ h3. Parameters
 
 h3. Returns
 
-* {DOMBuilder} - The original DOMBuilder object.
+* <code>DOMBuilder</code> - The original DOMBuilder object.
 
 h2. asDOM() - _Method_
 
@@ -87,7 +92,7 @@ Return the DOM element for DOMBuilder that can be used with standard DOM methods
 
 h3. Returns
 
-* {HTMLElement} - The entire DOMBuilder object as a DOM node.
+* <code>HTMLElement</code> - The entire DOMBuilder object as a DOM node.
 
 h2. asHTML() - _Method_
 
@@ -95,4 +100,4 @@ Return the DOMBuilder object as an HTML string.
 
 h3. Returns
 
-* {String} - The entire DOMBuilder object as a string of HTML.
+* <code>String</code> - The entire DOMBuilder object as a string of HTML.

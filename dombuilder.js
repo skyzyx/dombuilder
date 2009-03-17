@@ -1,4 +1,12 @@
 /**
+ * DOM BUILDER
+ * http://github.com/skyzyx/dombuilder/
+ * BSD Licensed - http://creativecommons.org/licenses/BSD/
+ * 
+ * Usage documentation available at the project site.
+ */
+
+/**
  * DOMBuilder generates DOM nodes with an object-oriented syntax.
  * 
  * @param elem - <String> (Required) The name of the element to generate.
