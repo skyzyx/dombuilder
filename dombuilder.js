@@ -17,8 +17,14 @@ function DOMBuilder(elem, attr) {
 
 	// Construct the element and add attributes
 	this.element = window.document.createElement(elem);
+
+	// If we have attributes...
 	if (attr) {
+
+		// Loop through the hash (i.e. associative array, key-value pairs)
 		for (var key in attr) {
+
+			// Add them to the element
 			this.element.setAttribute(key, attr[key]);
 		}
 	}
@@ -31,19 +37,30 @@ function DOMBuilder(elem, attr) {
 	 */
 	this.child = function(obj) {
 
+		// If the object isn't an array...
 		if (this.typeOf(obj) != 'array') {
+
+			// Turn it into an array to simplify the logic below
 			obj = [obj];
 		}
 
+		// Loop through the indexed array of children
 		for (var i = 0, max = obj.length; i < max; i++) {
+
+			// Is this child a DOMBuilder object?
 			if (this.isDOMBuilder(obj[i])) {
+
+				// Automatically append with DOMBuilder.asDOM()
 				this.element.appendChild(obj[i].asDOM());
 			}
 			else {
+
+				// Let's assume this is a native DOM 'HTMLElement' object
 				this.element.appendChild(obj[i]);
 			}
 		}
 
+		// Return the DOMBuilder object so we can chain it
 		return this;
 	};
 
@@ -54,7 +71,11 @@ function DOMBuilder(elem, attr) {
 	 * @returns <DOMBuilder> - The original DOMBuilder object.
 	 */
 	this.innerHTML = function(str) {
+
+		// Set the value with innerHTML
 		this.element.innerHTML = str;
+
+		// Return the DOMBuilder object so we can chain it
 		return this;
 	};
 
@@ -66,6 +87,8 @@ function DOMBuilder(elem, attr) {
 	 * @returns <HTMLElement> - The entire DOMBuilder object as a DOM node.
 	 */
 	this.asDOM = function() {
+
+		// Return the native DOM object that can be used with standard DOM methods
 		return this.element;
 	};
 
@@ -75,8 +98,14 @@ function DOMBuilder(elem, attr) {
 	 * @returns <String> - The entire DOMBuilder object as a string of HTML.
 	 */
 	this.asHTML = function() {
+
+		// Create a new DOM element in memory
 		var t = document.createElement('div');
+
+		// Append our DOM object to the in-memory element
 		t.appendChild(this.element);
+
+		// Read the content back as a string
 		return t.innerHTML;
 	};
 
@@ -91,17 +120,31 @@ function DOMBuilder(elem, attr) {
 	 * @returns <String> - The type of the object.
 	 */
 	this.typeOf = function(obj) {
+
+		// Determine the type of the object
 		var s = typeof obj;
+
+		// Is JavaScript telling us this is an 'object'? (JavaScript sometimes lies about this.)
 		if (s === 'object') {
+
+			// If we have an object...
 			if (obj) {
+
+				// Check the types of some of the methods of the object
 				if (typeof obj.length === 'number' && !(obj.propertyIsEnumerable('length')) && typeof obj.splice === 'function') {
+
+					// This is an array
 					s = 'array';
 				}
 			}
 			else {
+
+				// This is null
 				s = 'null';
 			}
 		}
+
+		// Otherwise, we can believe what JavaScript is telling us
 		return s;
 	};
 
@@ -112,9 +155,12 @@ function DOMBuilder(elem, attr) {
 	 * @returns <Boolean> - Whether the object is a DOMBuilder object.
 	 */
 	this.isDOMBuilder = function(obj) {
+
+		// Check to see if the string version of the constructor contains the word 'DOMBuilder'
 		return (obj.constructor.toString().indexOf('DOMBuilder') != -1);
 	};
 
+	// Return the DOMBuilder object so we can chain it
 	return this;
 }
 
@@ -122,5 +168,7 @@ function DOMBuilder(elem, attr) {
  * Shortened wrapper for the DOMBuilder class.
  */
 function $dom(elem, attr) {
+
+	// Initialize the real constructor and return it
 	return new DOMBuilder(elem, attr);
 }
