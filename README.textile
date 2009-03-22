@@ -18,16 +18,21 @@ h3. Here is how we'd do it with the standard DOM:
 
 <pre>control_div = document.createElement('div');
 control_div.className = "location_select_control";
+
 control_link = document.createElement('a');
 control_link.href = "";
 control_link.className = "location_select_label";
+
 control_label = document.createElement('label');
 control_label.innerHTML = "This is my label";
+
 control_label2 = document.createElement('label');
 control_label2.innerHTML = "This is another label";
+
 control_link.appendChild(control_label);
 control_link.appendChild(control_label2);
 control_div.appendChild(control_link);
+
 document.body.appendChild(control_div);</pre>
 
 h3. Lastly, here's how we'd do it with DOMBuilder:
