@@ -9,10 +9,10 @@ h1. Usage
 h3. Here's the HTML we want to generate:
 
 <pre><div class="location_select_control">
-	<a href="" class="location_select_label">
-		<label>This is my label</label>
-		<label>This is another label</label>
-	</a>
+    <a href="" class="location_select_label">
+        <label>This is my label</label>
+        <label>This is another label</label>
+    </a>
 </div></pre>
 
 h3. Here is how we'd do it with the standard DOM:
@@ -39,12 +39,12 @@ document.body.appendChild(control_div);</pre>
 h3. Lastly, here's how we'd do it with DOMBuilder:
 
 <pre>document.body.appendChild(
-	new DOMBuilder('div', { 'class':'location_select_control' }).child(
-		new DOMBuilder('a', { 'href':'', 'class':'location_select_label' }).child([
-			new DOMBuilder('label').innerHTML('This is my label'),
-			new DOMBuilder('label').innerHTML('This is another label')
-		])
-	).asDOM()
+    new DOMBuilder('div', { 'class':'location_select_control' }).child(
+        new DOMBuilder('a', { 'href':'', 'class':'location_select_label' }).child([
+            new DOMBuilder('label').innerHTML('This is my label'),
+            new DOMBuilder('label').innerHTML('This is another label')
+        ])
+    ).asDOM()
 );</pre>
 
 h1. API
