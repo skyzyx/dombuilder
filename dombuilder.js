@@ -24,8 +24,17 @@ function DOMBuilder(elem, attr) {
 		// Loop through the hash (i.e. associative array, key-value pairs)
 		for (var key in attr) {
 
-			// Add them to the element
-			this.element.setAttribute(key, attr[key]);
+			// Handle 'class' differently for IE.
+			if (key.toString() == 'class') {
+
+				// Add it to the element
+				this.element.className = attr[key];
+			}
+			else {
+
+				// Add them to the element
+				this.element.setAttribute(key, attr[key]);
+			}
 		}
 	}
 
@@ -162,13 +171,4 @@ function DOMBuilder(elem, attr) {
 
 	// Return the DOMBuilder object so we can chain it
 	return this;
-}
-
-/**
- * Shortened wrapper for the DOMBuilder class.
- */
-function $dom(elem, attr) {
-
-	// Initialize the real constructor and return it
-	return new DOMBuilder(elem, attr);
 }

@@ -2,6 +2,7 @@ h1. DOMBuilder
 
 * (c) Ryan Parman - "http://ryanparman.com/labs/":http://ryanparman.com/labs/
 * BSD Licensed - "http://creativecommons.org/licenses/BSD/":http://creativecommons.org/licenses/BSD/
+* Tested in Firefox 3, Safari 3/4, IE 6/7/8
 
 h1. Usage
 
@@ -38,10 +39,10 @@ document.body.appendChild(control_div);</pre>
 h3. Lastly, here's how we'd do it with DOMBuilder:
 
 <pre>document.body.appendChild(
-	$dom('div', { class:'location_select_control' }).child(
-		$dom('a', { href:'', class:'location_select_label' }).child([
-			$dom('label').innerHTML('This is my label'),
-			$dom('label').innerHTML('This is another label')
+	new DOMBuilder('div', { 'class':'location_select_control' }).child(
+		new DOMBuilder('a', { 'href':'', 'class':'location_select_label' }).child([
+			new DOMBuilder('label').innerHTML('This is my label'),
+			new DOMBuilder('label').innerHTML('This is another label')
 		])
 	).asDOM()
 );</pre>
