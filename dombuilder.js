@@ -82,7 +82,7 @@ function DOMBuilder(elem, attr) {
 	this.innerHTML = function(str) {
 
 		// Set the value with innerHTML
-		this.element.innerHTML = str;
+		this.element.innerHTML += str;
 
 		// Return the DOMBuilder object so we can chain it
 		return this;
