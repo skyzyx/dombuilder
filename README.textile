@@ -67,10 +67,6 @@ h3. Returns
 
 * <code>DOMBuilder</code> - The original DOMBuilder object.
 
-h3. Aliases
-
-* <code>$dom(elem, attr)</code> is a shortened wrapper around <code>new DOMBuilder(elem, attr)</code>.
-
 h2. child(obj) - _Method_
 
 Append one or more child nodes.
