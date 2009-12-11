@@ -128,4 +128,4 @@ DOMBuilder = function(elem, attr) {
 
 	// Return the DOMBuilder object so we can chain it
 	return this;
-}
+};
