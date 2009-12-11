@@ -37,7 +37,7 @@ document.body.appendChild(control_div);</pre>
 
 h3. Lastly, here's how we'd do it with DOMBuilder:
 
-<pre>// Create a shortcut
+<pre>// Define a shortcut. Let's pick underscore. It can be anything, really.
 var _ = function(elem, attr) { return new DOMBuilder(elem, attr); };
 
 document.body.appendChild(
