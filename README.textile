@@ -43,8 +43,8 @@ var _ = function(elem, attr) { return new DOMBuilder(elem, attr); };
 document.body.appendChild(
     _('div', { 'class':'location_select_control' }).child(
         _('a', { 'href':'', 'class':'location_select_label' }).child([
-            _('label').innerHTML('This is my label'),
-            _('label').innerHTML('This is another label')
+            _('label').html('This is my label'),
+            _('label').html('This is another label')
         ])
     ).asDOM()
 );</pre>
