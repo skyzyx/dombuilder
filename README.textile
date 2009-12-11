@@ -49,7 +49,7 @@ document.body.appendChild(
     ).asDOM()
 );</pre>
 
-See <code>index.htm</code> for more complex examples.
+See <code>index.htm</code> for more complex examples, or see it in action at <a href="http://ryanparman.com/labs/dombuilder/">http://ryanparman.com/labs/dombuilder/</a>.
 
 h1. API
 
