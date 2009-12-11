@@ -13,7 +13,7 @@
  * @param attr - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
  * @returns <DOMBuilder> - A DOMBuilder object.
  */
-DOMBuilder = function(elem, attr) {
+var DOMBuilder = function(elem, attr) {
 
 	// Construct the element and add attributes
 	this.element = window.document.createElement(elem);
