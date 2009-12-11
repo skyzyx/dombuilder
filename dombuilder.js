@@ -13,7 +13,7 @@
  * @param attr - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
  * @returns <DOMBuilder> - A DOMBuilder object.
  */
-function DOMBuilder(elem, attr) {
+DOMBuilder = function(elem, attr) {
 
 	// Construct the element and add attributes
 	this.element = window.document.createElement(elem);
@@ -47,7 +47,7 @@ function DOMBuilder(elem, attr) {
 	this.child = function(obj) {
 
 		// If the object isn't an array...
-		if (this.typeOf(obj) != 'array') {
+		if (typeof obj !== 'object' || typeof obj.length !== 'number' || typeof obj.splice !== 'function') {
 
 			// Turn it into an array to simplify the logic below
 			obj = [obj];
@@ -57,7 +57,7 @@ function DOMBuilder(elem, attr) {
 		for (var i = 0, max = obj.length; i < max; i++) {
 
 			// Is this child a DOMBuilder object?
-			if (this.isDOMBuilder(obj[i])) {
+			if (typeof obj[i].asDOM !== 'undefined') {
 
 				// Automatically append with DOMBuilder.asDOM()
 				this.element.appendChild(obj[i].asDOM());
@@ -77,27 +77,20 @@ function DOMBuilder(elem, attr) {
 	 * Set a value via innerHTML.
 	 *
 	 * @param str - <String> (Required) The string to assign via innerHTML.
+	 * @param replace - <Boolean> (Optional) Whether this new value should replace the existing value. Defaults to append (false).
 	 * @returns <DOMBuilder> - The original DOMBuilder object.
 	 */
-	this.innerHTML = function(str) {
+	this.html = function(str, replace) {
+
+		replace = replace || false;
 
 		// Set the value with innerHTML
-		this.element.innerHTML = str;
-
-		// Return the DOMBuilder object so we can chain it
-		return this;
-	};
-
-	/**
-	 * Append to a value via innerHTML.
-	 *
-	 * @param str - <String> (Required) The string to append via innerHTML.
-	 * @returns <DOMBuilder> - The original DOMBuilder object.
-	 */
-	this.appendHTML = function(str) {
-
-		// Append the value with innerHTML
-		this.element.innerHTML += str;
+		if (replace) {
+			this.element.innerHTML = str;
+		}
+		else {
+			this.element.innerHTML += str;
+		}
 
 		// Return the DOMBuilder object so we can chain it
 		return this;
@@ -131,57 +124,6 @@ function DOMBuilder(elem, attr) {
 
 		// Read the content back as a string
 		return t.innerHTML;
-	};
-
-
-	/************************************************************************************/
-	// PRIVATE
-
-	/**
-	 * Determine the typeOf value of an object. Works better than JavaScript's built-in typeof operator.
-	 *
-	 * @param obj - <Object> (Required) The object to check the type of. Null will return null, Array will return array.
-	 * @returns <String> - The type of the object.
-	 */
-	this.typeOf = function(obj) {
-
-		// Determine the type of the object
-		var s = typeof obj;
-
-		// Is JavaScript telling us this is an 'object'? (JavaScript sometimes lies about this.)
-		if (s === 'object') {
-
-			// If we have an object...
-			if (obj) {
-
-				// Check the types of some of the methods of the object
-				if (typeof obj.length === 'number' && !(obj.propertyIsEnumerable('length')) && typeof obj.splice === 'function') {
-
-					// This is an array
-					s = 'array';
-				}
-			}
-			else {
-
-				// This is null
-				s = 'null';
-			}
-		}
-
-		// Otherwise, we can believe what JavaScript is telling us
-		return s;
-	};
-
-	/**
-	 * Determine whether an object is a DOMBuilder object.
-	 *
-	 * @param obj - <Object> (Required) The object to check.
-	 * @returns <Boolean> - Whether the object is a DOMBuilder object.
-	 */
-	this.isDOMBuilder = function(obj) {
-
-		// Check to see if the string version of the constructor contains the word 'DOMBuilder'
-		return (obj.constructor.toString().indexOf('DOMBuilder') != -1);
 	};
 
 	// Return the DOMBuilder object so we can chain it

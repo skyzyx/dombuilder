@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
+	"http://www.w3.org/TR/html4/strict.dtd">
+<html>
+	<head>
+		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<title>DOMBuilder Examples</title>
+	</head>
+
+	<body>
+
+		<script src="dombuilder.js" type="text/javascript" charset="utf-8"></script>
+		<script type="text/javascript" charset="utf-8">
+		(function() {
+
+			// Define a shortcut. Let's pick underscore. It can be anything, really.
+			var _ = function(elem, attr) {
+				return new DOMBuilder(elem, attr);
+			}
+
+
+			/*
+			<div id="test" class="sample">
+				<p>This is a <a href="">sample of the code</a> that you may like.</p>
+				<p>And another <a href=""><strong>complex</strong></a> one.</p>
+				<ul class="sample">
+					<li><a href="http://google.com">One</a></li>
+					<li><em>Two</em></li>
+					<li><strong>Three</strong></li>
+				</ul>
+			</div>
+			*/
+			document.body.appendChild(
+				_('div', { 'id':'test', 'class':'sample' }).child([
+
+					// Straight HTML via html
+					_('p').html('This is a <a href="">sample of the code</a> that you may like.'),
+
+					// Similar, but using DOM
+					_('p').html('And another ').child(
+						_('a', { 'href':'#' }).child(
+							_('strong').html('complex').html('-ish')
+						)
+					).html(' one.'),
+
+					// Let's make a short list
+					_('ul').child([
+						_('li').child(
+							_('a', { 'href':'http://google.com' }).html('One')
+						),
+						_('li').child(
+							_('em').html('Two')
+						),
+						_('li').child(
+							_('strong').html('Three')
+						),
+					])
+				]).asDOM()
+			);
+
+
+			/*
+			<div>
+				<p>Adding similar nodes with a for loop.</p>
+				<ul id="list">
+					<li><a href="#one">one</a></li>
+					<li><a href="#two">two</a></li>
+					<li><a href="#three">three</a></li>
+					<li><a href="#four">four</a></li>
+					<li><a href="#five">five</a></li>
+				</ul>
+			</div>
+			*/
+			document.body.appendChild(function() {
+
+				// Define some variables
+				var div, ul, numbers = ['one', 'two', 'three', 'four', 'five'];
+
+				// Generate a DIV with multiple child nodes, while storing a reference to the child UL
+				div = _('div').child([
+					_('p').html('Adding similar nodes with a for loop.'),
+					ul = _('ul', { 'id':'list' })
+				]);
+
+				// Loop and add children to the UL
+				for (var i = 0, max = numbers.length; i < max; i++) {
+					ul.child(
+						_('li').child(
+							_('a', { 'href':'#' + numbers[i] }).html(numbers[i])
+						)
+					);
+				}
+
+				// Return the pre-constructed DOM nodes
+				return div.asDOM();
+			}());
+
+		})();
+		</script>
+	</body>
+</html>
