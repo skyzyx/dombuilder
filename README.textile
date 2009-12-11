@@ -83,13 +83,13 @@ h3. Returns
 * <code>DOMBuilder</code> - The original DOMBuilder object.
 
 
-h2. html(text) - _Method_
+h2. html(text, replace) - _Method_
 
 Set a value via innerHTML.
 
 h3. Parameters
 
-* <code>str</code> - {String} (Required) The string to assign via innerHTML.
+* <code>text</code> - {String} (Required) The string to assign via innerHTML.
 * <code>replace</code> - {Boolean} (Required) Whether this new value should replace the existing value. Defaults to append (false).
 
 h3. Returns
