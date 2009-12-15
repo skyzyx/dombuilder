@@ -37,8 +37,8 @@ document.body.appendChild(control_div);</pre>
 
 h3. Lastly, here's how we'd do it with DOMBuilder:
 
-<pre>// Define a shortcut. Let's pick underscore. It can be anything, really.
-var _ = function(elem, attr) { return new DOMBuilder(elem, attr); };
+<pre>// Define a shortcut. Let's pick underscore. It can be anything, really. Or nothing. Whatever.
+var _ = DOMBuilder;
 
 document.body.appendChild(
     _('div', { 'class':'location_select_control' }).child(
