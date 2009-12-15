@@ -90,7 +90,7 @@ Set a value via innerHTML.
 h3. Parameters
 
 * <code>text</code> - {String} (Required) The string to assign via innerHTML.
-* <code>replace</code> - {Boolean} (Required) Whether this new value should replace the existing value. Defaults to append (false).
+* <code>replace</code> - {Boolean} (Optional) Whether this new value should replace the existing value. Defaults to append (false).
 
 h3. Returns
 
