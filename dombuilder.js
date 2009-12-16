@@ -59,6 +59,11 @@
 			// Loop through the indexed array of children
 			for (var i = 0, max = obj.length; i < max; i++) {
 
+				// If there was accidentally an extra comma, ignore it.
+				if (typeof obj[i] === 'undefined') {
+					return this;
+				}
+
 				// Is this child a DOMBuilder object?
 				if (typeof obj[i].asDOM !== 'undefined') {
 
