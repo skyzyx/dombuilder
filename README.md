@@ -3,6 +3,10 @@ License: [http://creativecommons.org/licenses/BSD/](http://creativecommons.org/l
 
 ## Goals
 
+1. Small and lightweight (less than 800 bytes after YUI Compressor)
+2. Doesn't require another framework like Prototype, jQuery or YUI
+3. Chainable like crazy
+4. Easy to embed into other, larger projects
 
 ## Support
 
@@ -74,6 +78,7 @@ DOMBuilder generates DOM nodes with an object-oriented syntax.
 
 * `DOMBuilder` - The original DOMBuilder object.
 
+----
 
 ### child(obj) - _Method_
 
@@ -87,6 +92,7 @@ Append one or more child nodes.
 
 * `DOMBuilder` - The original DOMBuilder object.
 
+----
 
 ### html(text, replace) - _Method_
 
@@ -101,6 +107,7 @@ Set a value via innerHTML.
 
 * `DOMBuilder` - The original DOMBuilder object.
 
+----
 
 ### asDOM() - _Method_
 
@@ -110,6 +117,7 @@ Return the DOM element for DOMBuilder that can be used with standard DOM methods
 
 * `HTMLElement` - The entire DOMBuilder object as a DOM node.
 
+----
 
 ### asHTML() - _Method_
 
