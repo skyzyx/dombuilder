@@ -6,6 +6,13 @@
  * Usage documentation available at the project site.
  */
 
+// ==ClosureCompiler==
+// @compilation_level ADVANCED_OPTIMIZATIONS
+// ==/ClosureCompiler==
+
+/*jslint white: false, onevar: true, browser: true, undef: true, nomen: true, eqeqeq: true, plusplus: false, bitwise: true, regexp: true, strict: false, newcap: true, immed: false */
+/*global window */
+
 
 (function() {
 
@@ -16,10 +23,10 @@
 	 * @param attr - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
 	 * @returns <DOMBuilder> - A DOMBuilder object.
 	 */
-	var db = function(elem, attr) {
+	var DB = function(elem, attr) {
 
 		// Construct the element and add attributes
-		this.element = window.document.createElement(elem);
+		this.element = document.createElement(elem);
 
 		// If we have attributes...
 		if (attr) {
@@ -28,7 +35,7 @@
 			for (var key in attr) {
 
 				// Handle 'class' differently for IE.
-				if (key.toString() == 'class') {
+				if (key.toString() === 'class') {
 
 					// Add it to the element
 					this.element.className = attr[key];
@@ -140,7 +147,7 @@
 
 	// Expose DOMBuilder, pre-instantiated
 	window.DOMBuilder = function(elem, attr) {
-		return new db(elem, attr);
+		return new DB(elem, attr);
 	};
 
 })();
