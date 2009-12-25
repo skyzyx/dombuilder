@@ -7,7 +7,7 @@
  */
 
 // ==ClosureCompiler==
-// @compilation_level ADVANCED_OPTIMIZATIONS
+// @compilation_level SIMPLE_OPTIMIZATIONS
 // ==/ClosureCompiler==
 
 /*jslint white: false, onevar: true, browser: true, undef: true, nomen: true, eqeqeq: true, plusplus: false, bitwise: true, regexp: true, strict: false, newcap: true, immed: false */
@@ -17,16 +17,19 @@
 (function() {
 
 	/**
-	 * DOMBuilder generates DOM nodes with an object-oriented syntax.
+	 * DOMBuilder generates DOM nodes with an object-oriented synta_.
 	 *
 	 * @param elem - <String> (Required) The name of the element to generate.
 	 * @param attr - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
 	 * @returns <DOMBuilder> - A DOMBuilder object.
 	 */
-	var DB = function(elem, attr) {
+	var X = function(elem, attr) {
+
+		var _ = this,
+			d = document;
 
 		// Construct the element and add attributes
-		this.element = document.createElement(elem);
+		_.e = d.createElement(elem);
 
 		// If we have attributes...
 		if (attr) {
@@ -38,12 +41,12 @@
 				if (key.toString() === 'class') {
 
 					// Add it to the element
-					this.element.className = attr[key];
+					_.e.className = attr[key];
 				}
 				else {
 
 					// Add them to the element
-					this.element.setAttribute(key, attr[key]);
+					_.e.setAttribute(key, attr[key]);
 				}
 			}
 		}
@@ -54,7 +57,7 @@
 		 * @param obj - <HTMLElement|DOMBuilder|Array> (Required) A DOM element, a DOMBuilder object, or an array of these for multiple children.
 		 * @returns <DOMBuilder> - The original DOMBuilder object.
 		 */
-		this.child = function(obj) {
+		_.child = function(obj) {
 
 			// If the object isn't an array...
 			if (typeof obj !== 'object' || typeof obj.length !== 'number' || typeof obj.splice !== 'function') {
@@ -68,60 +71,60 @@
 
 				// If there was accidentally an extra comma, ignore it.
 				if (typeof obj[i] === 'undefined') {
-					return this;
+					return _;
 				}
 
-				// Is this child a DOMBuilder object?
+				// Is _ child a DOMBuilder object?
 				if (typeof obj[i].asDOM !== 'undefined') {
 
 					// Automatically append with DOMBuilder.asDOM()
-					this.element.appendChild(obj[i].asDOM());
+					_.e.appendChild(obj[i].asDOM());
 				}
 				else {
 
-					// Let's assume this is a native DOM 'HTMLElement' object
-					this.element.appendChild(obj[i]);
+					// Let's assume _ is a native DOM 'HTMLElement' object
+					_.e.appendChild(obj[i]);
 				}
 			}
 
 			// Return the DOMBuilder object so we can chain it
-			return this;
+			return _;
 		};
 
 		/**
 		 * Set a value via innerHTML.
 		 *
 		 * @param str - <String> (Required) The string to assign via innerHTML.
-		 * @param replace - <Boolean> (Optional) Whether this new value should replace the existing value. Defaults to append (false).
+		 * @param replace - <Boolean> (Optional) Whether _ new value should replace the existing value. Defaults to append (false).
 		 * @returns <DOMBuilder> - The original DOMBuilder object.
 		 */
-		this.html = function(str, replace) {
+		_.html = function(str, replace) {
 
 			replace = replace || false;
 
 			// Set the value with innerHTML
 			if (replace) {
-				this.element.innerHTML = str;
+				_.e.innerHTML = str;
 			}
 			else {
-				this.element.innerHTML += str;
+				_.e.innerHTML += str;
 			}
 
 			// Return the DOMBuilder object so we can chain it
-			return this;
+			return _;
 		};
 
 		/**
 		 * Return the DOM element for DOMBuilder that can be used with standard DOM methods.
-		 * This is optional when passed into a DOMBuilder.child() method. This is required
+		 * _ is optional when passed into a DOMBuilder.child() method. _ is required
 		 * as the last method in the chain when passing to a native DOM method.
 		 *
 		 * @returns <HTMLElement> - The entire DOMBuilder object as a DOM node.
 		 */
-		this.asDOM = function() {
+		_.asDOM = function() {
 
 			// Return the native DOM object that can be used with standard DOM methods
-			return this.element;
+			return _.e;
 		};
 
 		/**
@@ -129,25 +132,25 @@
 		 *
 		 * @returns <String> - The entire DOMBuilder object as a string of HTML.
 		 */
-		this.asHTML = function() {
+		_.asHTML = function() {
 
 			// Create a new DOM element in memory
-			var t = document.createElement('div');
+			var t = d.createElement('div');
 
 			// Append our DOM object to the in-memory element
-			t.appendChild(this.element);
+			t.appendChild(_.e);
 
 			// Read the content back as a string
 			return t.innerHTML;
 		};
 
 		// Return the DOMBuilder object so we can chain it
-		return this;
+		return _;
 	};
 
 	// Expose DOMBuilder, pre-instantiated
 	window.DOMBuilder = function(elem, attr) {
-		return new DB(elem, attr);
+		return new X(elem, attr);
 	};
 
 })();
