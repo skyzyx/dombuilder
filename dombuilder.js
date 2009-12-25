@@ -17,7 +17,7 @@
 (function() {
 
 	/**
-	 * DOMBuilder generates DOM nodes with an object-oriented synta_.
+	 * DOMBuilder generates DOM nodes with an object-oriented syntax.
 	 *
 	 * @param elem - <String> (Required) The name of the element to generate.
 	 * @param attr - <Hash> (Optional) A JSON Hash of the attributes to apply to the element.
@@ -74,7 +74,7 @@
 					return _;
 				}
 
-				// Is _ child a DOMBuilder object?
+				// Is this child a DOMBuilder object?
 				if (typeof obj[i].asDOM !== 'undefined') {
 
 					// Automatically append with DOMBuilder.asDOM()
@@ -82,7 +82,7 @@
 				}
 				else {
 
-					// Let's assume _ is a native DOM 'HTMLElement' object
+					// Let's assume this is a native DOM 'HTMLElement' object
 					_.e.appendChild(obj[i]);
 				}
 			}
@@ -95,7 +95,7 @@
 		 * Set a value via innerHTML.
 		 *
 		 * @param str - <String> (Required) The string to assign via innerHTML.
-		 * @param replace - <Boolean> (Optional) Whether _ new value should replace the existing value. Defaults to append (false).
+		 * @param replace - <Boolean> (Optional) Whether this new value should replace the existing value. Defaults to append (false).
 		 * @returns <DOMBuilder> - The original DOMBuilder object.
 		 */
 		_.html = function(str, replace) {
@@ -116,7 +116,7 @@
 
 		/**
 		 * Return the DOM element for DOMBuilder that can be used with standard DOM methods.
-		 * _ is optional when passed into a DOMBuilder.child() method. _ is required
+		 * This is optional when passed into a DOMBuilder.child() method. This is required
 		 * as the last method in the chain when passing to a native DOM method.
 		 *
 		 * @returns <HTMLElement> - The entire DOMBuilder object as a DOM node.
