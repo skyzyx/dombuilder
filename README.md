@@ -3,7 +3,7 @@ License: [http://creativecommons.org/licenses/BSD/](http://creativecommons.org/l
 
 ## Goals
 
-1. Small and lightweight (less than 800 bytes after YUI Compressor)
+1. Small and lightweight (less than 800 bytes after Google Closure Compiler)
 2. Doesn't require another framework like Prototype, jQuery or YUI
 3. Chainable like crazy
 4. Easy to embed into other, larger projects
