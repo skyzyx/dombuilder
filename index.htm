@@ -95,6 +95,106 @@
 				return div.asDOM();
 			}());
 
+
+			/*
+			<p>A table, generated programmatically with anonymous callbacks and closures, from data.</p>
+			<table width="20%" border="1">
+				<thead>
+					<tr>
+						<th>col-1</th>
+						<th>col-2</th>
+						<th>col-3</th>
+						<th>col-4</th>
+						<th>col-5</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						<td>cell-1</td>
+						<td>cell-2</td>
+						<td>cell-3</td>
+						<td>cell-4</td>
+						<td>cell-5</td>
+					</tr>
+					<tr>
+						<td>cell-6</td>
+						<td>cell-7</td>
+						<td>cell-8</td>
+						<td>cell-9</td>
+						<td>cell-10</td>
+					</tr>
+					<tr>
+						<td>cell-11</td>
+						<td>cell-12</td>
+						<td></td>
+						<td></td>
+						<td></td>
+					</tr>
+				</tbody>
+			</table>
+			*/
+			document.body.appendChild(_('p').html('A table, generated programmatically with anonymous callbacks and closures, from data.').asDOM());
+			document.body.appendChild(function() {
+
+				// Declare variables, and provide data to generate a table with.
+				var cols = ['col-1', 'col-2', 'col-3', 'col-4', 'col-5'],
+					cells = ['cell-1', 'cell-2', 'cell-3', 'cell-4', 'cell-5', 'cell-6', 'cell-7', 'cell-8', 'cell-9', 'cell-10', 'cell-11', 'cell-12'],
+					table;
+
+				// Return the entire generated <table>
+				return _('table', {
+					'width':'20%',
+					'border':'1'
+				}).child([
+
+					// <thead> section
+					_('thead').child(
+
+						// <tr> node
+						_('tr').child(function() {
+
+							// Loop and collect the <th> tags.
+							var th = [];
+							for (var i = 0, max = cols.length; i < max; i++) {
+								th.push(_('th').html(cols[i]));
+							}
+
+							// Return from the anonymous function
+							return th;
+						}())
+					),
+
+					// <tbody> section
+					_('tbody').child(function() {
+
+						// Loop through the cells, breaking them into chunks that fit the table columns
+						var tr = [];
+						for (var i = 0, max = Math.ceil(cells.length / cols.length); i < max; i++) {
+
+							// Add new <tr> tags for each row
+							tr.push(_('tr').child(function() {
+
+								// Loop through the individual cells, split into columns
+								var td = [];
+								for (var j = i * cols.length, jmax = (i + 1) * cols.length; j < jmax; j++) {
+
+									// Add the <td> tags with the cell data
+									td.push(_('td').html(cells[j] || ' '));
+								}
+
+								// Return from the anonymous function
+								return td;
+							}()));
+						}
+
+						// Return from the anonymous function
+						return tr;
+					}())
+
+				// Call asDOM() to return the real DOM nodes.
+				]).asDOM();
+			}());
+
 		})();
 		</script>
 	</body>
