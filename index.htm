@@ -8,7 +8,10 @@
 
 		<script type="text/javascript" charset="utf-8">
 		function cleanJS(s) {
-			return s.replace(/</g, '&lt;').replace(/\n\t\t\t/g, "\n").replace(/\t/g, "    ").replace(/^\n/, '');
+			return s.replace(/</g, '&lt;')
+			        .replace(/\n\t\t\t/g, "\n")
+			        .replace(/\t/g, "    ")
+			        .replace(/^\n/, '');
 		}
 		</script>
 
