@@ -1,201 +1,289 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN"
-	"http://www.w3.org/TR/html4/strict.dtd">
+<!DOCTYPE HTML>
 <html>
 	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
-		<title>DOMBuilder Examples</title>
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<script src="dombuilder.js" type="text/javascript" charset="utf-8"></script>
+		<title>DOMBuilder</title>
+
+		<script type="text/javascript" charset="utf-8">
+		function cleanJS(s) {
+			return s.replace(/</g, '&lt;').replace(/\n\t\t\t/g, "\n").replace(/\t/g, "    ").replace(/^\n/, '');
+		}
+		</script>
+
+		<style>
+		body {
+			font-size: 16px;
+			line-height: 24px;
+			background-color: #f6f5ea;
+			color: #453d5a;
+			font-family: Cambria, serif;
+		}
+		div.container {
+			width: 720px;
+			margin: 50px 0 50px 50px;
+		}
+		p {
+			width: 550px;
+		}
+		a, a:visited {
+			padding: 0 1px;
+			text-decoration: underline;
+			color: #453d5a;
+		}
+		a:active, a:hover {
+			text-decoration: none;
+			color: #fff;
+			background: #333;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			margin-top: 40px;
+		}
+		h2 {
+			margin-top: 20px;
+			border-top: 1px dotted #999;
+			padding-top: 30px;
+		}
+		b.header {
+			font-size: 18px;
+		}
+		table, tr, td {
+			margin: 0; padding: 0;
+		}
+		td {
+			padding: 2px 12px 2px 0;
+		}
+		code, pre, tt {
+			font-family: Monaco, Consolas, monospace;
+			font-size: 12px;
+			line-height: 18px;
+			color: #555529;
+		}
+		code {
+			margin-left: 20px;
+		}
+		pre {
+			font-size: 12px;
+			padding: 2px 0 2px 12px;
+			border-left: 6px solid #aaaa99;
+			margin: 0px 0 30px;
+		}
+		</style>
 	</head>
 
 	<body>
+		<div class="container">
+			<h1>DOMBuilder</h1>
+			<p>Read the <a href="http://skyzyx.github.com/dombuilder/">documentation</a> or <a href="http://github.com/skyzyx/dombuilder/">view the source</a>. It's highly recommended that you use a browser with <a href="http://getfirebug.com">Firebug</a>-like capabilities so you can view the HTML that's being generated.</p>
 
-		<p>View source to see how the HTML below is being generated. (Check out <a href="http://github.com/skyzyx/dombuilder">DOMBuilder on GitHub</a> for the up-to-date source.)</p>
-		<hr>
+			<h2 id="demo1"><a href="#demo1">Demo: Mixing and matching</a></h2>
+			<p>This will show a good cross-section of functionality for generating DOM nodes.</p>
 
-		<script src="dombuilder.js" type="text/javascript" charset="utf-8"></script>
-		<script type="text/javascript" charset="utf-8">
-		(function() {
+			<h3>HTML to generate</h3>
+			<pre>
+&lt;div id="test" class="sample">
+    &lt;p>This is a &lt;a href="">sample of the code&lt;/a> that you may like.&lt;/p>
+    &lt;p>And another &lt;a href="#">&lt;strong>complex-ish&lt;/strong>&lt;/a> one.&lt;/p>
+    &lt;ul class="sample">
+        &lt;li>&lt;a href="http://google.com">One&lt;/a>&lt;/li>
+        &lt;li>&lt;em>Two&lt;/em>&lt;/li>
+        &lt;li>&lt;strong>Three&lt;/strong>&lt;/li>
+    &lt;/ul>
+&lt;/div></pre>
 
-			// Define a shortcut. Let's pick underscore. It can be anything, really. Or nothing. Whatever.
-			var _ = DOMBuilder;
+			<h3>DOMBuilder code</h3>
+			<pre id="js1"></pre>
+
+			<h3>See it in action</h3>
+			<div id="demo01"></div>
+
+			<script type="text/javascript" charset="utf-8" id="script1">
+			(function() {
+				var _ = DOMBuilder;
+				document.getElementById('demo01').appendChild(
+					_('div', { 'id':'test', 'class':'sample' }).child([
+						_('p').html('This is a <a href="">sample of the code</a> that you may like.'),
+						_('p').html('And another ').child(_('a', { 'href':'#' }).child(_('strong').html('complex').html('-ish'))).html(' one.'),
+						_('ul').child([
+							_('li').child(_('a', { 'href':'http://google.com' }).html('One')),
+							_('li').child(_('em').html('Two')),
+							_('li').child(_('strong').html('Three'))
+						])
+					]).asDOM()
+				);
+			})();
+			</script>
+			<script type="text/javascript" charset="utf-8">
+			(function() {
+				document.getElementById('js1').innerHTML = cleanJS(document.getElementById('script1').innerHTML);
+			})();
+			</script>
+
+			<h2 id="demo2"><a href="#demo2">Demo: Simple list with data source</a></h2>
+			<p>This will show how to generate a simple list using an initial data source of list items to create. Watch how we store <tt>ul</tt> so that we can reference and append to it later.</p>
+
+			<h3>HTML to generate</h3>
+			<pre>
+&lt;div>
+    &lt;p>Adding similar nodes with a for loop.&lt;/p>
+    &lt;ul id="list">
+        &lt;li>&lt;a href="#one">one&lt;/a>&lt;/li>
+        &lt;li>&lt;a href="#two">two&lt;/a>&lt;/li>
+        &lt;li>&lt;a href="#three">three&lt;/a>&lt;/li>
+        &lt;li>&lt;a href="#four">four&lt;/a>&lt;/li>
+        &lt;li>&lt;a href="#five">five&lt;/a>&lt;/li>
+    &lt;/ul>
+&lt;/div></pre>
+
+			<h3>DOMBuilder code</h3>
+			<pre id="js2"></pre>
+
+			<h3>See it in action</h3>
+			<div id="demo02"></div>
+
+			<script type="text/javascript" charset="utf-8" id="script2">
+			(function() {
+				var _ = DOMBuilder;
+				document.getElementById('demo02').appendChild(function() {
+					var div, ul, numbers = ['one', 'two', 'three', 'four', 'five'];
+					div = _('div').child([
+						_('p').html('Adding similar nodes with a for loop.'),
+						ul = _('ul', { 'id':'list' })
+					]);
+					for (var i = 0, max = numbers.length; i < max; i++) {
+						ul.child(
+							_('li').child(_('a', { 'href':'#' + numbers[i] }).html(numbers[i]))
+						);
+					}
+					return div.asDOM();
+				}());
+			})();
+			</script>
+			<script type="text/javascript" charset="utf-8">
+			(function() {
+				document.getElementById('js2').innerHTML = cleanJS(document.getElementById('script2').innerHTML);
+			})();
+			</script>
 
 
-			/*
-			<div id="test" class="sample">
-				<p>This is a <a href="">sample of the code</a> that you may like.</p>
-				<p>And another <a href="#"><strong>complex-ish</strong></a> one.</p>
-				<ul class="sample">
-					<li><a href="http://google.com">One</a></li>
-					<li><em>Two</em></li>
-					<li><strong>Three</strong></li>
-				</ul>
-			</div>
-			*/
-			document.body.appendChild(
-				_('div', { 'id':'test', 'class':'sample' }).child([
+			<h2 id="demo3"><a href="#demo3">Demo: Complex table with data source</a></h2>
+			<p>This will show how to generate a table using an initial data source of list items to create, and doing the math to group the items into the table columns. Uses nested anonymous functions.</p>
+			<p>Rather than storing a reference to <tt>ul</tt> as we did before, this approach opts entirely for returning values from anonymous callbacks.</p>
 
-					// Straight HTML via html
-					_('p').html('This is a <a href="">sample of the code</a> that you may like.'),
+			<h3>HTML to generate</h3>
+			<pre>
+&lt;p>A table, generated programmatically with nested anonymous callbacks, from data.&lt;/p>
+&lt;table width="20%" border="1">
+    &lt;thead>
+        &lt;tr>
+            &lt;th>col-1&lt;/th>
+            &lt;th>col-2&lt;/th>
+            &lt;th>col-3&lt;/th>
+            &lt;th>col-4&lt;/th>
+            &lt;th>col-5&lt;/th>
+        &lt;/tr>
+    &lt;/thead>
+    &lt;tbody>
+        &lt;tr>
+            &lt;td>cell-1&lt;/td>
+            &lt;td>cell-2&lt;/td>
+            &lt;td>cell-3&lt;/td>
+            &lt;td>cell-4&lt;/td>
+            &lt;td>cell-5&lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;td>cell-6&lt;/td>
+            &lt;td>cell-7&lt;/td>
+            &lt;td>cell-8&lt;/td>
+            &lt;td>cell-9&lt;/td>
+            &lt;td>cell-10&lt;/td>
+        &lt;/tr>
+        &lt;tr>
+            &lt;td>cell-11&lt;/td>
+            &lt;td>cell-12&lt;/td>
+            &lt;td>&lt;/td>
+            &lt;td>&lt;/td>
+            &lt;td>&lt;/td>
+        &lt;/tr>
+    &lt;/tbody>
+&lt;/table></pre>
 
-					// Similar, but using DOM
-					_('p').html('And another ').child(
-						_('a', { 'href':'#' }).child(
-							_('strong').html('complex').html('-ish')
-						)
-					).html(' one.'),
+			<h3>DOMBuilder code</h3>
+			<p>This one is a little longer because I left the comments in. Parts of the looping calculations could also likely be simplified by using one of the popular JavaScript framework.</p>
+			<pre id="js3"></pre>
 
-					// Let's make a short list
-					_('ul').child([
-						_('li').child(
-							_('a', { 'href':'http://google.com' }).html('One')
-						),
-						_('li').child(
-							_('em').html('Two')
-						),
-						_('li').child(
-							_('strong').html('Three')
-						)
-					])
-				]).asDOM()
-			);
+			<h3>See it in action</h3>
+			<div id="demo03"></div>
 
+			<script type="text/javascript" charset="utf-8" id="script3">
+			(function() {
+				var _ = DOMBuilder;
 
-			/*
-			<div>
-				<p>Adding similar nodes with a for loop.</p>
-				<ul id="list">
-					<li><a href="#one">one</a></li>
-					<li><a href="#two">two</a></li>
-					<li><a href="#three">three</a></li>
-					<li><a href="#four">four</a></li>
-					<li><a href="#five">five</a></li>
-				</ul>
-			</div>
-			*/
-			document.body.appendChild(function() {
+				document.getElementById('demo03').appendChild(_('p').html('A table, generated programmatically with nested anonymous callbacks, from data.').asDOM());
+				document.getElementById('demo03').appendChild(function() {
 
-				// Define some variables
-				var div, ul, numbers = ['one', 'two', 'three', 'four', 'five'];
+					// Declare variables, and provide data to generate a table with.
+					var cols = ['col-1', 'col-2', 'col-3', 'col-4', 'col-5'],
+						cells = ['cell-1', 'cell-2', 'cell-3', 'cell-4', 'cell-5', 'cell-6', 'cell-7', 'cell-8', 'cell-9', 'cell-10', 'cell-11', 'cell-12'],
+						table;
 
-				// Generate a DIV with multiple child nodes, while storing a reference to the child UL
-				div = _('div').child([
-					_('p').html('Adding similar nodes with a for loop.'),
-					ul = _('ul', { 'id':'list' })
-				]);
+					return _('table', { 'width':'20%', 'border':'1' }).child([
+						_('thead').child(
+							_('tr').child(function() {
 
-				// Loop and add children to the UL
-				for (var i = 0, max = numbers.length; i < max; i++) {
-					ul.child(
-						_('li').child(
-							_('a', { 'href':'#' + numbers[i] }).html(numbers[i])
-						)
-					);
-				}
-
-				// Return the pre-constructed DOM nodes
-				return div.asDOM();
-			}());
-
-
-			/*
-			<p>A table, generated programmatically with anonymous callbacks and closures, from data.</p>
-			<table width="20%" border="1">
-				<thead>
-					<tr>
-						<th>col-1</th>
-						<th>col-2</th>
-						<th>col-3</th>
-						<th>col-4</th>
-						<th>col-5</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						<td>cell-1</td>
-						<td>cell-2</td>
-						<td>cell-3</td>
-						<td>cell-4</td>
-						<td>cell-5</td>
-					</tr>
-					<tr>
-						<td>cell-6</td>
-						<td>cell-7</td>
-						<td>cell-8</td>
-						<td>cell-9</td>
-						<td>cell-10</td>
-					</tr>
-					<tr>
-						<td>cell-11</td>
-						<td>cell-12</td>
-						<td></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</tbody>
-			</table>
-			*/
-			document.body.appendChild(_('p').html('A table, generated programmatically with anonymous callbacks and closures, from data.').asDOM());
-			document.body.appendChild(function() {
-
-				// Declare variables, and provide data to generate a table with.
-				var cols = ['col-1', 'col-2', 'col-3', 'col-4', 'col-5'],
-					cells = ['cell-1', 'cell-2', 'cell-3', 'cell-4', 'cell-5', 'cell-6', 'cell-7', 'cell-8', 'cell-9', 'cell-10', 'cell-11', 'cell-12'],
-					table;
-
-				// Return the entire generated <table>
-				return _('table', {
-					'width':'20%',
-					'border':'1'
-				}).child([
-
-					// <thead> section
-					_('thead').child(
-
-						// <tr> node
-						_('tr').child(function() {
-
-							// Loop and collect the <th> tags.
-							var th = [];
-							for (var i = 0, max = cols.length; i < max; i++) {
-								th.push(_('th').html(cols[i]));
-							}
-
-							// Return from the anonymous function
-							return th;
-						}())
-					),
-
-					// <tbody> section
-					_('tbody').child(function() {
-
-						// Loop through the cells, breaking them into chunks that fit the table columns
-						var tr = [];
-						for (var i = 0, max = Math.ceil(cells.length / cols.length); i < max; i++) {
-
-							// Add new <tr> tags for each row
-							tr.push(_('tr').child(function() {
-
-								// Loop through the individual cells, split into columns
-								var td = [];
-								for (var j = i * cols.length, jmax = (i + 1) * cols.length; j < jmax; j++) {
-
-									// Add the <td> tags with the cell data
-									td.push(_('td').html(cells[j] || ' '));
+								// Loop and collect the <th> tags.
+								var th = [];
+								for (var i = 0, max = cols.length; i < max; i++) {
+									th.push(_('th').html(cols[i]));
 								}
 
 								// Return from the anonymous function
-								return td;
-							}()));
-						}
+								return th;
+							}())
+						),
+						_('tbody').child(function() {
 
-						// Return from the anonymous function
-						return tr;
-					}())
+							// Loop through the cells, breaking them into chunks that fit the table columns
+							var tr = [];
+							for (var i = 0, max = Math.ceil(cells.length / cols.length); i < max; i++) {
 
-				// Call asDOM() to return the real DOM nodes.
-				]).asDOM();
-			}());
+								// Add new <tr> tags for each row
+								tr.push(_('tr').child(function() {
 
-		})();
-		</script>
+									// Loop through the individual cells, split into columns
+									var td = [];
+									for (var j = i * cols.length, jmax = (i + 1) * cols.length; j < jmax; j++) {
+
+										// Add the <td> tags with the cell data, defaulting to blank instead of undefined.
+										td.push(_('td').html(cells[j] || ' '));
+									}
+
+									// Return from the anonymous function
+									return td;
+								}()));
+							}
+
+							// Return from the anonymous function
+							return tr;
+						}())
+
+					// Call asDOM() to return the real DOM nodes.
+					]).asDOM();
+				}());
+			})();
+			</script>
+			<script type="text/javascript" charset="utf-8">
+			(function() {
+				document.getElementById('js3').innerHTML = cleanJS(document.getElementById('script3').innerHTML);
+			})();
+			</script>
+
+
+			<h2>Legalese</h2>
+			<p><em>DOMBuilder is copyright &copy; 2009 <a href="http://ryanparman.com">Ryan Parman</a>, and released under the open-source <a href="http://creativecommons.org/licenses/BSD/">New BSD License</a>.</em></p>
+
+		</div>
+
 	</body>
 </html>
