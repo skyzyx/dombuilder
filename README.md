@@ -1,16 +1,8 @@
 # DOMBuilder
-License: [http://creativecommons.org/licenses/BSD/](http://creativecommons.org/licenses/BSD/)
 
-## Goals
+## Documentation
 
-1. Small and lightweight (less than 800 bytes after Google Closure Compiler)
-2. Doesn't require another framework like Prototype, jQuery or YUI
-3. Chainable like crazy
-4. Easy to embed into other, larger projects
-
-## Support
-
-Tested in Firefox 3/3.5, Safari 3/4, IE 6/7/8. Not sure about Opera or Chrome, but I expect they'd work as well.
+Read the [documentation](http://skyzyx.github.com/dombuilder/) and [see the demo](http://ryanparman.com/labs/dombuilder/).
 
 ## Usage
 
@@ -57,63 +49,3 @@ Tested in Firefox 3/3.5, Safari 3/4, IE 6/7/8. Not sure about Opera or Chrome, b
 	        ])
 	    ).asDOM()
 	);
-
-See `index.htm` for more complex examples, or see it in action at [http://ryanparman.com/labs/dombuilder/](http://ryanparman.com/labs/dombuilder/).
-
-## DOMBuilder(elem, attr) - _Constructor_
-
-DOMBuilder generates DOM nodes with an object-oriented syntax.
-
-### Parameters
-
-* `elem` - {String} (Required) The name of the element to generate.
-* `attr` - {Hash} (Optional) A JSON Hash of the attributes to apply to the element.
-
-### Returns
-
-* `DOMBuilder` - The original DOMBuilder object.
-
-
-## child(obj) - _Method_
-
-Append one or more child nodes.
-
-### Parameters
-
-* `obj` - {HTMLElement | DOMBuilder | Array} (Required) A DOM element, a DOMBuilder object, or an array of these for multiple children.
-
-### Returns
-
-* `DOMBuilder` - The original DOMBuilder object.
-
-
-## html(text, replace) - _Method_
-
-Set a value via innerHTML.
-
-### Parameters
-
-* `text` - {String} (Required) The string to assign via innerHTML.
-* `replace` - {Boolean} (Optional) Whether this new value should replace the existing value. Defaults to append (false).
-
-### Returns
-
-* `DOMBuilder` - The original DOMBuilder object.
-
-
-## asDOM() - _Method_
-
-Return the DOM element for DOMBuilder that can be used with standard DOM methods. This is optional when passed into a DOMBuilder.child() method. This is required as the last method in the chain when passing to a native DOM method.
-
-### Returns
-
-* `HTMLElement` - The entire DOMBuilder object as a DOM node.
-
-
-## asHTML() - _Method_
-
-Return the DOMBuilder object as an HTML string.
-
-### Returns
-
-* `String` - The entire DOMBuilder object as a string of HTML.
