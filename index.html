@@ -11,7 +11,7 @@
 			line-height: 24px;
 			background-color: #f6f5ea;
 			color: #453d5a;
-			font-family: "Palatino Linotype", "Book Antiqua", Palatino, FreeSerif, serif;
+			font-family: Cambria, serif;
 		}
 		div.container {
 			width: 720px;
@@ -21,17 +21,22 @@
 			width: 550px;
 		}
 		a, a:visited {
-			padding: 0 2px;
-			text-decoration: none;
-			background: #dadaba;
+			padding: 0 1px;
+			text-decoration: underline;
 			color: #453d5a;
 		}
 		a:active, a:hover {
-			color: #000;
-			background: #f0c095;
+			text-decoration: none;
+			color: #fff;
+			background: #333;
 		}
 		h1, h2, h3, h4, h5, h6 {
 			margin-top: 40px;
+		}
+		h2 {
+			margin-top: 20px;
+			border-top: 1px dotted #999;
+			padding-top: 30px;
 		}
 		b.header {
 			font-size: 18px;
@@ -43,7 +48,7 @@
 			padding: 2px 12px 2px 0;
 		}
 		code, pre, tt {
-			font-family: Monaco, Consolas, "Lucida Console", monospace;
+			font-family: Monaco, Consolas, monospace;
 			font-size: 12px;
 			line-height: 18px;
 			color: #555529;
@@ -67,15 +72,22 @@
 			<ul>
 				<li>Small and lightweight.</li>
 				<li>Chainable like crazy.</li>
-				<li>Doesn't require another framework like Prototype, jQuery or YUI.</li>
+				<li>Doesn't require another framework like <a href="http://prototypejs.org">Prototype</a>, <a href="http://jquery.com">jQuery</a> or <a href="http://yuilibrary.com">YUI</a>.</li>
 				<li>Easy to embed into other, larger projects.</li>
 			</ul>
-			<p>The unabridged source code is <a href="http://github.com/skyzyx/dombuilder/">available on GitHub</a>. You can see a real-live demo at <a href="http://ryanparman.com/labs/dombuilder/">http://ryanparman.com/labs/dombuilder/</a>.</p>
-			<p><em>DOMBuilder is copyright &copy; 2009 <a href="http://ryanparman.com">Ryan Parman</a>, and released under the open-source <a href="http://creativecommons.org/licenses/BSD/">New BSD License</a>.</em></p>
+			<p>Source code is <a href="http://github.com/skyzyx/dombuilder/">available on GitHub</a>. You can also see a <a href="http://ryanparman.com/labs/dombuilder/">real, live demo</a>.</p>
 
 			<h2>Browser Support</h2>
 
-			<p>Tested in <a href="http://firefox.com">Firefox</a> 3/3.5, <a href="http://apple.com/safari">Safari</a> 3/4, <a href="http://google.com/chrome">Chrome</a> 3/4, <a href="http://microsoft.com/ie">Internet Explorer</a> 6/7/8. Not sure about Opera, but I expect it'd work as well.</p>
+			<p>DOMBuilder has been <em>tested</em> in the following browsers:</p>
+			<ul>
+				<li><a href="http://firefox.com">Firefox</a> 3/3.5</li>
+				<li><a href="http://apple.com/safari">Safari</a> 3/4</li>
+				<li><a href="http://google.com/chrome">Chrome</a> 3/4</li>
+				<li><a href="http://opera.com">Opera</a> 10.10</li>
+				<li><a href="http://microsoft.com/ie">Internet Explorer</a> 6/7/8</li>
+			</ul>
+			<p>The JavaScript used isn't all that complex, so I would expect that DOMBuilder <em>supports</em> other/older browsers as well.</p>
 
 			<h2>Downloads <em style="padding-left: 12px; font-size:12px;">(Right-click, and use "Save As")</em></h2>
 
@@ -172,15 +184,21 @@ id.innerHTML = _('p', { 'id':'abc', 'class':'def' }).html('This is my text.').as
 			<h2>Change Log</h2>
 
 			<p>
-				<b class="header">1.1</b><br />
-				Simplified the code under the hood. Now runs a little faster and compresses even smaller.
+				<b class="header"><a href="http://github.com/skyzyx/dombuilder/tree/1.1">1.1</a></b><br />
+				Simplified the code under the hood. Now runs a little faster and compresses even smaller. Removed the need to instantiate the class, making it easier to alias. Ensured that it passed JSLint. Provided a version minified by <a href="http://code.google.com/closure/compiler/">Google Closure Compiler.</a>
 			</p>
 
 			<p>
-				<b class="header">1.0</b><br />
-				Initial release of DOMBuilder.
+				<b class="header"><a href="http://github.com/skyzyx/dombuilder/tree/1.0">1.0</a></b><br />
+				Made sure that it worked with Internet Explorer 6&amp;7. Improved the innards of <tt>.child()</tt> to be more efficient. Merged <tt>.innerHTML()</tt> and <tt>.appendHTML()</tt> together into the new <tt>.html()</tt> method. Provided a version minified by <a href="http://yuilibrary.com/projects/yuicompressor">YUI Compressor</a>.
 			</p>
 
+			<p>
+				<b class="header">Pre-1.0</b><br />
+				Initial pre-release of DOMBuilder.
+			</p>
+
+			<p><em>DOMBuilder is copyright &copy; 2009 <a href="http://ryanparman.com">Ryan Parman</a>, and released under the open-source <a href="http://creativecommons.org/licenses/BSD/">New BSD License</a>.</em></p>
 		</div>
 
 	</body>
