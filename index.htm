@@ -94,6 +94,7 @@
 		<div class="container">
 			<h1>DOMBuilder</h1>
 			<p>Read the <a href="http://skyzyx.github.com/dombuilder/">documentation</a> or <a href="http://github.com/skyzyx/dombuilder/">view the source</a>. It's highly recommended that you use a browser with <a href="http://getfirebug.com">Firebug</a>-like capabilities so you can view the HTML that's being generated.</p>
+			<p>Some of the examples below use <tt>_.map()</tt> from the <a href="http://documentcloud.github.com/underscore/#map">Underscore.js</a> toolkit, as well as <a href="http://github.com/skyzyx/underscore/commit/14939b192b63efb16706060f1855f097fa501143">my fork</a> containing <tt>_.splitBy()</tt>.</p>
 
 			<h2 id="demo1"><a href="#demo1">Demo: Mixing and matching</a></h2>
 			<p>This will show a good cross-section of functionality for generating DOM nodes.</p>
@@ -118,15 +119,15 @@
 
 			<script type="text/javascript" charset="utf-8" id="script1">
 			(function() {
-				var _ = DOMBuilder;
+				var __ = DOMBuilder;
 				document.getElementById('demo01').appendChild(
-					_('div', { 'id':'test', 'class':'sample' }).child([
-						_('p').html('This is a <a href="">sample of the code</a> that you may like.'),
-						_('p').html('And another ').child(_('a', { 'href':'#' }).child(_('strong').html('complex').html('-ish'))).html(' one.'),
-						_('ul').child([
-							_('li').child(_('a', { 'href':'http://google.com' }).html('One')),
-							_('li').child(_('em').html('Two')),
-							_('li').child(_('strong').html('Three'))
+					__('div', { 'id':'test', 'class':'sample' }).child([
+						__('p').html('This is a <a href="">sample of the code</a> that you may like.'),
+						__('p').html('And another ').child(__('a', { 'href':'#' }).child(__('strong').html('complex').html('-ish'))).html(' one.'),
+						__('ul').child([
+							__('li').child(__('a', { 'href':'http://google.com' }).html('One')),
+							__('li').child(__('em').html('Two')),
+							__('li').child(__('strong').html('Three'))
 						])
 					]).asDOM()
 				);
@@ -139,7 +140,7 @@
 			</script>
 
 			<h2 id="demo2"><a href="#demo2">Demo: Simple list with data source</a></h2>
-			<p>This will show how to generate a simple list using an initial data source of list items to create. Watch how we store <tt>ul</tt> so that we can reference and append to it later.</p>
+			<p>This will show how to generate a simple list using an initial data source of list items to create.</p>
 
 			<h3>HTML to generate</h3>
 			<pre>
@@ -162,19 +163,15 @@
 
 			<script type="text/javascript" charset="utf-8" id="script2">
 			(function() {
-				var _ = DOMBuilder;
+				var __ = DOMBuilder;
 				document.getElementById('demo02').appendChild(function() {
 					var div, ul, numbers = ['one', 'two', 'three', 'four', 'five'];
-					div = _('div').child([
-						_('p').html('Adding similar nodes with a for loop.'),
-						ul = _('ul', { 'id':'list' })
-					]);
-					for (var i = 0, max = numbers.length; i < max; i++) {
-						ul.child(
-							_('li').child(_('a', { 'href':'#' + numbers[i] }).html(numbers[i]))
-						);
-					}
-					return div.asDOM();
+					return __('div').child([
+						__('p').html('Adding similar nodes with a for loop.'),
+						__('ul', { 'id':'list' }).child(_.map(numbers, function(e) {
+							return __('li').child(__('a', { 'href':'#' + e }).html(e));
+						}))
+					]).asDOM();
 				}());
 			})();
 			</script>
@@ -225,7 +222,6 @@
 &lt;/table></pre>
 
 			<h3>DOMBuilder code</h3>
-			<p>To shorten the code, this example uses <tt>_.map()</tt> from the <a href="http://documentcloud.github.com/underscore/#map">Underscore.js</a> toolkit, as well as <a href="http://github.com/skyzyx/underscore/commit/14939b192b63efb16706060f1855f097fa501143">my fork</a> containing <tt>_.splitBy()</tt>.</p>
 			<pre id="js3"></pre>
 
 			<h3>See it in action</h3>
@@ -233,8 +229,6 @@
 
 			<script type="text/javascript" charset="utf-8" id="script3">
 			(function() {
-
-				// This time, use double-underscore
 				var __ = DOMBuilder;
 
 				document.getElementById('demo03').appendChild(__('p').html('A table, generated programmatically with nested anonymous callbacks, from data.').asDOM());
