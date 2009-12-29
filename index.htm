@@ -3,10 +3,25 @@
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
 		<meta http-equiv="X-UA-Compatible" content="chrome=1">
+		<script src="http://documentcloud.github.com/underscore/underscore-min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="dombuilder.js" type="text/javascript" charset="utf-8"></script>
 		<title>DOMBuilder</title>
 
 		<script type="text/javascript" charset="utf-8">
+		// Split an array into a series of chunks, by size.
+		_.splitBy = function(array, length) {
+			if (!array.slice) return false;
+			var a = [], arr = array.slice();
+			while (arr.length > length) {
+				for (var i = 0, b = []; i < length; i++) {
+					b.push(arr.shift());
+				}
+				a.push(b);
+			}
+			a.push(arr);
+			return a;
+		};
+
 		function cleanJS(s) {
 			return s.replace(/</g, '&lt;')
 			        .replace(/\n\t\t\t/g, "\n")
@@ -205,15 +220,12 @@
         &lt;tr>
             &lt;td>cell-11&lt;/td>
             &lt;td>cell-12&lt;/td>
-            &lt;td>&lt;/td>
-            &lt;td>&lt;/td>
-            &lt;td>&lt;/td>
         &lt;/tr>
     &lt;/tbody>
 &lt;/table></pre>
 
 			<h3>DOMBuilder code</h3>
-			<p>This one is a little longer because I left the comments in. Parts of the looping calculations could also likely be simplified by using one of the popular JavaScript framework.</p>
+			<p>To shorten the code, this example uses <tt>_.map()</tt> from the <a href="http://documentcloud.github.com/underscore/#map">Underscore.js</a> toolkit, as well as <a href="http://github.com/skyzyx/underscore/commit/14939b192b63efb16706060f1855f097fa501143">my fork</a> containing <tt>_.splitBy()</tt>.</p>
 			<pre id="js3"></pre>
 
 			<h3>See it in action</h3>
@@ -221,57 +233,29 @@
 
 			<script type="text/javascript" charset="utf-8" id="script3">
 			(function() {
-				var _ = DOMBuilder;
 
-				document.getElementById('demo03').appendChild(_('p').html('A table, generated programmatically with nested anonymous callbacks, from data.').asDOM());
+				// This time, use double-underscore
+				var __ = DOMBuilder;
+
+				document.getElementById('demo03').appendChild(__('p').html('A table, generated programmatically with nested anonymous callbacks, from data.').asDOM());
 				document.getElementById('demo03').appendChild(function() {
 
 					// Declare variables, and provide data to generate a table with.
 					var cols = ['col-1', 'col-2', 'col-3', 'col-4', 'col-5'],
-						cells = ['cell-1', 'cell-2', 'cell-3', 'cell-4', 'cell-5', 'cell-6', 'cell-7', 'cell-8', 'cell-9', 'cell-10', 'cell-11', 'cell-12'],
+						cells = _.splitBy(['cell-1', 'cell-2', 'cell-3', 'cell-4', 'cell-5', 'cell-6', 'cell-7', 'cell-8', 'cell-9', 'cell-10', 'cell-11', 'cell-12'], cols.length),
 						table;
 
-					return _('table', { 'width':'20%', 'border':'1' }).child([
-						_('thead').child(
-							_('tr').child(function() {
-
-								// Loop and collect the <th> tags.
-								var th = [];
-								for (var i = 0, max = cols.length; i < max; i++) {
-									th.push(_('th').html(cols[i]));
-								}
-
-								// Return from the anonymous function
-								return th;
-							}())
+					return __('table', { 'width':'20%', 'border':'1' }).child([
+						__('thead').child(
+							__('tr').child(_.map(cols, function(c) {
+								return __('th').html(c);
+							}))
 						),
-						_('tbody').child(function() {
-
-							// Loop through the cells, breaking them into chunks that fit the table columns
-							var tr = [];
-							for (var i = 0, max = Math.ceil(cells.length / cols.length); i < max; i++) {
-
-								// Add new <tr> tags for each row
-								tr.push(_('tr').child(function() {
-
-									// Loop through the individual cells, split into columns
-									var td = [];
-									for (var j = i * cols.length, jmax = (i + 1) * cols.length; j < jmax; j++) {
-
-										// Add the <td> tags with the cell data, defaulting to blank instead of undefined.
-										td.push(_('td').html(cells[j] || ' '));
-									}
-
-									// Return from the anonymous function
-									return td;
-								}()));
-							}
-
-							// Return from the anonymous function
-							return tr;
-						}())
-
-					// Call asDOM() to return the real DOM nodes.
+						__('tbody').child(_.map(cells, function(tr) {
+							return __('tr').child(_.map(tr, function(td) {
+								return __('td').html(td);
+							}));
+						}))
 					]).asDOM();
 				}());
 			})();
@@ -287,6 +271,10 @@
 			<p><em>DOMBuilder is copyright &copy; 2009 <a href="http://ryanparman.com">Ryan Parman</a>, and released under the open-source <a href="http://creativecommons.org/licenses/BSD/">New BSD License</a>.</em></p>
 
 		</div>
+
+		<script type="text/javascript" charset="utf-8">
+		var cells = ['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
+		</script>
 
 	</body>
 </html>
