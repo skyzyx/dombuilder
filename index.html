@@ -100,7 +100,7 @@
 					</tr>
 					<tr>
 						<td><a href="http://github.com/skyzyx/dombuilder/raw/1.2/dombuilder.min.js">Production Version (1.2)</a></td>
-						<td><i>459 bytes, packed and gzip compressed</i></td>
+						<td><i>450 bytes, packed and gzip compressed</i></td>
 					</tr>
 				</table>
 			</p>
@@ -116,9 +116,24 @@
 // Assign to shorter variable
 var _ = DOMBuilder;
 
-document.body.appendChild(
-    _('p', { 'id':'abc', 'class':'def' }).asDOM()
-);</pre>
+document.body.appendChild(_.DOM(
+    _('p', { 'id':'abc', 'class':'def' })
+));</pre>
+
+			<p id="dom">
+				<b class="header"><a href="#dom">DOM</a></b><code>.DOM(nodes)</code>
+				<br />
+				This is the function that all other <tt>DOMBuilder</tt> nodes are passed into, as it returns directly into the <tt>appendChild()</tt> method. For a single DOMBuilder chain, this is interchangable with the <tt>.asDOM()</tt> method (although they're used differently). If you are passing in multiple sibling nodes without a parent, this is required.
+			</p>
+			<pre>
+// Assign to shorter variable
+var _ = DOMBuilder;
+
+document.body.appendChild(_.DOM([
+    _('p', { 'id':'abc', 'class':'def' }).html('This is my text.'),
+    _('p').html('Something simpler.'),
+    _('p').html('Let\'s add a third paragraph, for kicks.')
+]));</pre>
 
 			<p id="child">
 				<b class="header"><a href="#child">child</a></b><code>.child(nodes)</code>
@@ -129,12 +144,12 @@ document.body.appendChild(
 // Assign to shorter variable
 var _ = DOMBuilder;
 
-document.body.appendChild(
+document.body.appendChild(_.DOM(
     _('p', { 'id':'abc', 'class':'def' }).child([
         _('strong').html('This is bold text.'),
         _('em').html('This is italic text.')
-    ]).asDOM()
-);</pre>
+    ])
+));</pre>
 
 			<p id="html">
 				<b class="header"><a href="#html">html</a></b><code>.html(text, [replace])</code>
@@ -145,14 +160,13 @@ document.body.appendChild(
 // Assign to shorter variable
 var _ = DOMBuilder;
 
-document.body.appendChild(
+document.body.appendChild(_.DOM(
     _('p', { 'id':'abc', 'class':'def' }).child([
         _('strong').html('This is bold text.'),
         _('em').html('This is italic text.')
     ])
     .html('Replace the previous child nodes with this text', true)
-    .asDOM()
-);</pre>
+));</pre>
 
 			<p id="asdom">
 				<b class="header"><a href="#asdom">asDOM</a></b><code>.asDOM()</code>
@@ -182,26 +196,11 @@ var _ = DOMBuilder;
 var id = document.getElementById('#id');
 id.innerHTML = _('p', { 'id':'abc', 'class':'def' }).html('This is my text.').asHTML();</pre>
 
-			<p id="siblings">
-				<b class="header"><a href="#siblings">siblings</a></b><code>.siblings(nodes)</code>
-				<br />
-				Allows you to append multiple sibling nodes at once. This method is different from the others in that it's not meant to be chained at all. <tt>.siblings()</tt> is a workaround for the fact that you can't append multiple nodes at once via DOM methods. This is for cases when you need to add individual nodes that don't share a single parent node.
-			</p>
-			<pre>
-// Assign to shorter variable
-var _ = DOMBuilder;
-
-document.body.appendChild(_.siblings([
-    _('p', { 'id':'abc', 'class':'def' }).html('This is my text.'),
-    _('p').html('Something simpler.'),
-    _('p').html('Let\'s add a third paragraph, for kicks.'),
-]));</pre>
-
 			<h2>Change Log</h2>
 
 			<p>
 				<b class="header"><a href="http://github.com/skyzyx/dombuilder/tree/1.2">1.2</a></b><br />
-				Added <tt>DOMBuilder.siblings()</tt> for appending multiple nodes at once.</a>
+				Added <tt>DOMBuilder.DOM()</tt> as the primary way of passing real DOM nodes back; useful for appending multiple nodes at once.</a>
 			</p>
 
 			<p>
