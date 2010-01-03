@@ -154,32 +154,21 @@
 		return new X(elem, attr);
 	};
 
-	window.DOMBuilder.siblings = function(nodes) {
+	window.DOMBuilder.DOM = function(nodes) {
 
 		// Create a document fragment
-		var f = document.createDocumentFragment(), i, max;
+		var f = document.createDocumentFragment(), i, max,
 
-		// Loop through the items
-		for (i = 0, max = nodes.length; i < max; i++) {
+			// Grab the already-processed nodes.
+			n = new X('div').child(nodes).asDOM().childNodes;
 
-			// If there was accidentally an extra comma, ignore it.
-			if (typeof nodes[i] === 'undefined') {
-				break;
-			}
+		// Loop through the items. These are live DOM nodes.
+		while (n.length) {
 
-			// Is this child a DOMBuilder object?
-			if (typeof nodes[i].asDOM !== 'undefined') {
-
-				// Automatically append with DOMBuilder.asDOM()
-				f.appendChild(nodes[i].asDOM());
-			}
-			else {
-
-				// Let's assume this is a native DOM 'HTMLElement' object
-				f.appendChild(nodes[i]);
-			}
+			// This is a native DOM 'HTMLElement' object
+			f.appendChild(n[0]);
 		}
+
 		return f;
 	};
-
 })();

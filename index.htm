@@ -97,7 +97,7 @@
 			<p>Some of the examples below use <tt>_.map()</tt> from the <a href="http://documentcloud.github.com/underscore/#map">Underscore.js</a> toolkit, as well as <a href="http://github.com/skyzyx/underscore/commit/14939b192b63efb16706060f1855f097fa501143">my fork</a> containing <tt>_.splitBy()</tt>.</p>
 
 			<h2 id="demo1"><a href="#demo1">Demo: Mixing and matching</a></h2>
-			<p>This will show a good cross-section of functionality for generating DOM nodes.</p>
+			<p>This will show a good cross-section of functionality for generating DOM nodes. This example uses <tt>.asDOM()</tt> to return real DOM nodes to the <tt>.appendChild()</tt> method. (This is preferred for smaller, quicker uses.)</p>
 
 			<h3>HTML to generate</h3>
 			<pre>
@@ -120,17 +120,17 @@
 			<script type="text/javascript" charset="utf-8" id="script1">
 			(function() {
 				var __ = DOMBuilder;
-				document.getElementById('demo01').appendChild(
+				document.getElementById('demo01').appendChild(__.DOM(
 					__('div', { 'id':'test', 'class':'sample' }).child([
 						__('p').html('This is a <a href="">sample of the code</a> that you may like.'),
-						__('p').html('And another ').child(__('a', { 'href':'#' }).child(__('strong').html('complex').html('-ish'))).html(' one.'),
+						__('p').html('And another ').child(__('a', { 'href':'#' }).child(__('strong').html('complex-ish'))).html(' one.'),
 						__('ul').child([
 							__('li').child(__('a', { 'href':'http://google.com' }).html('One')),
 							__('li').child(__('em').html('Two')),
 							__('li').child(__('strong').html('Three'))
 						])
-					]).asDOM()
-				);
+					])
+				));
 			})();
 			</script>
 			<script type="text/javascript" charset="utf-8">
@@ -166,14 +166,14 @@
 				var numbers = ['one', 'two', 'three', 'four', 'five'];
 
 				var __ = DOMBuilder;
-				document.getElementById('demo02').appendChild(function() {
-					return __('div').child([
+				document.getElementById('demo02').appendChild(__.DOM(
+					__('div').child([
 						__('p').html('Adding similar nodes with a for loop.'),
 						__('ul', { 'id':'list' }).child(_.map(numbers, function(n) {
 							return __('li').child(__('a', { 'href':'#' + n }).html(n));
 						}))
-					]).asDOM();
-				}());
+					])
+				));
 			})();
 			</script>
 			<script type="text/javascript" charset="utf-8">
@@ -185,7 +185,7 @@
 
 			<h2 id="demo3"><a href="#demo3">Demo: Complex table with data source</a></h2>
 			<p>This will show how to generate a table using an initial data source of list items to create, and doing the math to group the items into the table columns. Uses nested anonymous functions.</p>
-			<p>Rather than storing a reference to <tt>ul</tt> as we did before, this approach opts entirely for returning values from anonymous callbacks. We can also append multiple siblings at once with <tt>.sibling()</tt>.</p>
+			<p>Rather than storing a reference to <tt>ul</tt> as we did before, this approach opts entirely for returning values from anonymous callbacks. Here, we're passing multiple objects into <tt>.DOM()</tt> as an array.</p>
 
 			<h3>HTML to generate</h3>
 			<pre>
@@ -235,8 +235,7 @@
 					cells = _.splitBy(['cell-1', 'cell-2', 'cell-3', 'cell-4', 'cell-5', 'cell-6', 'cell-7', 'cell-8', 'cell-9', 'cell-10', 'cell-11', 'cell-12'], cols.length);
 
 				var __ = DOMBuilder;
-
-				document.getElementById('demo03').appendChild(__.siblings([
+				document.getElementById('demo03').appendChild(__.DOM([
 					__('p').html('A table, generated programmatically with nested anonymous callbacks, from data.'),
 					__('table', { 'width':'20%', 'border':'1' }).child([
 						__('thead').child(
