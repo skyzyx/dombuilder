@@ -10,7 +10,7 @@
 // @compilation_level SIMPLE_OPTIMIZATIONS
 // ==/ClosureCompiler==
 
-/*jslint white: false, onevar: true, browser: true, undef: true, nomen: true, eqeqeq: true, plusplus: false, bitwise: true, regexp: true, strict: false, newcap: true, immed: false */
+/*jslint white: false, onevar: true, browser: true, undef: true, nomen: false, eqeqeq: true, plusplus: false, bitwise: true, regexp: true, strict: false, newcap: true, immed: false */
 /*global window */
 
 
@@ -26,7 +26,8 @@
 	var X = function(elem, attr) {
 
 		var _ = this,
-			d = document;
+			d = document,
+			key;
 
 		// Construct the element and add attributes
 		_.e = d.createElement(elem);
@@ -35,7 +36,7 @@
 		if (attr) {
 
 			// Loop through the hash (i.e. associative array, key-value pairs)
-			for (var key in attr) {
+			for (key in attr) {
 
 				// Handle 'class' differently for IE.
 				if (key.toString() === 'class') {
@@ -71,7 +72,7 @@
 
 				// If there was accidentally an extra comma, ignore it.
 				if (typeof obj[i] === 'undefined') {
-					return _;
+					break;
 				}
 
 				// Is this child a DOMBuilder object?
@@ -151,6 +152,34 @@
 	// Expose DOMBuilder, pre-instantiated
 	window.DOMBuilder = function(elem, attr) {
 		return new X(elem, attr);
+	};
+
+	window.DOMBuilder.siblings = function(nodes) {
+
+		// Create a document fragment
+		var f = document.createDocumentFragment(), i, max;
+
+		// Loop through the items
+		for (i = 0, max = nodes.length; i < max; i++) {
+
+			// If there was accidentally an extra comma, ignore it.
+			if (typeof nodes[i] === 'undefined') {
+				break;
+			}
+
+			// Is this child a DOMBuilder object?
+			if (typeof nodes[i].asDOM !== 'undefined') {
+
+				// Automatically append with DOMBuilder.asDOM()
+				f.appendChild(nodes[i].asDOM());
+			}
+			else {
+
+				// Let's assume this is a native DOM 'HTMLElement' object
+				f.appendChild(nodes[i]);
+			}
+		}
+		return f;
 	};
 
 })();

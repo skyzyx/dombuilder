@@ -163,13 +163,14 @@
 
 			<script type="text/javascript" charset="utf-8" id="script2">
 			(function() {
+				var numbers = ['one', 'two', 'three', 'four', 'five'];
+
 				var __ = DOMBuilder;
 				document.getElementById('demo02').appendChild(function() {
-					var div, ul, numbers = ['one', 'two', 'three', 'four', 'five'];
 					return __('div').child([
 						__('p').html('Adding similar nodes with a for loop.'),
-						__('ul', { 'id':'list' }).child(_.map(numbers, function(e) {
-							return __('li').child(__('a', { 'href':'#' + e }).html(e));
+						__('ul', { 'id':'list' }).child(_.map(numbers, function(n) {
+							return __('li').child(__('a', { 'href':'#' + n }).html(n));
 						}))
 					]).asDOM();
 				}());
@@ -184,7 +185,7 @@
 
 			<h2 id="demo3"><a href="#demo3">Demo: Complex table with data source</a></h2>
 			<p>This will show how to generate a table using an initial data source of list items to create, and doing the math to group the items into the table columns. Uses nested anonymous functions.</p>
-			<p>Rather than storing a reference to <tt>ul</tt> as we did before, this approach opts entirely for returning values from anonymous callbacks.</p>
+			<p>Rather than storing a reference to <tt>ul</tt> as we did before, this approach opts entirely for returning values from anonymous callbacks. We can also append multiple siblings at once with <tt>.sibling()</tt>.</p>
 
 			<h3>HTML to generate</h3>
 			<pre>
@@ -229,17 +230,15 @@
 
 			<script type="text/javascript" charset="utf-8" id="script3">
 			(function() {
+				// Declare variables, and provide data to generate a table with.
+				var cols = ['col-1', 'col-2', 'col-3', 'col-4', 'col-5'],
+					cells = _.splitBy(['cell-1', 'cell-2', 'cell-3', 'cell-4', 'cell-5', 'cell-6', 'cell-7', 'cell-8', 'cell-9', 'cell-10', 'cell-11', 'cell-12'], cols.length);
+
 				var __ = DOMBuilder;
 
-				document.getElementById('demo03').appendChild(__('p').html('A table, generated programmatically with nested anonymous callbacks, from data.').asDOM());
-				document.getElementById('demo03').appendChild(function() {
-
-					// Declare variables, and provide data to generate a table with.
-					var cols = ['col-1', 'col-2', 'col-3', 'col-4', 'col-5'],
-						cells = _.splitBy(['cell-1', 'cell-2', 'cell-3', 'cell-4', 'cell-5', 'cell-6', 'cell-7', 'cell-8', 'cell-9', 'cell-10', 'cell-11', 'cell-12'], cols.length),
-						table;
-
-					return __('table', { 'width':'20%', 'border':'1' }).child([
+				document.getElementById('demo03').appendChild(__.siblings([
+					__('p').html('A table, generated programmatically with nested anonymous callbacks, from data.'),
+					__('table', { 'width':'20%', 'border':'1' }).child([
 						__('thead').child(
 							__('tr').child(_.map(cols, function(c) {
 								return __('th').html(c);
@@ -250,8 +249,8 @@
 								return __('td').html(td);
 							}));
 						}))
-					]).asDOM();
-				}());
+					])
+				]));
 			})();
 			</script>
 			<script type="text/javascript" charset="utf-8">
@@ -265,10 +264,5 @@
 			<p><em>DOMBuilder is copyright &copy; 2009 <a href="http://ryanparman.com">Ryan Parman</a>, and released under the open-source <a href="http://creativecommons.org/licenses/BSD/">New BSD License</a>.</em></p>
 
 		</div>
-
-		<script type="text/javascript" charset="utf-8">
-		var cells = ['one','two','three','four','five','six','seven','eight','nine','ten','eleven','twelve'];
-		</script>
-
 	</body>
 </html>
