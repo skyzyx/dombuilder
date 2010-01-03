@@ -95,12 +95,12 @@
 			<p>
 				<table>
 					<tr>
-						<td><a href="http://github.com/skyzyx/dombuilder/raw/1.1/dombuilder.js">Development Version (1.1)</a></td>
-						<td><i>4kb, uncompressed with comments</i></td>
+						<td><a href="http://github.com/skyzyx/dombuilder/raw/1.2/dombuilder.js">Development Version (1.2)</a></td>
+						<td><i>4.5 kb, uncompressed with comments</i></td>
 					</tr>
 					<tr>
-						<td><a href="http://github.com/skyzyx/dombuilder/raw/1.1/dombuilder.min.js">Production Version (1.1)</a></td>
-						<td><i>384 bytes, packed and gzip compressed</i></td>
+						<td><a href="http://github.com/skyzyx/dombuilder/raw/1.2/dombuilder.min.js">Production Version (1.2)</a></td>
+						<td><i>459 bytes, packed and gzip compressed</i></td>
 					</tr>
 				</table>
 			</p>
@@ -108,7 +108,7 @@
 			<h2>Functions and Methods</h2>
 
 			<p id="dombuilder">
-				<b class="header">DOMBuilder</b><code>DOMBuilder(element, [attributes])</code>
+				<b class="header"><a href="#dombuilder">DOMBuilder</a></b><code>DOMBuilder(element, [attributes])</code>
 				<br />
 				Accepts a <em>string</em> representation of a tag name for the <tt>element</tt> parameter, and a JSON <em>hash</em> of key-value pairs for the <tt>attributes</tt> parameter. Returns a self-reference to <b>this</b> by default. Provides methods, described below. You can easily shorten this function name by assigning it to a variable.
 			</p>
@@ -121,7 +121,7 @@ document.body.appendChild(
 );</pre>
 
 			<p id="child">
-				<b class="header">child</b><code>.child(nodes)</code>
+				<b class="header"><a href="#child">child</a></b><code>.child(nodes)</code>
 				<br />
 				This is used to add children to a parent node, or to add a new tag to a text string. Accepts one or more child nodes in the form of a <tt>DOMBuilder</tt> object or a native <tt>HTMLElement</tt> node. Multiple child nodes are passed as an <em>array</em> of objects. Returns a self-reference to <b>this</b> by default.
 			</p>
@@ -137,7 +137,7 @@ document.body.appendChild(
 );</pre>
 
 			<p id="html">
-				<b class="header">html</b><code>.html(text, [replace])</code>
+				<b class="header"><a href="#html">html</a></b><code>.html(text, [replace])</code>
 				<br />
 				This is used for adding text or HTML content to a node. Since it leverages <tt>innerHTML</tt> under the hood, you can pass a <em>string</em> of content to the <tt>text</tt> parameter. It appends by default. If you'd prefer to replace the existing <tt>innerHTML</tt> content instead, pass a boolean <em>true</em> to the <tt>replace</tt> parameter. Returns a self-reference to <b>this</b> by default.
 			</p>
@@ -155,7 +155,7 @@ document.body.appendChild(
 );</pre>
 
 			<p id="asdom">
-				<b class="header">asDOM</b><code>.asDOM()</code>
+				<b class="header"><a href="#asdom">asDOM</a></b><code>.asDOM()</code>
 				<br />
 				Returns a real DOM node for use with the standard JavaScript DOM methods. When <tt>DOMBuilder</tt> objects are passed to the <tt>child</tt> method, <tt>asDOM</tt> is optional. It is only required when it's the last method in the chain while being passed into a real JavaScript DOM node.
 			</p>
@@ -171,7 +171,7 @@ document.body.appendChild(
 );</pre>
 
 			<p id="ashtml">
-				<b class="header">asHTML</b><code>.asHTML()</code>
+				<b class="header"><a href="#ashtml">asHTML</a></b><code>.asHTML()</code>
 				<br />
 				Returns the DOM nodes as a <em>string</em> of HTML. It's as simple as that.
 			</p>
@@ -182,7 +182,27 @@ var _ = DOMBuilder;
 var id = document.getElementById('#id');
 id.innerHTML = _('p', { 'id':'abc', 'class':'def' }).html('This is my text.').asHTML();</pre>
 
+			<p id="siblings">
+				<b class="header"><a href="#siblings">siblings</a></b><code>.siblings(nodes)</code>
+				<br />
+				Allows you to append multiple sibling nodes at once. This method is different from the others in that it's not meant to be chained at all. <tt>.siblings()</tt> is a workaround for the fact that you can't append multiple nodes at once via DOM methods. This is for cases when you need to add individual nodes that don't share a single parent node.
+			</p>
+			<pre>
+// Assign to shorter variable
+var _ = DOMBuilder;
+
+document.body.appendChild(_.siblings([
+    _('p', { 'id':'abc', 'class':'def' }).html('This is my text.'),
+    _('p').html('Something simpler.'),
+    _('p').html('Let\'s add a third paragraph, for kicks.'),
+]));</pre>
+
 			<h2>Change Log</h2>
+
+			<p>
+				<b class="header"><a href="http://github.com/skyzyx/dombuilder/tree/1.2">1.2</a></b><br />
+				Added <tt>DOMBuilder.siblings()</tt> for appending multiple nodes at once.</a>
+			</p>
 
 			<p>
 				<b class="header"><a href="http://github.com/skyzyx/dombuilder/tree/1.1">1.1</a></b><br />
