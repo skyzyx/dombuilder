@@ -1,0 +1,228 @@
+<!--*********************************************************************************************************-->
+
+<script type="text/javascript" charset="utf-8" id="script1">
+(function() {
+
+	// Clear it
+	node.innerHTML = '';
+
+	// Start
+	var start = new Date();
+
+	for (i = 0, max = 400; i < max; i++) {
+		var div_a = document.createElement('div'),
+			div_b = document.createElement('div'),
+			div_c = document.createElement('div'),
+			div_d = document.createElement('div'),
+			div_e = document.createElement('div'),
+			text = document.createTextNode('ZZZ');
+
+		div_a.className = 'a';
+		div_b.className = 'b';
+		div_c.className = 'c';
+		div_d.className = 'd';
+		div_e.className = 'e';
+
+		div_e.appendChild(text);
+		div_d.appendChild(div_e);
+		div_c.appendChild(div_d);
+		div_b.appendChild(div_c);
+		div_a.appendChild(div_b);
+		node.appendChild(div_a);
+	}
+
+	// Stop
+	var end = new Date();
+	var time = (end-start);
+
+	var label = 'Raw DOM - Forward for loop, add once to live node';
+	document.getElementById('results_rawdom').appendChild(_('tr').child([_('td').html(label), _('td').html(time)]).asDOM());
+
+})();
+</script>
+
+<!--*********************************************************************************************************-->
+
+<script type="text/javascript" charset="utf-8" id="script1">
+(function() {
+
+	// Clear it
+	node.innerHTML = '';
+
+	// Start
+	var start = new Date();
+
+	for (i = 0, max = 400; i < max; i++) {
+		var div_a = document.createElement('div'),
+			div_b = document.createElement('div'),
+			div_c = document.createElement('div'),
+			div_d = document.createElement('div'),
+			div_e = document.createElement('div'),
+			text = document.createTextNode('ZZZ');
+
+		div_a.className = 'a';
+		div_b.className = 'b';
+		div_c.className = 'c';
+		div_d.className = 'd';
+		div_e.className = 'e';
+
+		node.appendChild(div_a);
+		div_a.appendChild(div_b);
+		div_b.appendChild(div_c);
+		div_c.appendChild(div_d);
+		div_d.appendChild(div_e);
+		div_e.appendChild(text);
+	}
+
+	// Stop
+	var end = new Date();
+	var time = (end-start);
+
+	var label = 'Raw DOM - Forward for loop, add sub-node to live node each time';
+	document.getElementById('results_rawdom').appendChild(_('tr').child([_('td').html(label), _('td').html(time)]).asDOM());
+
+})();
+</script>
+
+<!--*********************************************************************************************************-->
+
+<script type="text/javascript" charset="utf-8" id="script1">
+(function() {
+
+	// Clear it
+	node.innerHTML = '';
+
+	// Start
+	var start = new Date();
+
+	i = 400;
+	while (i--) {
+		var div_a = document.createElement('div'),
+			div_b = document.createElement('div'),
+			div_c = document.createElement('div'),
+			div_d = document.createElement('div'),
+			div_e = document.createElement('div'),
+			text = document.createTextNode('ZZZ');
+
+		div_a.className = 'a';
+		div_b.className = 'b';
+		div_c.className = 'c';
+		div_d.className = 'd';
+		div_e.className = 'e';
+
+		div_e.appendChild(text);
+		div_d.appendChild(div_e);
+		div_c.appendChild(div_d);
+		div_b.appendChild(div_c);
+		div_a.appendChild(div_b);
+		node.appendChild(div_a);
+	}
+
+	// Stop
+	var end = new Date();
+	var time = (end-start);
+
+	var label = 'Raw DOM - Reverse while loop, add to live node each time';
+	document.getElementById('results_rawdom').appendChild(_('tr').child([_('td').html(label), _('td').html(time)]).asDOM());
+
+})();
+</script>
+
+<!--*********************************************************************************************************-->
+
+<script type="text/javascript" charset="utf-8" id="script1">
+(function() {
+
+	// Clear it
+	node.innerHTML = '';
+
+	// Start
+	var start = new Date();
+
+	var frag = document.createDocumentFragment();
+
+	i = 400;
+	while (i--) {
+		var div_a = document.createElement('div'),
+			div_b = document.createElement('div'),
+			div_c = document.createElement('div'),
+			div_d = document.createElement('div'),
+			div_e = document.createElement('div'),
+			text = document.createTextNode('ZZZ');
+
+		div_a.className = 'a';
+		div_b.className = 'b';
+		div_c.className = 'c';
+		div_d.className = 'd';
+		div_e.className = 'e';
+
+		div_e.appendChild(text);
+		div_d.appendChild(div_e);
+		div_c.appendChild(div_d);
+		div_b.appendChild(div_c);
+		div_a.appendChild(div_b);
+		frag.appendChild(div_a);
+	}
+
+	node.appendChild(frag);
+
+	// Stop
+	var end = new Date();
+	var time = (end-start);
+
+	var label = 'Raw DOM - Reverse while loop, collect using DOMFragment, add to live once';
+	document.getElementById('results_rawdom').appendChild(_('tr').child([_('td').html(label), _('td').html(time)]).asDOM());
+
+})();
+</script>
+
+<!--*********************************************************************************************************-->
+
+<script type="text/javascript" charset="utf-8" id="script1">
+(function() {
+
+	// Clear it
+	node.innerHTML = '';
+
+	// Pre-cache
+	var div_a = document.createElement('div'),
+		div_b = document.createElement('div'),
+		div_c = document.createElement('div'),
+		div_d = document.createElement('div'),
+		div_e = document.createElement('div'),
+		text = document.createTextNode('ZZZ');
+
+	div_a.className = 'a';
+	div_b.className = 'b';
+	div_c.className = 'c';
+	div_d.className = 'd';
+	div_e.className = 'e';
+
+	div_e.appendChild(text);
+	div_d.appendChild(div_e);
+	div_c.appendChild(div_d);
+	div_b.appendChild(div_c);
+	div_a.appendChild(div_b);
+
+	// Start
+	var start = new Date();
+
+	var frag = document.createDocumentFragment();
+
+	i = 400;
+	while (i--) {
+		frag.appendChild(div_a.cloneNode(true));
+	}
+
+	node.appendChild(frag);
+
+	// Stop
+	var end = new Date();
+	var time = (end-start);
+
+	var label = 'Raw DOM - Reverse while loop, pre-cached generation, collect using DOMFragment, add to live once';
+	document.getElementById('results_rawdom').appendChild(_('tr').child([_('td').html(label), _('td').html(time)]).asDOM());
+
+})();
+</script>
+
