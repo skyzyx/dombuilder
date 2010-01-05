@@ -2,7 +2,6 @@
 <html>
 	<head>
 		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
-		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<script src="dombuilder.js" type="text/javascript" charset="utf-8"></script>
 		<script type="text/javascript" charset="utf-8">
 		var _ = DOMBuilder;
