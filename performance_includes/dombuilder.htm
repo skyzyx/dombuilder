@@ -21,7 +21,7 @@
 	).asDOM();
 
 	for (i = 0, max = 400; i < max; i++) {
-		node.appendChild(insertNodes);
+		node.appendChild(insertNodes.cloneNode(true));
 	}
 
 	// Stop
@@ -57,7 +57,7 @@
 	var start = new Date();
 
 	for (i = 0, max = 400; i < max; i++) {
-		node.appendChild(insertNodes);
+		node.appendChild(insertNodes.cloneNode(true));
 	}
 
 	// Stop
@@ -94,7 +94,7 @@
 
 	i = 400;
 	while (i--) {
-		node.appendChild(insertNodes);
+		node.appendChild(insertNodes.cloneNode(true));
 	}
 
 	// Stop
@@ -131,7 +131,7 @@
 
 	i = 400;
 	while (i--) {
-		node.appendChild(insertNodes);
+		node.appendChild(insertNodes.cloneNode(true));
 	}
 
 	// Stop
@@ -170,7 +170,7 @@
 	var frag = document.createDocumentFragment();
 
 	for (i = 0, max = 400; i < max; i++) {
-		frag.appendChild(insertNodes);
+		frag.appendChild(insertNodes.cloneNode(true));
 	}
 
 	node.appendChild(frag);
@@ -209,7 +209,7 @@
 	var start = new Date();
 
 	for (i = 0, max = 400; i < max; i++) {
-		collect.push(insertNodes);
+		collect.push(insertNodes.cloneNode(true));
 	}
 
 	node.appendChild(_.DOM(collect));
@@ -251,7 +251,7 @@
 
 	i = 400;
 	while (i--) {
-		frag.appendChild(insertNodes);
+		frag.appendChild(insertNodes.cloneNode(true));
 	}
 
 	node.appendChild(frag);
@@ -291,7 +291,7 @@
 
 	i = 400;
 	while (i--) {
-		collect.push(insertNodes);
+		collect.push(insertNodes.cloneNode(true));
 	}
 
 	node.appendChild(_.DOM(collect));
