@@ -8,6 +8,10 @@
 		<title>DOMBuilder</title>
 
 		<script type="text/javascript" charset="utf-8">
+
+		// Timer variables
+		var timeStart, timeEnd;
+
 		// Split an array into a series of chunks, by size.
 		_.splitBy = function(array, length) {
 			if (!array.slice) return false;
@@ -26,7 +30,8 @@
 			return s.replace(/</g, '&lt;')
 			        .replace(/\n\t\t\t/g, "\n")
 			        .replace(/\t/g, "    ")
-			        .replace(/^\n/, '');
+			        .replace(/^\n/, '')
+					.replace(/time(Start|End) = new Date\(\);\n/g, '');
 		}
 		</script>
 
@@ -119,6 +124,7 @@
 			<div id="demo01"></div>
 
 			<script type="text/javascript" charset="utf-8" id="script1">
+			timeStart = new Date();
 			(function() {
 				var __ = DOMBuilder;
 				document.getElementById('demo01').appendChild(__.DOM(
@@ -133,12 +139,14 @@
 					])
 				));
 			})();
+			timeEnd = new Date();
 			</script>
 			<script type="text/javascript" charset="utf-8">
 			(function() {
 				document.getElementById('js1').innerHTML = cleanJS(document.getElementById('script1').innerHTML);
 			})();
 			</script>
+			<p><small>(Rendered in <script type="text/javascript">document.write(timeEnd-timeStart)</script> milliseconds)</small></p>
 
 			<h2 id="demo2"><a href="#demo2">Demo: Simple list with data source</a></h2>
 			<p>This will show how to generate a simple list using an initial data source of list items to create.</p>
@@ -163,6 +171,7 @@
 			<div id="demo02"></div>
 
 			<script type="text/javascript" charset="utf-8" id="script2">
+			timeStart = new Date();
 			(function() {
 				var numbers = ['one', 'two', 'three', 'four', 'five'];
 
@@ -176,17 +185,19 @@
 					])
 				));
 			})();
+			timeEnd = new Date();
 			</script>
 			<script type="text/javascript" charset="utf-8">
 			(function() {
 				document.getElementById('js2').innerHTML = cleanJS(document.getElementById('script2').innerHTML);
 			})();
 			</script>
+			<p><small>(Rendered in <script type="text/javascript">document.write(timeEnd-timeStart)</script> milliseconds)</small></p>
 
 
 			<h2 id="demo3"><a href="#demo3">Demo: Complex table with data source</a></h2>
 			<p>This will show how to generate a table using an initial data source of list items to create, and doing the math to group the items into the table columns. Uses nested anonymous functions.</p>
-			<p>Rather than storing a reference to <tt>ul</tt> as we did before, this approach opts entirely for returning values from anonymous callbacks. Here, we're passing multiple objects into <tt>.DOM()</tt> as an array.</p>
+			<p>Here, we're passing multiple objects into <tt>.DOM()</tt> as an array.</p>
 
 			<h3>HTML to generate</h3>
 			<pre>
@@ -230,6 +241,7 @@
 			<div id="demo03"></div>
 
 			<script type="text/javascript" charset="utf-8" id="script3">
+			timeStart = new Date();
 			(function() {
 				// Declare variables, and provide data to generate a table with.
 				var cols = ['col-1', 'col-2', 'col-3', 'col-4', 'col-5'],
@@ -252,12 +264,14 @@
 					])
 				]));
 			})();
+			timeEnd = new Date();
 			</script>
 			<script type="text/javascript" charset="utf-8">
 			(function() {
 				document.getElementById('js3').innerHTML = cleanJS(document.getElementById('script3').innerHTML);
 			})();
 			</script>
+			<p><small>(Rendered in <script type="text/javascript">document.write(timeEnd-timeStart)</script> milliseconds)</small></p>
 
 
 			<h2>Legalese</h2>
