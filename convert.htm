@@ -2,19 +2,80 @@
 	"http://www.w3.org/TR/html4/strict.dtd">
 <html>
 	<head>
-		<meta http-equiv="Content-type" content="text/html; charset=utf-8">
+		<meta http-equiv="content-type" content="text/html;charset=UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="chrome=1">
 		<title>convert</title>
 		<style type="text/css" media="screen">
+		body {
+			font-size: 16px;
+			line-height: 24px;
+			background-color: #f6f5ea;
+			color: #453d5a;
+			font-family: Cambria, serif;
+		}
+		div.container {
+			width: 720px;
+			margin: 50px 0 50px 50px;
+		}
 		textarea {
 			width: 100%;
 			height: 250px;
+			font-family: monospace;
+		}
+		p {
+			width: 550px;
+		}
+		a, a:visited {
+			padding: 0 1px;
+			text-decoration: underline;
+			color: #453d5a;
+		}
+		a:active, a:hover {
+			text-decoration: none;
+			color: #fff;
+			background: #333;
+		}
+		h1, h2, h3, h4, h5, h6 {
+			margin-top: 40px;
+		}
+		h2 {
+			margin-top: 20px;
+			border-top: 1px dotted #999;
+			padding-top: 30px;
+		}
+		b.header {
+			font-size: 18px;
+		}
+		table, tr, td {
+			margin: 0; padding: 0;
+		}
+		td {
+			padding: 2px 12px 2px 0;
+		}
+		code, pre, tt {
+			font-family: Monaco, Consolas, monospace;
+			font-size: 12px;
+			line-height: 18px;
+			color: #555529;
+		}
+		pre {
+			font-size: 12px;
+			padding: 2px 0 2px 12px;
+			border-left: 6px solid #aaaa99;
+			margin: 0px 0 30px;
 		}
 		</style>
 	</head>
 	<body>
+		<div class="container">
+			<h1>DOMBuilder Converter</h1>
+			<p>Convert raw HTML into DOMBuilder code. This will do a direct translation, but won't implement any special optimizations.</p>
+			<p>See the <a href="http://ryanparman.com/labs/dombuilder/">demo</a>, read the <a href="http://skyzyx.github.com/dombuilder/">documentation</a>, <a href="http://github.com/skyzyx/dombuilder/">view the source</a>, <a href="http://ryanparman.com/labs/dombuilder/performance.php">compare performance</a>, or <a href="http://ryanparman.com/labs/dombuilder/convert.htm">convert some code</a>.</p>
 
-		<h3>Enter your HTML</h3>
-		<textarea name="input"><p>This is a <a href="">sample of the code</a> that you may like.</p>
+			<hr>
+
+			<h3>Enter your HTML</h3>
+			<textarea name="input"><p>This is a <a href="">sample of the code</a> that you may like.</p>
 <p>And another <a href="#"><strong>complex-ish</strong></a> one.</p>
 
 <ul>
@@ -56,27 +117,28 @@
     </tbody>
 </table></textarea>
 
-		<ul>
-			<li>Alias <code>DOMBuilder</code> to <input type="text" id="alias" value="_" size="10"></li>
-			<li>Indent code with <select id="indent">
-				<option value="2">2 spaces</option>
-				<option value="4" selected="selected">4 spaces</option>
-				<option value="tab">a tab</option>
-			</select></li>
-		</ul>
-		<p><input type="button" value="Convert HTML to DOMBuilder code" id="inputSubmit"></p>
+			<ul>
+				<li>Alias <code>DOMBuilder</code> to <input type="text" id="alias" value="_" size="10"></li>
+				<li>Indent code with <select id="indent">
+					<option value="2">2 spaces</option>
+					<option value="4" selected="selected">4 spaces</option>
+					<option value="tab">a tab</option>
+				</select></li>
+			</ul>
+			<p><input type="button" value="Convert HTML to DOMBuilder code" id="inputSubmit"></p>
 
-		<hr>
+			<hr>
 
-		<h3>Output DOMBuilder code</h3>
-		<textarea name="output" readonly="readonly"></textarea>
-		<p><input type="button" value="Add these DOMBuilder nodes to the live DOM tree" id="renderDOM"></p>
+			<h3>Output DOMBuilder code</h3>
+			<textarea name="output" readonly="readonly"></textarea>
+			<p><input type="button" value="Add these DOMBuilder nodes to the live DOM tree" id="renderDOM"></p>
 
-		<hr>
+			<hr>
 
-		<h3>Rendered DOMBuilder nodes</h3>
-		<div id="hook"></div>
+			<h3>Rendered DOMBuilder nodes</h3>
+			<div id="hook"></div>
 
+		</div>
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
 		<script src="dombuilder.min.js" type="text/javascript" charset="utf-8"></script>
 

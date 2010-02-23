@@ -80,7 +80,7 @@
 	<body>
 		<div class="container">
 			<h1>Performance tests</h1>
-			<p>See the <a href="http://ryanparman.com/labs/dombuilder/">demo</a>, read the <a href="http://skyzyx.github.com/dombuilder/">documentation</a>, <a href="http://github.com/skyzyx/dombuilder/">view the source</a>, or <a href="http://ryanparman.com/labs/dombuilder/performance.php">compare performance</a>.</p>
+			<p>See the <a href="http://ryanparman.com/labs/dombuilder/">demo</a>, read the <a href="http://skyzyx.github.com/dombuilder/">documentation</a>, <a href="http://github.com/skyzyx/dombuilder/">view the source</a>, <a href="http://ryanparman.com/labs/dombuilder/performance.php">compare performance</a>, or <a href="http://ryanparman.com/labs/dombuilder/convert.htm">convert some code</a>.</p>
 			<p>Comparing performance for multiple approaches to adding DOM nodes. The runtime of each test is from looping 400 times. Results are in milliseconds.</p>
 
 			<p><strong>What are we testing?:</strong></p>
