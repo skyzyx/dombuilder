@@ -55,24 +55,54 @@
         </tr>
     </tbody>
 </table></textarea>
+
+		<ul>
+			<li>Alias <code>DOMBuilder</code> to <input type="text" id="alias" value="_" size="10"></li>
+			<li>Indent code with <select id="indent">
+				<option value="2">2 spaces</option>
+				<option value="4" selected="selected">4 spaces</option>
+				<option value="tab">a tab</option>
+			</select></li>
+		</ul>
 		<p><input type="button" value="Convert HTML to DOMBuilder code" id="inputSubmit"></p>
 
 		<hr>
 
-		<h3>Output DOMBuilder code (assumes <code>DOMBuilder</code> has been aliased to <code>_</code>)</h3>
+		<h3>Output DOMBuilder code</h3>
 		<textarea name="output" readonly="readonly"></textarea>
+		<p><input type="button" value="Add these DOMBuilder nodes to the live DOM tree" id="renderDOM"></p>
+
+		<hr>
+
+		<h3>Rendered DOMBuilder nodes</h3>
+		<div id="hook"></div>
 
 		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="dombuilder.min.js" type="text/javascript" charset="utf-8"></script>
+
 		<script type="text/javascript" charset="utf-8">
 		$(function() {
 
 			$('input#inputSubmit').click(function(evt) {
 				var input = $('textarea:first').val().replace(/>\s+</gm, '><');
-				var db = convertToDOMBuilder(input);
+				var alias = $('#alias').val();
+				var db = convertToDOMBuilder(input, alias);
 				$('textarea:last').val(db);
 			});
 
-			window.convertToDOMBuilder = function(html) {
+			$('input#renderDOM').click(function(evt) {
+				var alias = $('#alias').val();
+				if (alias.toLowerCase() !== 'dombuilder') {
+					eval('var ' + alias + ' = DOMBuilder;');
+				}
+
+				var db = $('textarea:last').val();
+				db = eval(db);
+				$('#hook').get(0).innerHTML = '';
+				$('#hook').get(0).appendChild(db);
+			});
+
+			window.convertToDOMBuilder = function(html, alias) {
 				var text = [],
 					output,
 					container = (function(html) {
@@ -96,26 +126,40 @@
 							for (var j = 0, jmax = nodes[i].attributes.length; j < jmax; j++) {
 								attr.push("'" + nodes[i].attributes[j].nodeName + "':'" + nodes[i].attributes[j].nodeValue + "'");
 							}
-							text.push("_('" + tagName + "', { " + attr.join(', ') + " })" + parseChildren(nodes[i].childNodes, indent + 1));
+							text.push(alias + "('" + tagName + "', { " + attr.join(', ') + " })" + parseChildren(nodes[i].childNodes, indent + 1, alias));
 						}
 						else {
-							text.push("_('" + tagName + "')" + parseChildren(nodes[i].childNodes, indent + 1));
+							text.push(alias + "('" + tagName + "')" + parseChildren(nodes[i].childNodes, indent + 1, alias));
 						}
 					}
 				}
 
-				return "_.DOM([\n" + ind(indent) + text.join(",\n" + ind(indent)) + "\n])"
+				return alias + ".DOM([\n" + ind(indent) + text.join(",\n" + ind(indent)) + "\n])"
 			};
 
 			var ind = function(max) {
+				var indent = $('#indent').val(), ind;
+
+				switch (indent) {
+					case '2':
+						ind = "  ";
+						break;
+					case '4':
+						ind = "    ";
+						break;
+					case 'tab':
+						ind = "\t";
+						break;
+				}
+
 				var t = "";
 				for (var i = 0; i < max; i++) {
-					t += "\t";
+					t += ind;
 				}
 				return t;
 			};
 
-			var parseChildren = function(nodes, indent) {
+			var parseChildren = function(nodes, indent, alias) {
 				var text = [], ends = ['', ''];
 
 				if (nodes[0].nodeName.toLowerCase() === '#text') {
@@ -144,10 +188,10 @@
 								for (var j = 0, jmax = nodes[i].attributes.length; j < jmax; j++) {
 									attr.push("'" + nodes[i].attributes[j].nodeName + "':'" + nodes[i].attributes[j].nodeValue + "'");
 								}
-								text.push("_('" + tagName + "', { " + attr.join(', ') + " })" + parseChildren(nodes[i].childNodes, indent));
+								text.push(alias + "('" + tagName + "', { " + attr.join(', ') + " })" + parseChildren(nodes[i].childNodes, indent, alias));
 							}
 							else {
-								text.push("_('" + tagName + "')" + parseChildren(nodes[i].childNodes, indent));
+								text.push(alias + "('" + tagName + "')" + parseChildren(nodes[i].childNodes, indent, alias));
 							}
 
 							indent--;
