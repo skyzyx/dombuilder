@@ -1,4 +1,3 @@
-<?php
 /**
  * **[DOMBuilder](http://github.com/skyzyx/dombuilder/)** is a tiny JavaScript class for generating DOM nodes
  * on-the-fly. It is designed around a few basic goals:
