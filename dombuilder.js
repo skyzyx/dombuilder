@@ -33,15 +33,17 @@
  *
  * <table>
  * 	<tr>
- * 		<td><a href="http://github.com/skyzyx/dombuilder/raw/1.2/dombuilder.js">Development Version (1.2)</a></td>
+ * 		<td><a href="http://github.com/skyzyx/dombuilder/raw/1.3/dombuilder.js">Development Version (1.3)</a></td>
  * 		<td><i>10.5 kb, uncompressed with comments</i></td>
  * 	</tr>
  * 	<tr>
- * 		<td><a href="http://github.com/skyzyx/dombuilder/raw/1.2/dombuilder.min.js">Production Version (1.2)</a></td>
+ * 		<td><a href="http://github.com/skyzyx/dombuilder/raw/1.3/dombuilder.min.js">Production Version (1.3)</a></td>
  * 		<td><i>450 bytes, packed and gzip compressed</i></td>
  * 	</tr>
  * </table>
  */
+
+// @todo: text()
 
 /*
 ## HTML to generate:
@@ -60,10 +62,10 @@
 
 var _ = DOMBuilder;
 document.body.appendChild(_.DOM(
-    _('div', { 'id':'test', 'class':'sample' }).child([
+    _('div#test.sample')._([
         _('p').html('This is a <a href="">sample of the code</a> that you may like.'),
         _('p').html('And another ').child(_('a', { 'href':'#' }).child(_('strong').html('complex-ish'))).html(' one.'),
-        _('ul', { 'class':'sample' }).child([
+        _('ul.sample').child([
             _('li').child(_('a', { 'href':'http://google.com' }).html('One')),
             _('li').child(_('em').html('Two')),
             _('li').child(_('strong').html('Three'))
@@ -102,8 +104,14 @@ document.body.appendChild(_.DOM(
 	 * 	document.body.appendChild(_.DOM(
 	 * 		_('p', {
 	 * 			'id':'abc',
-	 * 			'class':'def'
+	 * 			'class':['def', 'ghi']
 	 * 		})
+	 * 	));
+	 *
+	 * 	// or...
+	 *
+	 * 	document.body.appendChild(_.DOM(
+	 * 		_('p#abc.def.ghi)
 	 * 	));
 	 *
 	 * This `X` variable will be exposed to the global scope as `DOMBuilder`.
@@ -114,20 +122,90 @@ document.body.appendChild(_.DOM(
 		// down as small as possible using YUI Compressor or Google Closure Compiler.
 		var _ = this,
 			d = document,
+			dotHashRe = new RegExp("[.#]"),
 			key;
+
+		/**
+		 * Support CSS/jQuery-style notation for generating elements with IDs and classnames. (Internal-only!)
+		 *
+		 * 	div#myId
+		 * 	p#id.class1.class2
+		 */
+		function notation(elem) {
+
+			var attr = { 'class': [] },
+			    dotHashRe = new RegExp("[.#]"),
+			    piece, pieces, elemType, pos, classes;
+
+			if (!dotHashRe.test(elem)) {
+				return {};
+			}
+
+			pieces = elem.split(dotHashRe);
+			elemType = pieces.shift();
+			pos = elemType.length;
+			classes = attr['class'];
+
+			for (piece in pieces) {
+				(elem[pos] === '#') ? (attr.id = pieces[piece]) : classes.push(pieces[piece]);
+				pos += pieces[piece].length + 1;
+			}
+
+			attr['class'] = classes;
+			if (!attr['class'].length) {
+				delete attr['class'];
+			}
+
+			return attr;
+		}
+
+		// Merge the properties of one object with the properties of a second object. (Internal-only!)
+		function merge_options(o1, o2) {
+
+			var o3 = {},
+			    attrname;
+
+			for (attrname in o1) {
+				if (o1.hasOwnProperty(attrname)) {
+					o3[attrname] = o1[attrname];
+				}
+			}
+
+			for (attrname in o2) {
+				if (o2.hasOwnProperty(attrname)) {
+					o3[attrname] = o2[attrname];
+				}
+			}
+
+			return o3;
+		}
+
+		// Merge options into a conglomo-hash!
+		attr = merge_options(attr, notation(elem));
 
 		// Construct the element, loop through the list of attributes and add them to the node. Because of
 		// the way that IE works, class names need to be added explicitly via the `.className` property instead
 		// of using `.setAttribute()`.
-		_.e = d.createElement(elem);
+		if (dotHashRe.test(elem)) {
+			_.e = d.createElement(elem.split(dotHashRe).shift());
+		}
+		else {
+			_.e = d.createElement(elem);
+		}
 
 		if (attr) {
 			for (key in attr) {
-				if (key.toString() === 'class') {
-					_.e.className = attr[key];
-				}
-				else {
-					_.e.setAttribute(key, attr[key]);
+				if (attr.hasOwnProperty(key)) {
+					if (typeof attr[key] === 'object' && typeof attr[key].length === 'number' && typeof attr[key].splice === 'function') {
+						attr[key] = attr[key].join(' ');
+					}
+
+					if (key.toString() === 'class') {
+						_.e.className = attr[key];
+					}
+					else {
+						_.e.setAttribute(key, attr[key]);
+					}
 				}
 			}
 		}
@@ -178,6 +256,13 @@ document.body.appendChild(_.DOM(
 		};
 
 		/**
+		 * ### _()
+		 *
+		 * Alias for child().
+		 */
+		_._ = _.child;
+
+		/**
 		 * ### html()
 		 *
 		 * The `html()` method is used for adding text or HTML content to a node. Since it leverages `.innerHTML`
@@ -186,6 +271,8 @@ document.body.appendChild(_.DOM(
 		 *
 		 * If you'd prefer to replace the existing `.innerHTML` content instead, pass a boolean `true` to the
 		 * `replace` parameter. Returns a self-reference to `this` by default.
+		 *
+		 * Pass no parameters to read back the node as a string of HTML.
 		 *
 		 * 	// Assign to shorter variable
 		 * 	var _ = DOMBuilder;
@@ -197,8 +284,18 @@ document.body.appendChild(_.DOM(
 		 * 		])
 		 * 		.html('Replace the previous nodes with this text', true)
 		 * 	));
+		 *
+		 * 	_('p', { 'id':'abc', 'class':'def' })._([
+		 * 		_('strong').html('This is bold text.'),
+		 * 		_('em').html('This is italic text.')
+		 * 	]).html()
 		 */
 		_.html = function(str, replace) {
+
+			// Read value. Alias for asHTML().
+			if (arguments.length === 0) {
+				return _.asHTML();
+			}
 
 			// Determine the default value for `replace`.
 			replace = replace || false;
@@ -216,7 +313,64 @@ document.body.appendChild(_.DOM(
 		};
 
 		/**
+		 * ### text()
+		 *
+		 * The `text()` method is used for adding plain text content to a node. Since it leverages `.textContent`
+		 * or `.innerText` under the hood, you can pass a string of content to the text parameter. The default
+		 * behavior is to append content.
+		 *
+		 * If you'd prefer to replace the existing content instead, pass a boolean `true` to the `replace`
+		 * parameter. Returns a self-reference to `this` by default.
+		 *
+		 * Pass no parameters to read back the node as a string of plain text.
+		 *
+		 * 	// Assign to shorter variable
+		 * 	var _ = DOMBuilder;
+		 *
+		 * 	document.body.appendChild(_.DOM(
+		 * 		_('p', { 'id':'abc', 'class':'def' }).child([
+		 * 			_('strong').html('This is bold text.'),
+		 * 			_('em').html('This is italic text.')
+		 * 		])
+		 * 		.text('Replace the previous nodes with this text', true)
+		 * 	));
+		 *
+		 * 	_('p#abc.def)._([
+		 * 		_('strong').html('This is bold text.'),
+		 * 		_('em').html('This is italic text.')
+		 * 	]).text()
+		 */
+		_.text = function(str) {
+
+			// Read value. Alias for asText().
+			if (arguments.length === 0) {
+				return _.asText();
+			}
+
+			// Set the value
+			if (_.e.innerText) {
+				_.e.innerText = str;
+			}
+			else {
+				var text = document.createTextNode(str);
+				_.e.appendChild(text);
+			}
+
+			// Return the `DOMBuilder` object so we can chain it.
+			return _;
+		}
+
+		/**
 		 * ### asDOM()
+		 *
+		 * Alias for dom().
+		 */
+		_.asDOM = function() {
+			return _.e;
+		};
+
+		/**
+		 * ### dom()
 		 *
 		 * Returns a real DOM node for use with the standard JavaScript DOM methods. When DOMBuilder objects
 		 * are passed to the child method, asDOM is optional. It is only required when it's the last method
@@ -232,9 +386,7 @@ document.body.appendChild(_.DOM(
 		 * 		]).asDOM()
 		 * 	);
 		 */
-		_.asDOM = function() {
-			return _.e;
-		};
+		_.dom = _.asDOM;
 
 		/**
 		 * ### asHTML()
@@ -257,6 +409,35 @@ document.body.appendChild(_.DOM(
 			var t = d.createElement('div');
 			t.appendChild(_.e);
 			return t.innerHTML;
+		};
+
+		/**
+		 * ### asText()
+		 *
+		 * Returns the DOM nodes as a string of plain text. It's as simple as that.
+		 *
+		 * 	// Assign to shorter variable
+		 * 	var _ = DOMBuilder;
+		 *
+		 * 	var id = document.getElementById('id');
+		 * 	id.innerHTML = _('p', {
+		 * 		'id':'abc',
+		 * 		'class':'def'
+		 * 	}).html('This is my text.').asText();
+		 */
+		_.asText = function() {
+
+			// Create a new DOM element in memory, append our DOM object to the in-memory element, then read
+			// the content back as a string.
+			var t = d.createElement('div');
+			t.appendChild(_.e);
+
+			if (t.innerText) {
+				return t.innerText;
+			}
+			else if (t.textContent) {
+				return t.textContent;
+			}
 		};
 
 		// Return the `DOMBuilder` object so we can chain it.
@@ -297,7 +478,7 @@ document.body.appendChild(_.DOM(
 		// Create a document fragment. Grab and loop through the in-memory DOM nodes, and _move_ them to the
 		// Document Fragment.
 		var f = document.createDocumentFragment(), i, max,
-			n = new X('div').child(nodes).asDOM().childNodes;
+			n = new X('div')._(nodes).dom().childNodes;
 
 		while (n.length) {
 			f.appendChild(n[0]);
@@ -310,6 +491,12 @@ document.body.appendChild(_.DOM(
 
 /**
  * ## Change Log
+ *
+ * ### 1.3
+ * Added a number of shortcuts and niceties. Use `.dom()` as an alias for `.asDOM()`. Use `.html()` as an alias
+ * for `.asHTML()`. Use `._()` as an alias for `.child()`. You can now pass an array of class names to the 'class'
+ * hash attribute. You can also use CSS-style # and . notation for setting IDs and class names. Also now supports
+ * text() and asText() for working with plain text nodes.
  *
  * ### 1.2
  * Added `.DOM()` as the primary way of passing real DOM nodes back; useful for appending multiple
