@@ -43,8 +43,6 @@
  * </table>
  */
 
-// @todo: text()
-
 /*
 ## HTML to generate:
 
@@ -63,12 +61,12 @@
 var _ = DOMBuilder;
 document.body.appendChild(_.DOM(
     _('div#test.sample')._([
-        _('p').html('This is a <a href="">sample of the code</a> that you may like.'),
-        _('p').html('And another ').child(_('a', { 'href':'#' }).child(_('strong').html('complex-ish'))).html(' one.'),
-        _('ul.sample').child([
-            _('li').child(_('a', { 'href':'http://google.com' }).html('One')),
-            _('li').child(_('em').html('Two')),
-            _('li').child(_('strong').html('Three'))
+        _('p').H('This is a <a href="">sample of the code</a> that you may like.'),
+        _('p').H('And another <a href="#"><strong>complex-ish</strong></a> one.'),
+        _('ul.sample')._([
+            _('li')._(_('a', { 'href':'http://google.com' }).html('One')),
+            _('li')._(_('em').html('Two')),
+            _('li')._(_('strong').html('Three'))
         ])
     ])
 ));
@@ -99,9 +97,11 @@ document.body.appendChild(_.DOM(
 	 * described below. You can easily shorten this function name by assigning it to a variable.
 	 *
 	 * 	// Assign to shorter variable
-	 * 	var _ = DOMBuilder;
+	 * 	var _ = DOMBuilder,
+	 * 	    $body = document.body,
+	 * 	    $body.a = $body.appendChild;
 	 *
-	 * 	document.body.appendChild(_.DOM(
+	 * 	$body.a(_.DOM(
 	 * 		_('p', {
 	 * 			'id':'abc',
 	 * 			'class':['def', 'ghi']
@@ -110,8 +110,8 @@ document.body.appendChild(_.DOM(
 	 *
 	 * 	// or...
 	 *
-	 * 	document.body.appendChild(_.DOM(
-	 * 		_('p#abc.def.ghi)
+	 * 	$body.a(_.DOM(
+	 * 		_('p#abc.def.ghi')
 	 * 	));
 	 *
 	 * This `X` variable will be exposed to the global scope as `DOMBuilder`.
@@ -219,12 +219,14 @@ document.body.appendChild(_.DOM(
 		 * array of objects. Returns a self-reference to `this` by default.
 		 *
 		 * 	// Assign to shorter variable
-		 * 	var _ = DOMBuilder;
+		 * 	var _ = DOMBuilder,
+		 * 	    $body = document.body,
+		 * 	    $body.a = $body.appendChild;
 		 *
-		 * 	document.body.appendChild(_.DOM(
-		 * 		_('p', { 'id':'abc', 'class':'def' }).child([
-		 * 			_('strong').html('This is bold text.'),
-		 * 			_('em').html('This is italic text.')
+		 * 	$body.a(_.DOM(
+		 * 		_('p#abc.def')._([
+		 * 			_('strong').H('This is bold text.'),
+		 * 			_('em').H('This is italic text.')
 		 * 		])
 		 * 	));
 		 */
@@ -275,19 +277,21 @@ document.body.appendChild(_.DOM(
 		 * Pass no parameters to read back the node as a string of HTML.
 		 *
 		 * 	// Assign to shorter variable
-		 * 	var _ = DOMBuilder;
+		 * 	var _ = DOMBuilder,
+		 * 	    $body = document.body,
+		 * 	    $body.a = $body.appendChild;
 		 *
-		 * 	document.body.appendChild(_.DOM(
-		 * 		_('p', { 'id':'abc', 'class':'def' }).child([
-		 * 			_('strong').html('This is bold text.'),
-		 * 			_('em').html('This is italic text.')
+		 * 	$body.a(_.DOM(
+		 * 		_('p#abc.def')._([
+		 * 			_('strong').H('This is bold text.'),
+		 * 			_('em').H('This is italic text.')
 		 * 		])
-		 * 		.html('Replace the previous nodes with this text', true)
+		 * 		.H('Replace the previous nodes with this text', true)
 		 * 	));
 		 *
-		 * 	_('p', { 'id':'abc', 'class':'def' })._([
-		 * 		_('strong').html('This is bold text.'),
-		 * 		_('em').html('This is italic text.')
+		 * 	_('p#abc.def')._([
+		 * 		_('strong').H('This is bold text.'),
+		 * 		_('em').H('This is italic text.')
 		 * 	]).html()
 		 */
 		_.html = function(str, replace) {
@@ -332,19 +336,21 @@ document.body.appendChild(_.DOM(
 		 * Pass no parameters to read back the node as a string of plain text.
 		 *
 		 * 	// Assign to shorter variable
-		 * 	var _ = DOMBuilder;
+		 * 	var _ = DOMBuilder,
+		 * 	    $body = document.body,
+		 * 	    $body.a = $body.appendChild;
 		 *
-		 * 	document.body.appendChild(_.DOM(
-		 * 		_('p', { 'id':'abc', 'class':'def' }).child([
-		 * 			_('strong').html('This is bold text.'),
-		 * 			_('em').html('This is italic text.')
+		 * 	$body.a(_.DOM(
+		 * 		_('p#abc.def').child([
+		 * 			_('strong').H('This is bold text.'),
+		 * 			_('em').H('This is italic text.')
 		 * 		])
-		 * 		.text('Replace the previous nodes with this text', true)
+		 * 		.T('Replace the previous nodes with this text', true)
 		 * 	));
 		 *
-		 * 	_('p#abc.def)._([
-		 * 		_('strong').html('This is bold text.'),
-		 * 		_('em').html('This is italic text.')
+		 * 	_('p#abc.def')._([
+		 * 		_('strong').H('This is bold text.'),
+		 * 		_('em').H('This is italic text.')
 		 * 	]).text()
 		 */
 		_.text = function(str) {
@@ -391,12 +397,14 @@ document.body.appendChild(_.DOM(
 		 * in the chain while being passed into a real JavaScript DOM node.
 		 *
 		 * 	// Assign to shorter variable
-		 * 	var _ = DOMBuilder;
+		 * 	var _ = DOMBuilder,
+		 * 	    $body = document.body,
+		 * 	    $body.a = $body.appendChild;
 		 *
-		 * 	document.body.appendChild(
-		 * 		_('p', { 'id':'abc', 'class':'def' }).child([
-		 * 			_('strong').html('This is bold text.'),
-		 * 			_('em').html('This is italic text.')
+		 * 	$body.a(
+		 * 		_('p#abc.def')._([
+		 * 			_('strong').H('This is bold text.'),
+		 * 			_('em').H('This is italic text.')
 		 * 		]).asDOM()
 		 * 	);
 		 */
@@ -411,10 +419,7 @@ document.body.appendChild(_.DOM(
 		 * 	var _ = DOMBuilder;
 		 *
 		 * 	var id = document.getElementById('id');
-		 * 	id.innerHTML = _('p', {
-		 * 		'id':'abc',
-		 * 		'class':'def'
-		 * 	}).html('This is my text.').asHTML();
+		 * 	id.innerHTML = _('p#abc.def').H('This is my text.').asHTML();
 		 */
 		_.asHTML = function() {
 
@@ -434,10 +439,7 @@ document.body.appendChild(_.DOM(
 		 * 	var _ = DOMBuilder;
 		 *
 		 * 	var id = document.getElementById('id');
-		 * 	id.innerHTML = _('p', {
-		 * 		'id':'abc',
-		 * 		'class':'def'
-		 * 	}).html('This is my text.').asText();
+		 * 	id.innerHTML = _('p#abc.def').H('This is my text.').asText();
 		 */
 		_.asText = function() {
 
@@ -479,12 +481,14 @@ document.body.appendChild(_.DOM(
 	 * of writing multiple nodes to the live DOM.
 	 *
 	 * 	// Assign to shorter variable
-	 * 	var _ = DOMBuilder;
+	 * 	var _ = DOMBuilder,
+	 * 	    $body = document.body,
+	 * 	    $body.a = $body.appendChild;
 	 *
-	 * 	document.body.appendChild(_.DOM([
-	 * 		_('p#abc.def' }).html('This is my text.'),
-	 * 		_('p').html('Something simpler.'),
-	 * 		_('p').html('Let\'s add a third paragraph, for kicks.')
+	 * 	$body.a(_.DOM([
+	 * 		_('p#abc.def').H('This is my text.'),
+	 * 		_('p').H('Something simpler.'),
+	 * 		_('p').H('Let\'s add a third paragraph, for kicks.')
 	 * 	]));
 	 */
 	window.DOMBuilder.DOM = function(nodes) {
