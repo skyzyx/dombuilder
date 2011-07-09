@@ -313,6 +313,13 @@ document.body.appendChild(_.DOM(
 		};
 
 		/**
+		 * ### H()
+		 *
+		 * Alias for html().
+		 */
+		_.H = _.html;
+
+		/**
 		 * ### text()
 		 *
 		 * The `text()` method is used for adding plain text content to a node. Since it leverages `.textContent`
@@ -359,6 +366,13 @@ document.body.appendChild(_.DOM(
 			// Return the `DOMBuilder` object so we can chain it.
 			return _;
 		}
+
+		/**
+		 * ### T()
+		 *
+		 * Alias for text().
+		 */
+		_.T = _.text;
 
 		/**
 		 * ### asDOM()
@@ -468,7 +482,7 @@ document.body.appendChild(_.DOM(
 	 * 	var _ = DOMBuilder;
 	 *
 	 * 	document.body.appendChild(_.DOM([
-	 * 		_('p', { 'id':'abc', 'class':'def' }).html('This is my text.'),
+	 * 		_('p#abc.def' }).html('This is my text.'),
 	 * 		_('p').html('Something simpler.'),
 	 * 		_('p').html('Let\'s add a third paragraph, for kicks.')
 	 * 	]));
@@ -496,7 +510,8 @@ document.body.appendChild(_.DOM(
  * Added a number of shortcuts and niceties. Use `.dom()` as an alias for `.asDOM()`. Use `.html()` as an alias
  * for `.asHTML()`. Use `._()` as an alias for `.child()`. You can now pass an array of class names to the 'class'
  * hash attribute. You can also use CSS-style # and . notation for setting IDs and class names. Also now supports
- * text() and asText() for working with plain text nodes.
+ * text() and asText() for working with plain text nodes. Added support for using T() and H() as shortcuts for
+ * text() and html().
  *
  * ### 1.2
  * Added `.DOM()` as the primary way of passing real DOM nodes back; useful for appending multiple
