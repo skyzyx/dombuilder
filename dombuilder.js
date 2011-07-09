@@ -37,7 +37,7 @@
 //   </tr>
 //   <tr>
 //     <td><a href="http://github.com/skyzyx/dombuilder/raw/1.3/dombuilder.min.js">Production Version (1.3)</a></td>
-//     <td><i>450 bytes, packed and gzip compressed</i></td>
+//     <td><i>794 bytes, packed and gzip compressed</i></td>
 //   </tr>
 // </table>
 
