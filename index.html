@@ -234,23 +234,24 @@ append content.</p>
 
 <p>Pass no parameters to read back the node as a string of HTML.</p>
 
-<p>// Assign to shorter variable
- var _ = DOMBuilder,
-     $body = document.body,
-     $body.a = $body.appendChild;</p>
+<pre><code>// Assign to shorter variable
+var _ = DOMBuilder,
+    $body = document.body,
+    $body.a = $body.appendChild;
 
-<p>$body.a(<em>.DOM(
-     _('p#abc.def').</em>([
-         _('strong').H('This is bold text.'),
-         _('em').H('This is italic text.')
-     ])
-     .H('Replace the previous nodes with this text', true)
- ));</p>
+$body.a(_.DOM(
+    _('p#abc.def')._([
+        _('strong').H('This is bold text.'),
+        _('em').H('This is italic text.')
+    ])
+    .H('Replace the previous nodes with this text', true)
+));
 
-<p><em>('p#abc.def').</em>([
-     _('strong').H('This is bold text.'),
-     _('em').H('This is italic text.')
- ]).html()</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">html</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">H</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">replace</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>No parameters? Read the value instead. Alias for asHTML().</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+_('p#abc.def')._([
+    _('strong').H('This is bold text.'),
+    _('em').H('This is italic text.')
+]).html()
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">html</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">H</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">,</span> <span class="nx">replace</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-16">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-16">&#182;</a>               </div>               <p>No parameters? Read the value instead. Alias for asHTML().</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">asHTML</span><span class="p">();</span>
             <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-17">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-17">&#182;</a>               </div>               <p>Determine the default value for <code>replace</code>.</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="nx">replace</span> <span class="o">=</span> <span class="nx">replace</span> <span class="o">||</span> <span class="kc">false</span><span class="p">;</span></pre></div>             </td>           </tr>                               <tr id="section-18">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-18">&#182;</a>               </div>               <p>Set the value with innerHTML.</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">replace</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">_</span><span class="p">.</span><span class="nx">e</span><span class="p">.</span><span class="nx">innerHTML</span> <span class="o">=</span> <span class="nx">str</span><span class="p">;</span>
@@ -271,23 +272,24 @@ parameter. Returns a self-reference to <code>this</code> by default.</p>
 
 <p>Pass no parameters to read back the node as a string of plain text.</p>
 
-<p>// Assign to shorter variable
- var _ = DOMBuilder,
-     $body = document.body,
-     $body.a = $body.appendChild;</p>
+<pre><code>// Assign to shorter variable
+var _ = DOMBuilder,
+    $body = document.body,
+    $body.a = $body.appendChild;
 
-<p>$body.a(<em>.DOM(
-     _('p#abc.def').</em>([
-         _('strong').H('This is bold text.'),
-         _('em').H('This is italic text.')
-     ])
-     .T('Replace the previous nodes with this text', true)
- ));</p>
+$body.a(_.DOM(
+    _('p#abc.def')._([
+        _('strong').H('This is bold text.'),
+        _('em').H('This is italic text.')
+    ])
+    .T('Replace the previous nodes with this text', true)
+));
 
-<p><em>('p#abc.def').</em>([
-     _('strong').H('This is bold text.'),
-     _('em').H('This is italic text.')
- ]).text()</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">T</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>No parameters? Read the value instead. Alias for asText().</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
+_('p#abc.def')._([
+    _('strong').H('This is bold text.'),
+    _('em').H('This is italic text.')
+]).text()
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">text</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">T</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">str</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-20">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-20">&#182;</a>               </div>               <p>No parameters? Read the value instead. Alias for asText().</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">arguments</span><span class="p">.</span><span class="nx">length</span> <span class="o">===</span> <span class="mi">0</span><span class="p">)</span> <span class="p">{</span>
                 <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">asText</span><span class="p">();</span>
             <span class="p">}</span></pre></div>             </td>           </tr>                               <tr id="section-21">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-21">&#182;</a>               </div>               <p>Set the value</p>             </td>             <td class="code">               <div class="highlight"><pre>            <span class="k">if</span> <span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">e</span><span class="p">.</span><span class="nx">innerText</span><span class="p">)</span> <span class="p">{</span>
                 <span class="nx">_</span><span class="p">.</span><span class="nx">e</span><span class="p">.</span><span class="nx">innerText</span> <span class="o">=</span> <span class="nx">str</span><span class="p">;</span>
@@ -304,28 +306,30 @@ parameter. Returns a self-reference to <code>this</code> by default.</p>
 are passed to the child method, <code>asDOM()</code> is optional. It is only required when it's the last method
 in the chain while being passed into a real JavaScript DOM node.</p>
 
-<p>// Assign to shorter variable
- var _ = DOMBuilder,
-     $body = document.body,
-     $body.a = $body.appendChild;</p>
+<pre><code>// Assign to shorter variable
+var _ = DOMBuilder,
+    $body = document.body,
+    $body.a = $body.appendChild;
 
-<p>$body.a(
-     <em>('p#abc.def').</em>([
-         _('strong').H('This is bold text.'),
-         _('em').H('This is italic text.')
-     ]).dom()
- );</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">asDOM</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">dom</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+$body.a(
+    _('p#abc.def')._([
+        _('strong').H('This is bold text.'),
+        _('em').H('This is italic text.')
+    ]).dom()
+);
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">asDOM</span> <span class="o">=</span> <span class="nx">_</span><span class="p">.</span><span class="nx">dom</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
             <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">e</span><span class="p">;</span>
         <span class="p">};</span></pre></div>             </td>           </tr>                               <tr id="section-23">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-23">&#182;</a>               </div>               <h3>.asHTML() or .html() or .H()</h3>
 
 <p>Returns the DOM nodes as a string of HTML. It's as simple as that.</p>
 
-<p>// Assign to shorter variable
- var _ = DOMBuilder;</p>
+<pre><code>// Assign to shorter variable
+var _ = DOMBuilder;
 
-<p>var id = document.getElementById('id');
- id.innerHTML = _('p#abc.def').H('This is my text.').asHTML();</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">asHTML</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+var id = document.getElementById('id');
+id.innerHTML = _('p#abc.def').H('This is my text.').asHTML();
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">asHTML</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
             <span class="kd">var</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
             <span class="nx">t</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">e</span><span class="p">);</span>
@@ -334,11 +338,12 @@ in the chain while being passed into a real JavaScript DOM node.</p>
 
 <p>Returns the DOM nodes as a string of plain text. It's as simple as that.</p>
 
-<p>// Assign to shorter variable
- var _ = DOMBuilder;</p>
+<pre><code>// Assign to shorter variable
+var _ = DOMBuilder;
 
-<p>var id = document.getElementById('id');
- id.innerHTML = _('p#abc.def').H('This is my text.').asText();</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">asText</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+var id = document.getElementById('id');
+id.innerHTML = _('p#abc.def').H('This is my text.').asText();
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">asText</span> <span class="o">=</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
 
             <span class="kd">var</span> <span class="nx">t</span> <span class="o">=</span> <span class="nx">d</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">);</span>
             <span class="nx">t</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">_</span><span class="p">.</span><span class="nx">e</span><span class="p">);</span>
@@ -366,16 +371,17 @@ method (although they're used differently).</p>
 <a href="http://ejohn.org/blog/dom-documentfragments/">Document Fragments</a> to substantially speed up the process
 of writing multiple nodes to the live DOM.</p>
 
-<p>// Assign to shorter variable
- var _ = DOMBuilder,
-     $body = document.body,
-     $body.a = $body.appendChild;</p>
+<pre><code>// Assign to shorter variable
+var _ = DOMBuilder,
+    $body = document.body,
+    $body.a = $body.appendChild;
 
-<p>$body.a(_.DOM([
-     _('p#abc.def').H('This is my text.'),
-     _('p').H('Something simpler.'),
-     _('p').H('Let\'s add a third paragraph, for kicks.')
- ]));</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">window</span><span class="p">.</span><span class="nx">DOMBuilder</span><span class="p">.</span><span class="nx">DOM</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nodes</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>Create a document fragment. Grab and loop through the in-memory DOM nodes, and <em>move</em> them to the
+$body.a(_.DOM([
+    _('p#abc.def').H('This is my text.'),
+    _('p').H('Something simpler.'),
+    _('p').H('Let\'s add a third paragraph, for kicks.')
+]));
+</code></pre>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nb">window</span><span class="p">.</span><span class="nx">DOMBuilder</span><span class="p">.</span><span class="nx">DOM</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">nodes</span><span class="p">)</span> <span class="p">{</span></pre></div>             </td>           </tr>                               <tr id="section-27">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-27">&#182;</a>               </div>               <p>Create a document fragment. Grab and loop through the in-memory DOM nodes, and <em>move</em> them to the
 Document Fragment.</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="kd">var</span> <span class="nx">f</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createDocumentFragment</span><span class="p">(),</span> <span class="nx">i</span><span class="p">,</span> <span class="nx">max</span><span class="p">,</span>
             <span class="nx">n</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">X</span><span class="p">(</span><span class="s1">&#39;div&#39;</span><span class="p">).</span><span class="nx">_</span><span class="p">(</span><span class="nx">nodes</span><span class="p">).</span><span class="nx">dom</span><span class="p">().</span><span class="nx">childNodes</span><span class="p">;</span>
 
@@ -392,6 +398,8 @@ for <code>.asHTML()</code>. Use <code>._()</code> as an alias for <code>.child()
 hash attribute. You can also use CSS-style <code>#</code> and <code>.</code> notation for setting IDs and class names. Also now
 supports <code>.text()</code> and <code>.asText()</code> for working with plain text nodes. Added support for using <code>.T()</code> and
 <code>.H()</code> as shortcuts for <code>.text()</code> and <code>.html()</code>.</p>
+
+<p>This release was heavily inspired by <a href="https://github.com/glebm/DOMBrew/">DOMBrew</a>.</p>
 
 <h3>1.2</h3>
 
