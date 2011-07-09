@@ -60,8 +60,8 @@ browsers as well.</p>
 <span class="cm">## DOMBuilder code:</span>
 
 <span class="cm">var _ = DOMBuilder,</span>
-<span class="cm">    $body = document.body,</span>
-<span class="cm">    $body.a = $body.appendChild;</span>
+<span class="cm">    $body = document.body;</span>
+<span class="cm">$body.a = $body.appendChild;</span>
 
 <span class="cm">$body.a(_.DOM(</span>
 <span class="cm">    _(&#39;div#test.sample&#39;)._([</span>
@@ -85,10 +85,10 @@ browsers as well.</p>
 pairs for the attributes parameter. Returns a self-reference to this by default. Provides methods,
 described below. You can easily shorten this function name by assigning it to a variable.</p>
 
-<pre><code>// Assign to shorter variable
+<pre><code>// Assign to shorter variables.
 var _ = DOMBuilder,
-    $body = document.body,
-    $body.a = $body.appendChild;
+    $body = document.body;
+$body.a = $body.appendChild;
 
 $body.a(_.DOM(
     _('p', {
@@ -194,10 +194,10 @@ text string. Accepts one or more child nodes in the form of a <code>DOMBuilder</
 <code>HTMLElement</code> node (created with <code>document.createElement()</code>). Multiple child nodes are passed as an
 array of objects. Returns a self-reference to <code>this</code> by default.</p>
 
-<pre><code>// Assign to shorter variable
+<pre><code>// Assign to shorter variables.
 var _ = DOMBuilder,
-    $body = document.body,
-    $body.a = $body.appendChild;
+    $body = document.body;
+$body.a = $body.appendChild;
 
 $body.a(_.DOM(
     _('p#abc.def')._([
@@ -234,10 +234,10 @@ append content.</p>
 
 <p>Pass no parameters to read back the node as a string of HTML.</p>
 
-<pre><code>// Assign to shorter variable
+<pre><code>// Assign to shorter variables.
 var _ = DOMBuilder,
-    $body = document.body,
-    $body.a = $body.appendChild;
+    $body = document.body;
+$body.a = $body.appendChild;
 
 $body.a(_.DOM(
     _('p#abc.def')._([
@@ -272,10 +272,10 @@ parameter. Returns a self-reference to <code>this</code> by default.</p>
 
 <p>Pass no parameters to read back the node as a string of plain text.</p>
 
-<pre><code>// Assign to shorter variable
+<pre><code>// Assign to shorter variables.
 var _ = DOMBuilder,
-    $body = document.body,
-    $body.a = $body.appendChild;
+    $body = document.body;
+$body.a = $body.appendChild;
 
 $body.a(_.DOM(
     _('p#abc.def')._([
@@ -306,10 +306,10 @@ _('p#abc.def')._([
 are passed to the child method, <code>asDOM()</code> is optional. It is only required when it's the last method
 in the chain while being passed into a real JavaScript DOM node.</p>
 
-<pre><code>// Assign to shorter variable
+<pre><code>// Assign to shorter variables.
 var _ = DOMBuilder,
-    $body = document.body,
-    $body.a = $body.appendChild;
+    $body = document.body;
+$body.a = $body.appendChild;
 
 $body.a(
     _('p#abc.def')._([
@@ -371,10 +371,10 @@ method (although they're used differently).</p>
 <a href="http://ejohn.org/blog/dom-documentfragments/">Document Fragments</a> to substantially speed up the process
 of writing multiple nodes to the live DOM.</p>
 
-<pre><code>// Assign to shorter variable
+<pre><code>// Assign to shorter variables.
 var _ = DOMBuilder,
-    $body = document.body,
-    $body.a = $body.appendChild;
+    $body = document.body;
+$body.a = $body.appendChild;
 
 $body.a(_.DOM([
     _('p#abc.def').H('This is my text.'),
