@@ -268,25 +268,25 @@ $body.a(_.DOM(
         // If you'd prefer to replace the existing `.innerHTML` content instead, pass a boolean `true` to the
         // `replace` parameter. Returns a self-reference to `this` by default.
         //
-        // Pass no parameters to read back the node as a string of HTML.
-        //
-        //  // Assign to shorter variable
-        //  var _ = DOMBuilder,
-        //      $body = document.body,
-        //      $body.a = $body.appendChild;
-        //
-        //  $body.a(_.DOM(
-        //      _('p#abc.def')._([
-        //          _('strong').H('This is bold text.'),
-        //          _('em').H('This is italic text.')
-        //      ])
-        //      .H('Replace the previous nodes with this text', true)
-        //  ));
-        //
-        //  _('p#abc.def')._([
-        //      _('strong').H('This is bold text.'),
-        //      _('em').H('This is italic text.')
-        //  ]).html()
+		// Pass no parameters to read back the node as a string of HTML.
+		//
+		//     // Assign to shorter variable
+		//     var _ = DOMBuilder,
+		//         $body = document.body,
+		//         $body.a = $body.appendChild;
+		//
+		//     $body.a(_.DOM(
+		//         _('p#abc.def')._([
+		//             _('strong').H('This is bold text.'),
+		//             _('em').H('This is italic text.')
+		//         ])
+		//         .H('Replace the previous nodes with this text', true)
+		//     ));
+		//
+		//     _('p#abc.def')._([
+		//         _('strong').H('This is bold text.'),
+		//         _('em').H('This is italic text.')
+		//     ]).html()
         _.html = _.H = function(str, replace) {
 
             // No parameters? Read the value instead. Alias for asHTML().
@@ -317,25 +317,25 @@ $body.a(_.DOM(
         // If you'd prefer to replace the existing content instead, pass a boolean `true` to the `replace`
         // parameter. Returns a self-reference to `this` by default.
         //
-        // Pass no parameters to read back the node as a string of plain text.
-        //
-        //  // Assign to shorter variable
-        //  var _ = DOMBuilder,
-        //      $body = document.body,
-        //      $body.a = $body.appendChild;
-        //
-        //  $body.a(_.DOM(
-        //      _('p#abc.def')._([
-        //          _('strong').H('This is bold text.'),
-        //          _('em').H('This is italic text.')
-        //      ])
-        //      .T('Replace the previous nodes with this text', true)
-        //  ));
-        //
-        //  _('p#abc.def')._([
-        //      _('strong').H('This is bold text.'),
-        //      _('em').H('This is italic text.')
-        //  ]).text()
+		// Pass no parameters to read back the node as a string of plain text.
+		//
+		//     // Assign to shorter variable
+		//     var _ = DOMBuilder,
+		//         $body = document.body,
+		//         $body.a = $body.appendChild;
+		//
+		//     $body.a(_.DOM(
+		//         _('p#abc.def')._([
+		//             _('strong').H('This is bold text.'),
+		//             _('em').H('This is italic text.')
+		//         ])
+		//         .T('Replace the previous nodes with this text', true)
+		//     ));
+		//
+		//     _('p#abc.def')._([
+		//         _('strong').H('This is bold text.'),
+		//         _('em').H('This is italic text.')
+		//     ]).text()
         _.text = _.T = function(str) {
 
             // No parameters? Read the value instead. Alias for asText().
@@ -359,19 +359,19 @@ $body.a(_.DOM(
         //
         // Returns a real DOM node for use with the standard JavaScript DOM methods. When DOMBuilder objects
         // are passed to the child method, `asDOM()` is optional. It is only required when it's the last method
-        // in the chain while being passed into a real JavaScript DOM node.
-        //
-        //  // Assign to shorter variable
-        //  var _ = DOMBuilder,
-        //      $body = document.body,
-        //      $body.a = $body.appendChild;
-        //
-        //  $body.a(
-        //      _('p#abc.def')._([
-        //          _('strong').H('This is bold text.'),
-        //          _('em').H('This is italic text.')
-        //      ]).dom()
-        //  );
+		// in the chain while being passed into a real JavaScript DOM node.
+		//
+		//     // Assign to shorter variable
+		//     var _ = DOMBuilder,
+		//         $body = document.body,
+		//         $body.a = $body.appendChild;
+		//
+		//     $body.a(
+		//         _('p#abc.def')._([
+		//             _('strong').H('This is bold text.'),
+		//             _('em').H('This is italic text.')
+		//         ]).dom()
+		//     );
         _.asDOM = _.dom = function() {
 
             return _.e;
@@ -381,11 +381,11 @@ $body.a(_.DOM(
         //
         // Returns the DOM nodes as a string of HTML. It's as simple as that.
         //
-        //  // Assign to shorter variable
-        //  var _ = DOMBuilder;
+        //     // Assign to shorter variable
+        //     var _ = DOMBuilder;
         //
-        //  var id = document.getElementById('id');
-        //  id.innerHTML = _('p#abc.def').H('This is my text.').asHTML();
+        //     var id = document.getElementById('id');
+        //     id.innerHTML = _('p#abc.def').H('This is my text.').asHTML();
         _.asHTML = function() {
 
             var t = d.createElement('div');
@@ -397,11 +397,11 @@ $body.a(_.DOM(
         //
         // Returns the DOM nodes as a string of plain text. It's as simple as that.
         //
-        //  // Assign to shorter variable
-        //  var _ = DOMBuilder;
+        //     // Assign to shorter variable
+        //     var _ = DOMBuilder;
         //
-        //  var id = document.getElementById('id');
-        //  id.innerHTML = _('p#abc.def').H('This is my text.').asText();
+        //     var id = document.getElementById('id');
+        //     id.innerHTML = _('p#abc.def').H('This is my text.').asText();
         _.asText = function() {
 
             var t = d.createElement('div');
@@ -435,16 +435,16 @@ $body.a(_.DOM(
     // [Document Fragments](http://ejohn.org/blog/dom-documentfragments/) to substantially speed up the process
     // of writing multiple nodes to the live DOM.
     //
-    //  // Assign to shorter variable
-    //  var _ = DOMBuilder,
-    //      $body = document.body,
-    //      $body.a = $body.appendChild;
+    //     // Assign to shorter variable
+    //     var _ = DOMBuilder,
+    //         $body = document.body,
+    //         $body.a = $body.appendChild;
     //
-    //  $body.a(_.DOM([
-    //      _('p#abc.def').H('This is my text.'),
-    //      _('p').H('Something simpler.'),
-    //      _('p').H('Let\'s add a third paragraph, for kicks.')
-    //  ]));
+    //     $body.a(_.DOM([
+    //         _('p#abc.def').H('This is my text.'),
+    //         _('p').H('Something simpler.'),
+    //         _('p').H('Let\'s add a third paragraph, for kicks.')
+    //     ]));
     window.DOMBuilder.DOM = function(nodes) {
 
         // Create a document fragment. Grab and loop through the in-memory DOM nodes, and _move_ them to the
@@ -469,6 +469,8 @@ $body.a(_.DOM(
 // hash attribute. You can also use CSS-style `#` and `.` notation for setting IDs and class names. Also now
 // supports `.text()` and `.asText()` for working with plain text nodes. Added support for using `.T()` and
 // `.H()` as shortcuts for `.text()` and `.html()`.
+//
+// This release was heavily inspired by [DOMBrew](https://github.com/glebm/DOMBrew/).
 //
 // ### 1.2
 // Added `.DOM()` as the primary way of passing real DOM nodes back; useful for appending multiple
