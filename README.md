@@ -6,7 +6,7 @@ For a more detailed description of DOMBuilder, see the [documentation](http://sk
 
 ## Tests
 
-DOMBuilder leverages the QUnit unit testing framework. You can run the tests by opening `tests/test-runner.html` in your web browser.
+DOMBuilder leverages the [QUnit](https://github.com/jquery/qunit) unit testing framework. You can run the tests by opening `tests/test-runner.html` in your web browser.
 
 ## Inspiration
 
