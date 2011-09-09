@@ -19,7 +19,9 @@
 // * [Internet Explorer](http://microsoft.com/ie) 6+
 //
 // The JavaScript used isn't all that complex, so I would expect that DOMBuilder _supports_ other/older
-// browsers as well.
+// browsers as well. I would encourage you to 
+// [run the unit tests in your browser](http://skyzyx.github.com/dombuilder/tests/test-runner.html) 
+// and let me know about any failing tests and which browser/version you're running.
 //
 // ## License
 //
