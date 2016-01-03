@@ -99,8 +99,8 @@ test('Generate multiple nested children mixed with text nodes', function() {
 	).H(' to Google.')
 	.dom();
 
-	equals(element.getElementsByTagName('*').length, 1, 'Element has one child');
-	equals(element.innerHTML, 'This is a <a href="http://google.com">link</a> to Google.', 'innerHTML matches what is expected');
+	equal(element.getElementsByTagName('*').length, 1, 'Element has one child');
+	equal(element.innerHTML, 'This is a <a href="http://google.com">link</a> to Google.', 'innerHTML matches what is expected');
 });
 
 /****************************************************************************************/
@@ -109,8 +109,8 @@ test('Generate multiple nested children using innerHTML', function() {
 
 	var element = _('p.myClass').H('This is a <a href="http://google.com">link</a> to Google.').dom();
 
-	equals(element.getElementsByTagName('*').length, 1, 'Element has one child');
-	equals(element.innerHTML, 'This is a <a href="http://google.com">link</a> to Google.', 'innerHTML matches what is expected');
+	equal(element.getElementsByTagName('*').length, 1, 'Element has one child');
+	equal(element.innerHTML, 'This is a <a href="http://google.com">link</a> to Google.', 'innerHTML matches what is expected');
 });
 
 /****************************************************************************************/
@@ -122,8 +122,8 @@ test('Generate multiple nested children by mixing text nodes and innerHTML', fun
 	).H(' to Google.')
 	.dom();
 
-	equals(element.getElementsByTagName('*').length, 2, 'Element has two children');
-	equals(element.innerHTML, 'This is a <a href="http://google.com"><strong>link</strong></a> to Google.', 'innerHTML matches what is expected');
+	equal(element.getElementsByTagName('*').length, 2, 'Element has two children');
+	equal(element.innerHTML, 'This is a <a href="http://google.com"><strong>link</strong></a> to Google.', 'innerHTML matches what is expected');
 });
 
 /****************************************************************************************/
@@ -142,6 +142,6 @@ test('Generate multiple nested children by mixing native DOM methods and anonymo
 		return strong;
 	}());
 
-	equals(element.getElementsByTagName('*').length, 2, 'Element has two children');
-	equals(element.innerHTML, 'This is a <a href="http://google.com"><strong>link</strong></a> to Google.', 'innerHTML matches what is expected');
+	equal(element.getElementsByTagName('*').length, 2, 'Element has two children');
+	equal(element.innerHTML, 'This is a <a href="http://google.com"><strong>link</strong></a> to Google.', 'innerHTML matches what is expected');
 });
