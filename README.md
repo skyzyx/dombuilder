@@ -114,7 +114,7 @@ For a more detailed description of DOMBuilder, see the [documentation](http://sk
 ## Building the minified version
 
 ```bash
-make build
+make install build
 ```
 
 
@@ -123,7 +123,7 @@ make build
 DOMBuilder leverages the [QUnit](https://github.com/jquery/qunit) unit testing framework. You can run the tests by opening `tests/test-runner.html` in your web browser.
 
 ```bash
-make test
+make install test
 ```
 
 Alternatively, you can [run the tests for the latest release](http://skyzyx.github.com/dombuilder/tests/test-runner.html).
