@@ -12,6 +12,10 @@ install:
 lint:
 	node_modules/.bin/eslint dombuilder.js
 
+.PHONY: typecheck
+typecheck:
+	node_modules/.bin/flow check 2>/dev/null
+
 .PHONY: build
 build:
 	node_modules/.bin/uglifyjs dombuilder.js --source-map dombuilder.js.map --screw-ie8 --compress --mangle > dombuilder.min.js

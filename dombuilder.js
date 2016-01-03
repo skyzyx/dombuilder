@@ -1,4 +1,6 @@
-// For this, and all code examples below, please assume that we've done the following aliasing — just to keep things a little less verbose.
+/* @flow */
+
+// For all code examples below, please assume that we've done the following aliasing — just to keep things a little less verbose.
 //
 //     // Assign to shorter variables.
 //     var _ = DOMBuilder, $body = document.body;
@@ -50,7 +52,7 @@
         function notation() {
 
             var att = { 'class': [] },
-                piece, pieces, elemType, pos, classes;
+                pieces, elemType, pos, classes;
 
             if (!dotHashRe.test(elem)) {
                 return {};
@@ -61,17 +63,15 @@
             pos = elemType.length;
             classes = att['class'];
 
-            for (piece in pieces) {
-                if (pieces.hasOwnProperty(piece)) {
-                    if (elem[pos] === '#') {
-                        att.id = pieces[piece];
-                    }
-                    else {
-                        classes.push(pieces[piece]);
-                    }
-                    pos += pieces[piece].length + 1;
+            pieces.forEach(function(val, idx, arr) {
+                if (elem[pos] === '#') {
+                    att.id = val;
+                } else {
+                    classes.push(val);
                 }
-            }
+
+                pos += arr[idx].length + 1;
+            });
 
             att['class'] = classes;
             if (!att['class'].length) {
@@ -124,8 +124,7 @@
                     // property instead of using `.setAttribute()`.
                     if (key.toString() === 'class') {
                         _.e.className = attr[key];
-                    }
-                    else {
+                    } else {
                         _.e.setAttribute(key, attr[key]);
                     }
                 }
@@ -162,8 +161,7 @@
 
                 if (typeof obj[i].asDOM !== 'undefined') {
                     _.e.appendChild(obj[i].asDOM());
-                }
-                else {
+                } else {
                     _.e.appendChild(obj[i]);
                 }
             }
@@ -207,8 +205,7 @@
             // Set the value with innerHTML.
             if (replace) {
                 _.e.innerHTML = str;
-            }
-            else {
+            } else {
                 _.e.innerHTML += str;
             }
 
@@ -248,8 +245,7 @@
             // Set the value
             if (_.e.innerText) {
                 _.e.innerText = str;
-            }
-            else {
+            } else {
                 var text = document.createTextNode(str);
                 _.e.appendChild(text);
             }
@@ -300,8 +296,7 @@
 
             if (t.innerText) {
                 return t.innerText;
-            }
-            else if (t.textContent) {
+            } else if (t.textContent) {
                 return t.textContent;
             }
         };

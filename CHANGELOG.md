@@ -11,6 +11,7 @@
     * Updated to latest QUnit release.
 * Switched CHANGELOG to use the format from <http://keepachangelog.com>.
 * Lots of updates to the README and the generated documentation.
+* Introduced [Flow](http://http://flowtype.org), a JavaScript type-checker.
 
 ## 1.3 - 2011-07-08
 

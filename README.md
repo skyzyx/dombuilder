@@ -92,13 +92,16 @@ document.body.appendChild(DOMBuilder.DOM(
 
 ## Browser Support
 
-DOMBuilder has been _tested_ in the following browsers:
+DOMBuilder has been _tested successfully_ in the following browsers:
 
-* [Firefox](http://firefox.com) 3+
-* [Safari](http://apple.com/safari) 3+
-* [Chrome](http://google.com/chrome) 3+
-* [Opera](http://opera.com) 10.10+
-* [Internet Explorer](http://microsoft.com/ie) 9+
+* Internet Explorer 9+
+* Edge 12+
+* Firefox 21+
+* Safari 6+
+* Chrome 23+
+* Opera 15+
+* Android 4.4+
+* iOS 7+
 
 The JavaScript used isn't all that complex, so I would expect that DOMBuilder _supports_ other/older browsers as well. I would encourage you to [run the unit tests in your browser](http://skyzyx.github.com/dombuilder/tests/test-runner.html) and let me know about any failing tests and which browser/version you're running.
 
@@ -111,19 +114,43 @@ For a more detailed description of DOMBuilder, see the [documentation](http://sk
 1. Some of us don't necessarily like or work with React, for business or pleasure.
 
 
-## Building the minified version
+## Makefile
+
+Before anything, you need to install the dependencies.
 
 ```bash
-make install build
+make install
+```
+
+### Building the minified version
+
+```bash
+make build
 ```
 
 
-## Running the tests
+### Linting your changes
+
+First, run the style linter.
+
+```bash
+make lint
+```
+
+Next, run the type checker.
+
+```bash
+make typecheck
+```
+
+
+### Running the tests
 
 DOMBuilder leverages the [QUnit](https://github.com/jquery/qunit) unit testing framework. You can run the tests by opening `tests/test-runner.html` in your web browser.
 
 ```bash
-make install test
+make test
+open tests/test-runner.html
 ```
 
 Alternatively, you can [run the tests for the latest release](http://skyzyx.github.com/dombuilder/tests/test-runner.html).

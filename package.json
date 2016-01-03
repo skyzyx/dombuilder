@@ -23,5 +23,8 @@
     "eslint": "^1.10.3",
     "js2coffee": "^2.1.0",
     "uglify-js": "^2.6.1"
+  },
+  "dependencies": {
+    "flow-bin": "^0.20.1"
   }
 }

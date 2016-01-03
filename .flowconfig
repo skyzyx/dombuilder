@@ -1,0 +1,8 @@
+[ignore]
+
+[include]
+./interfaces/*.js
+
+[libs]
+
+[options]
