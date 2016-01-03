@@ -9,15 +9,15 @@ install:
 	node_modules/.bin/bower install
 
 .PHONY: lint
-lint: install
+lint:
 	node_modules/.bin/eslint dombuilder.js
 
 .PHONY: build
-build: install
+build:
 	node_modules/.bin/uglifyjs dombuilder.js --source-map dombuilder.js.map --screw-ie8 --compress --mangle > dombuilder.min.js
 
 .PHONY: test
-test: install
+test:
 	mkdir -p tests/dependencies
 	cp bower_components/qunit/qunit/* tests/dependencies/
 	cp bower_components/underscore/underscore-min.js tests/dependencies/
@@ -26,7 +26,7 @@ test: install
 #-------------------------------------------------------------------------------
 
 .PHONY: docs
-docs: install
+docs:
 	rm -Rf docs
 	node_modules/.bin/docco -l parallel dombuilder.js
 	mv docs/dombuilder.html docs/index.html
@@ -34,8 +34,8 @@ docs: install
 .PHONY: pushdocs
 pushdocs: docs
 	rm -Rf /tmp/gh-pages
-	git clone git@github.com:wepay/Ruby-SDK.git --branch gh-pages --single-branch /tmp/gh-pages
-	cp -Rf ./doc/ /tmp/gh-pages/
+	git clone git@github.com:skyzyx/dombuilder.git --branch gh-pages --single-branch /tmp/gh-pages
+	cp -Rf ./docs/ /tmp/gh-pages/
 	cd /tmp/gh-pages/ && git add . && git commit -a -m "Automated commit on $$(date)" && git push origin gh-pages
 
 #-------------------------------------------------------------------------------
@@ -66,5 +66,6 @@ version:
 
 .PHONY: clean
 clean:
-	rm *.gem
-	rm *.gemspec
+	rm -Rf bower_components
+	rm -Rf docs
+	rm -Rf node_modules

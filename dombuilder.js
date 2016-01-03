@@ -1,80 +1,9 @@
-// **[DOMBuilder](http://github.com/skyzyx/dombuilder/)** is a tiny JavaScript class for generating DOM nodes
-// on-the-fly. It is designed around a few basic goals:
+// For this, and all code examples below, please assume that we've done the following aliasing — just to keep things a little less verbose.
 //
-// * Remove the _suck_ from using JavaScript's [DOM](https://developer.mozilla.org/en/Gecko_DOM_Reference) methods.
-// * Small and lightweight.
-// * Chainable like crazy.
-// * Easy to embed into other, larger projects.
-// * Doesn't _require_ another framework, but plays well with [Prototype](http://prototypejs.org),
-//   [jQuery](http://jquery.com), [YUI](http://yuilibrary.com) and others.
-//
-// ## Browser Support
-//
-// DOMBuilder has been _tested_ in the following browsers:
-//
-// * [Firefox](http://firefox.com) 3+
-// * [Safari](http://apple.com/safari) 3+
-// * [Chrome](http://google.com/chrome) 3+
-// * [Opera](http://opera.com) 10.10+
-// * [Internet Explorer](http://microsoft.com/ie) 6+
-//
-// The JavaScript used isn't all that complex, so I would expect that DOMBuilder _supports_ other/older
-// browsers as well. I would encourage you to
-// [run the unit tests in your browser](http://skyzyx.github.com/dombuilder/tests/test-runner.html)
-// and let me know about any failing tests and which browser/version you're running.
-//
-// ## License
-//
-// DOMBuilder is copyright (c) 2009-2016 Ryan Parman, and released for use under the open-source
-// [MIT License](http://opensource.org/licenses/mit).
-//
-// ## Downloads
-//
-// _(Right-click, and use "Save As")_
-//
-// <table>
-//   <tr>
-//     <td><a href="https://raw.githubusercontent.com/skyzyx/dombuilder/1.4/dombuilder.js">Development Version (1.4)</a></td>
-//     <td><i>16.8 kb, uncompressed with comments</i></td>
-//   </tr>
-//   <tr>
-//     <td><a href="https://raw.githubusercontent.com/skyzyx/dombuilder/1.4/dombuilder.min.js">Production Version (1.4)</a></td>
-//     <td><i>794 bytes, packed and gzip compressed</i></td>
-//   </tr>
-// </table>
+//     // Assign to shorter variables.
+//     var _ = DOMBuilder, $body = document.body;
+//     $body.a = $body.appendChild;
 
-/*
-## HTML to generate:
-
-<div id="test" class="sample">
-    <p>This is a <a href="">sample of the code</a> that you may like.</p>
-    <p>And another <a href="#"><strong>complex-ish</strong></a> one.</p>
-    <ul class="sample">
-        <li><a href="http://google.com">One</a></li>
-        <li><em>Two</em></li>
-        <li><strong>Three</strong></li>
-    </ul>
-</div>
-
-
-## DOMBuilder code:
-
-var _ = DOMBuilder,
-    $body = document.body;
-$body.a = $body.appendChild;
-
-$body.a(_.DOM(
-    _('div#test.sample')._([
-        _('p').H('This is a <a href="">sample of the code</a> that you may like.'),
-        _('p').H('And another <a href="#"><strong>complex-ish</strong></a> one.'),
-        _('ul.sample')._([
-            _('li')._(_('a', { 'href':'http://google.com' }).html('One')),
-            _('li')._(_('em').html('Two')),
-            _('li')._(_('strong').html('Three'))
-        ])
-    ])
-));
-*/
 
 // ## Digging into code
 
@@ -89,11 +18,7 @@ $body.a(_.DOM(
     // pairs for the attributes parameter. Returns a self-reference to this by default. Provides methods,
     // described below. You can easily shorten this function name by assigning it to a variable.
     //
-    //     // Assign to shorter variables.
-    //     var _ = DOMBuilder,
-    //         $body = document.body;
-    //     $body.a = $body.appendChild;
-    //
+    //     // Longer-form
     //     $body.a(_.DOM(
     //         _('p', {
     //             'id':'abc',
@@ -103,6 +28,7 @@ $body.a(_.DOM(
     //
     //     // or...
     //
+    //     // Shorter-form
     //     $body.a(_.DOM(
     //         _('p#abc.def.ghi')
     //     ));
@@ -111,7 +37,7 @@ $body.a(_.DOM(
     var X = function(elem, attr) {
 
         // Internally to DOMBuilder, we use very short variable names so that we can squeeze the file size
-        // down as small as possible using YUI Compressor or Google Closure Compiler.
+        // down as small as possible using Uglify.
         var _ = this,
             d = document,
             dotHashRe = new RegExp('[.#]'),
@@ -179,9 +105,7 @@ $body.a(_.DOM(
         // Merge options into a conglomo-hash!
         attr = mergeOptions(attr, notation());
 
-        // Construct the element, loop through the list of attributes and add them to the node. Because of
-        // the way that IE works, class names need to be added explicitly via the `.className` property instead
-        // of using `.setAttribute()`.
+        // Construct the element, loop through the list of attributes and add them to the node.
         if (dotHashRe.test(elem)) {
             _.e = d.createElement(elem.split(dotHashRe).shift());
         }
@@ -196,6 +120,8 @@ $body.a(_.DOM(
                         attr[key] = attr[key].join(' ');
                     }
 
+                    // Because of the way that IE works, class names need to be added explicitly via the `.className`
+                    // property instead of using `.setAttribute()`.
                     if (key.toString() === 'class') {
                         _.e.className = attr[key];
                     }
@@ -212,11 +138,6 @@ $body.a(_.DOM(
         // text string. Accepts one or more child nodes in the form of a `DOMBuilder` object or a native
         // `HTMLElement` node (created with `document.createElement()`). Multiple child nodes are passed as an
         // array of objects. Returns a self-reference to `this` by default.
-        //
-        //     // Assign to shorter variables.
-        //     var _ = DOMBuilder,
-        //         $body = document.body;
-        //     $body.a = $body.appendChild;
         //
         //     $body.a(_.DOM(
         //         _('p#abc.def')._([
@@ -260,11 +181,6 @@ $body.a(_.DOM(
         // `replace` parameter. Returns a self-reference to `this` by default.
         //
         // Pass no parameters to read back the node as a string of HTML.
-        //
-        //     // Assign to shorter variables.
-        //     var _ = DOMBuilder,
-        //         $body = document.body;
-        //     $body.a = $body.appendChild;
         //
         //     $body.a(_.DOM(
         //         _('p#abc.def')._([
@@ -310,11 +226,6 @@ $body.a(_.DOM(
         //
         // Pass no parameters to read back the node as a string of plain text.
         //
-        //     // Assign to shorter variables.
-        //     var _ = DOMBuilder,
-        //         $body = document.body;
-        //     $body.a = $body.appendChild;
-        //
         //     $body.a(_.DOM(
         //         _('p#abc.def')._([
         //             _('strong').H('This is bold text.'),
@@ -352,11 +263,6 @@ $body.a(_.DOM(
         // are passed to the child method, `asDOM()` is optional. It is only required when it's the last method
         // in the chain while being passed into a real JavaScript DOM node.
         //
-        //     // Assign to shorter variables.
-        //     var _ = DOMBuilder,
-        //         $body = document.body;
-        //     $body.a = $body.appendChild;
-        //
         //     $body.a(
         //         _('p#abc.def')._([
         //             _('strong').H('This is bold text.'),
@@ -372,9 +278,6 @@ $body.a(_.DOM(
         //
         // Returns the DOM nodes as a string of HTML. It's as simple as that.
         //
-        //     // Assign to shorter variable
-        //     var _ = DOMBuilder;
-        //
         //     var id = document.getElementById('id');
         //     id.innerHTML = _('p#abc.def').H('This is my text.').asHTML();
         _.asHTML = function() {
@@ -387,9 +290,6 @@ $body.a(_.DOM(
         // ### .asText() or .text() or .T()
         //
         // Returns the DOM nodes as a string of plain text. It's as simple as that.
-        //
-        //     // Assign to shorter variable
-        //     var _ = DOMBuilder;
         //
         //     var id = document.getElementById('id');
         //     id.innerHTML = _('p#abc.def').H('This is my text.').asText();
@@ -426,11 +326,6 @@ $body.a(_.DOM(
     // [Document Fragments](http://ejohn.org/blog/dom-documentfragments/) to substantially speed up the process
     // of writing multiple nodes to the live DOM.
     //
-    //     // Assign to shorter variables.
-    //     var _ = DOMBuilder,
-    //         $body = document.body;
-    //     $body.a = $body.appendChild;
-    //
     //     $body.a(_.DOM([
     //         _('p#abc.def').H('This is my text.'),
     //         _('p').H('Something simpler.'),
@@ -451,34 +346,3 @@ $body.a(_.DOM(
         return f;
     };
 })();
-
-// ## Changelog
-//
-// ### 1.4
-// Updated the build chain to use modern tools.
-//
-// ### 1.3
-// Added a number of shortcuts and niceties. Use `.dom()` as an alias for `.asDOM()`. Use `.html()` as an alias
-// for `.asHTML()`. Use `._()` as an alias for `.child()`. You can now pass an array of class names to the 'class'
-// hash attribute. You can also use CSS-style `#` and `.` notation for setting IDs and class names. Also now
-// supports `.text()` and `.asText()` for working with plain text nodes. Added support for using `.T()` and
-// `.H()` as shortcuts for `.text()` and `.html()`.
-//
-// This release was heavily inspired by [DOMBrew](https://github.com/glebm/DOMBrew/).
-//
-// ### 1.2
-// Added `.DOM()` as the primary way of passing real DOM nodes back; useful for appending multiple
-// nodes at once.
-//
-// ### 1.1
-// Simplified the code under the hood. Now runs a little faster and compresses even smaller. Removed the
-// need to instantiate the class, making it easier to alias. Ensured that it passed JSLint. Provided a
-// version minified by Google Closure Compiler.
-//
-// ### 1.0
-// Made sure that it worked with Internet Explorer 6 & 7. Improved the innards of `.child()` to be more efficient.
-// Merged `.innerHTML()` and `.appendHTML()` together into the new `.html()` method. Provided a version minified
-// by YUI Compressor.
-//
-// ### Pre-1.0
-// Initial pre-release of DOMBuilder.
