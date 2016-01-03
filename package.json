@@ -1,0 +1,27 @@
+{
+  "name": "dombuilder",
+  "version": "1.4.0",
+  "description": "A tiny JavaScript class for generating DOM nodes on-the-fly.",
+  "main": "dombuilder.js",
+  "directories": {
+    "test": "tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/skyzyx/dombuilder.git"
+  },
+  "author": "Ryan Parman <ryan@ryanparman.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/skyzyx/dombuilder/issues"
+  },
+  "homepage": "https://github.com/skyzyx/dombuilder#readme",
+  "devDependencies": {
+    "babel-cli": "^6.3.17",
+    "bower": "^1.7.2",
+    "docco": "^0.7.0",
+    "eslint": "^1.10.3",
+    "js2coffee": "^2.1.0",
+    "uglify-js": "^2.6.1"
+  }
+}

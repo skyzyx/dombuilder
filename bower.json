@@ -1,0 +1,21 @@
+{
+  "name": "dombuilder",
+  "main": "dombuilder.min.js",
+  "homepage": "https://github.com/skyzyx/dombuilder",
+  "authors": [
+    "Ryan Parman <ryan@ryanparman.com>"
+  ],
+  "description": "A tiny JavaScript class for generating DOM nodes on-the-fly.",
+  "moduleType": [],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "tests"
+  ],
+  "dependencies": {
+    "qunit": "~1.20.0",
+    "underscore": "~1.8.3"
+  }
+}

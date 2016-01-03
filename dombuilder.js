@@ -19,14 +19,14 @@
 // * [Internet Explorer](http://microsoft.com/ie) 6+
 //
 // The JavaScript used isn't all that complex, so I would expect that DOMBuilder _supports_ other/older
-// browsers as well. I would encourage you to 
-// [run the unit tests in your browser](http://skyzyx.github.com/dombuilder/tests/test-runner.html) 
+// browsers as well. I would encourage you to
+// [run the unit tests in your browser](http://skyzyx.github.com/dombuilder/tests/test-runner.html)
 // and let me know about any failing tests and which browser/version you're running.
 //
 // ## License
 //
-// DOMBuilder is copyright (c) 2009-2011 Ryan Parman, and released for use under the open-source
-// [3-clause BSD License](http://opensource.org/licenses/bsd-license).
+// DOMBuilder is copyright (c) 2009-2016 Ryan Parman, and released for use under the open-source
+// [MIT License](http://opensource.org/licenses/mit).
 //
 // ## Downloads
 //
@@ -34,11 +34,11 @@
 //
 // <table>
 //   <tr>
-//     <td><a href="http://github.com/skyzyx/dombuilder/raw/1.3/dombuilder.js">Development Version (1.3)</a></td>
+//     <td><a href="https://raw.githubusercontent.com/skyzyx/dombuilder/1.4/dombuilder.js">Development Version (1.4)</a></td>
 //     <td><i>16.8 kb, uncompressed with comments</i></td>
 //   </tr>
 //   <tr>
-//     <td><a href="http://github.com/skyzyx/dombuilder/raw/1.3/dombuilder.min.js">Production Version (1.3)</a></td>
+//     <td><a href="https://raw.githubusercontent.com/skyzyx/dombuilder/1.4/dombuilder.min.js">Production Version (1.4)</a></td>
 //     <td><i>794 bytes, packed and gzip compressed</i></td>
 //   </tr>
 // </table>
@@ -78,20 +78,10 @@ $body.a(_.DOM(
 
 // ## Digging into code
 
-// Settings for Google Closure Compiler.
-/*
-==ClosureCompiler==
-@compilation_level SIMPLE_OPTIMIZATIONS
-==/ClosureCompiler==
-*/
-
-// Settings for JSLint or JSHint.
-/*jslint white: false, onevar: true, browser: true, undef: true, nomen: false, eqeqeq: true, plusplus: false, bitwise: true, regexp: true, strict: false, newcap: true, immed: false */
-/*global window */
-
 // Do everything in a localized scope. We'll expose pieces to the global scope later.
-(function() {
+;(function() {
 
+    'use strict';
 
     // ## DOMBuilder
     //
@@ -124,17 +114,16 @@ $body.a(_.DOM(
         // down as small as possible using YUI Compressor or Google Closure Compiler.
         var _ = this,
             d = document,
-            dotHashRe = new RegExp("[.#]"),
+            dotHashRe = new RegExp('[.#]'),
             key;
 
         // Support CSS/jQuery-style notation for generating elements with IDs and classnames. (Internal-only!)
         //
         //     div#myId
         //     p#id.class1.class2
-        function notation(elem) {
+        function notation() {
 
-            var attr = { 'class': [] },
-                dotHashRe = new RegExp("[.#]"),
+            var att = { 'class': [] },
                 piece, pieces, elemType, pos, classes;
 
             if (!dotHashRe.test(elem)) {
@@ -144,12 +133,12 @@ $body.a(_.DOM(
             pieces = elem.split(dotHashRe);
             elemType = pieces.shift();
             pos = elemType.length;
-            classes = attr['class'];
+            classes = att['class'];
 
             for (piece in pieces) {
                 if (pieces.hasOwnProperty(piece)) {
                     if (elem[pos] === '#') {
-                        attr.id = pieces[piece];
+                        att.id = pieces[piece];
                     }
                     else {
                         classes.push(pieces[piece]);
@@ -158,16 +147,16 @@ $body.a(_.DOM(
                 }
             }
 
-            attr['class'] = classes;
-            if (!attr['class'].length) {
-                delete attr['class'];
+            att['class'] = classes;
+            if (!att['class'].length) {
+                delete att['class'];
             }
 
-            return attr;
+            return att;
         }
 
         // Merge the properties of one object with the properties of a second object. (Internal-only!)
-        function merge_options(o1, o2) {
+        function mergeOptions(o1, o2) {
 
             var o3 = {},
                 attrname;
@@ -188,7 +177,7 @@ $body.a(_.DOM(
         }
 
         // Merge options into a conglomo-hash!
-        attr = merge_options(attr, notation(elem));
+        attr = mergeOptions(attr, notation());
 
         // Construct the element, loop through the list of attributes and add them to the node. Because of
         // the way that IE works, class names need to be added explicitly via the `.className` property instead
@@ -451,7 +440,7 @@ $body.a(_.DOM(
 
         // Create a document fragment. Grab and loop through the in-memory DOM nodes, and _move_ them to the
         // Document Fragment.
-        var f = document.createDocumentFragment(), i, max,
+        var f = document.createDocumentFragment(),
             n = new X('div')._(nodes).dom().childNodes;
 
         while (n.length) {
@@ -463,7 +452,10 @@ $body.a(_.DOM(
     };
 })();
 
-// ## Change Log
+// ## Changelog
+//
+// ### 1.4
+// Updated the build chain to use modern tools.
 //
 // ### 1.3
 // Added a number of shortcuts and niceties. Use `.dom()` as an alias for `.asDOM()`. Use `.html()` as an alias
