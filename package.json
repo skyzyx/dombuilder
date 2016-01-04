@@ -25,6 +25,7 @@
     "uglify-js": "^2.6.1"
   },
   "dependencies": {
+    "babel-plugin-transform-flow-strip-types": "^6.3.15",
     "flow-bin": "^0.20.1"
   }
 }

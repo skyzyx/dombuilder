@@ -18,10 +18,23 @@ typecheck:
 
 .PHONY: build
 build:
+	@ echo "Scrubbing the type information..."
+	babel dombuilder.typed.js > dombuilder.js
+	@ echo "Mangling and minifying..."
 	node_modules/.bin/uglifyjs dombuilder.js --source-map dombuilder.js.map --screw-ie8 --compress --mangle > dombuilder.min.js
+	@ echo "Gzipping for size..."
+	gzip -c9 dombuilder.min.js > dombuilder.min.js.gz
+
+	@ echo "" > tmpl/sizes.tmpl
+	@ echo "|| dombuilder.typed.js  | Main source file     | $$(cat dombuilder.typed.js | wc -c) |" >> tmpl/sizes.tmpl
+	@ echo "|| dombuilder.js        | De-typed source      | $$(cat dombuilder.js | wc -c) |" >> tmpl/sizes.tmpl
+	@ echo "|| dombuilder.min.js    | Mangled and minified | $$(cat dombuilder.min.js | wc -c) |" >> tmpl/sizes.tmpl
+	@ echo "|| dombuilder.min.js.gz | Gzip compressed      | $$(cat dombuilder.min.js.gz | wc -c) |" >> tmpl/sizes.tmpl
+
+	@ rm -f dombuilder.min.js.gz
 
 .PHONY: test
-test:
+test: build
 	mkdir -p tests/dependencies
 	cp bower_components/qunit/qunit/* tests/dependencies/
 	cp bower_components/underscore/underscore-min.js tests/dependencies/
@@ -30,10 +43,11 @@ test:
 #-------------------------------------------------------------------------------
 
 .PHONY: docs
-docs:
+docs: build
 	rm -Rf docs
 	node_modules/.bin/docco -l parallel dombuilder.js
 	mv docs/dombuilder.html docs/index.html
+	# cat tmpl/README.tmpl | sed -e "s/@@sizes@@/$$(cat tmpl\/sizes.tmpl)/" > README.md
 
 .PHONY: pushdocs
 pushdocs: docs
@@ -70,6 +84,5 @@ version:
 
 .PHONY: clean
 clean:
-	rm -Rf bower_components
-	rm -Rf docs
-	rm -Rf node_modules
+	rm -Rf bower_components docs node_modules
+	rm -f dombuilder.js dombuilder.min.js dombuilder.min.js.map

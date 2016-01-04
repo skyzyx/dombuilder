@@ -1,14 +1,15 @@
-
+/* @flow */
 // For all code examples below, please assume that we've done the following aliasing — just to keep things a little less verbose.
 //
 //     // Assign to shorter variables.
 //     var _ = DOMBuilder, $body = document.body;
 //     $body.a = $body.appendChild;
 
+
 // ## Digging into code
 
 // Do everything in a localized scope. We'll expose pieces to the global scope later.
-;(function () {
+;(function() {
 
     'use strict';
 
@@ -34,15 +35,14 @@
     //     ));
     //
     // This `X` variable will be exposed to the global scope as `DOMBuilder`.
-
-    var X = function (elem, attr) {
+    var X = function(elem: string, attr) {
 
         // Internally to DOMBuilder, we use very short variable names so that we can squeeze the file size
         // down as small as possible using Uglify.
         var _ = this;
-        var d = document;
-        var dotHashRe = new RegExp('[.#]');
-        var key;
+        var d: Document = document;
+        var dotHashRe: RegExp = new RegExp('[.#]');
+        var key: string;
 
         // Set a default internal value
         attr = attr || {};
@@ -51,14 +51,17 @@
         //
         //     div#myId
         //     p#id.class1.class2
-        function notation() {
+        function notation(): {} {
 
-            var pieces;
-            var elemType;
-            var pos;
-            var classes;
+            var pieces: Array<string>;
+            var elemType: string;
+            var pos: number;
+            var classes: Array<string>;
 
-            var att = {
+            var att: {
+                class: Array<string>,
+                id: string
+            } = {
                 class: [],
                 id: ''
             };
@@ -72,7 +75,7 @@
             pos = elemType.length;
             classes = att['class'];
 
-            pieces.forEach(function (val, idx, arr) {
+            pieces.forEach(function(val: string, idx: number, arr: Array<string>) {
                 if (elem[pos] === '#') {
                     att.id = val;
                 } else {
@@ -91,10 +94,10 @@
         }
 
         // Merge the properties of one object with the properties of a second object. (Internal-only!)
-        function mergeOptions(o1, o2) {
+        function mergeOptions(o1: {}, o2: {}): {} {
 
-            var o3 = {},
-                attrname;
+            var o3: {} = {},
+                attrname: string;
 
             for (attrname in o1) {
                 if (o1.hasOwnProperty(attrname)) {
@@ -117,7 +120,8 @@
         // Construct the element, loop through the list of attributes and add them to the node.
         if (dotHashRe.test(elem)) {
             _.e = d.createElement(elem.split(dotHashRe).shift());
-        } else {
+        }
+        else {
             _.e = d.createElement(elem);
         }
 
@@ -152,7 +156,7 @@
         //             _('em').H('This is italic text.')
         //         ])
         //     ));
-        _.child = _._ = function (obj) {
+        _.child = _._ = function(obj: [any]): any {
 
             // If the object isn't an array, convert it to an array to maintain a single codepath below.
             if (typeof obj !== 'object' || typeof obj.length !== 'number' || typeof obj.splice !== 'function') {
@@ -161,7 +165,7 @@
 
             // Loop through the indexed array of children. If the node is a `DOMBuilder` object, convert it to
             // DOM and append it. Otherwise, assume it's a real DOM node.
-            for (var i = 0, max = obj.length; i < max; i++) {
+            for (var i: number = 0, max: number = obj.length; i < max; i++) {
 
                 if (typeof obj[i] === 'undefined') {
                     break;
@@ -200,7 +204,7 @@
         //         _('strong').H('This is bold text.'),
         //         _('em').H('This is italic text.')
         //     ]).html()
-        _.html = _.H = function (str, replace) {
+        _.html = _.H = function(str: string, replace: boolean) {
 
             // No parameters? Read the value instead. Alias for asHTML().
             if (arguments.length === 0) {
@@ -243,7 +247,7 @@
         //         _('strong').H('This is bold text.'),
         //         _('em').H('This is italic text.')
         //     ]).text()
-        _.text = _.T = function (str) {
+        _.text = _.T = function(str: string): any {
 
             // No parameters? Read the value instead. Alias for asText().
             if (arguments.length === 0) {
@@ -254,7 +258,7 @@
             if (_.e.innerText) {
                 _.e.innerText = str;
             } else {
-                var text = document.createTextNode(str);
+                var text: Text = document.createTextNode(str);
                 _.e.appendChild(text);
             }
 
@@ -273,7 +277,7 @@
         //             _('em').H('This is italic text.')
         //         ]).dom()
         //     );
-        _.asDOM = _.dom = function () {
+        _.asDOM = _.dom = function(): HTMLElement {
 
             return _.e;
         };
@@ -284,9 +288,9 @@
         //
         //     var id = document.getElementById('id');
         //     id.innerHTML = _('p#abc.def').H('This is my text.').asHTML();
-        _.asHTML = function () {
+        _.asHTML = function(): string {
 
-            var t = d.createElement('div');
+            var t: HTMLDivElement = d.createElement('div');
             t.appendChild(_.e);
             return t.innerHTML;
         };
@@ -297,9 +301,9 @@
         //
         //     var id = document.getElementById('id');
         //     id.innerHTML = _('p#abc.def').H('This is my text.').asText();
-        _.asText = function () {
+        _.asText = function(): any {
 
-            var t = d.createElement('div');
+            var t: HTMLDivElement = d.createElement('div');
             t.appendChild(_.e);
 
             if (t.innerText) {
@@ -315,7 +319,7 @@
     // ## Expose to the global scope
     //
     // Pre-instantiate the class on each call so that you never need to use `new`.
-    window.DOMBuilder = function (elem, attr) {
+    window.DOMBuilder = function(elem, attr) {
         return new X(elem, attr);
     };
 
@@ -334,12 +338,12 @@
     //         _('p').H('Something simpler.'),
     //         _('p').H('Let\'s add a third paragraph, for kicks.')
     //     ]));
-    window.DOMBuilder.DOM = function (nodes) {
+    window.DOMBuilder.DOM = function(nodes): Node {
 
         // Create a document fragment. Grab and loop through the in-memory DOM nodes, and _move_ them to the
-
-        var f = document.createDocumentFragment(),
-            n = new X('div')._(nodes).dom().childNodes;
+        // Document Fragment.
+        var f: Node = document.createDocumentFragment(),
+            n: NodeList = new X('div')._(nodes).dom().childNodes;
 
         while (n.length) {
             f.appendChild(n[0]);
@@ -349,4 +353,3 @@
         return f;
     };
 })();
-
