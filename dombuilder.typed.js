@@ -53,10 +53,9 @@
         //     p#id.class1.class2
         function notation(): {} {
 
-            var pieces: Array<string>;
-            var elemType: string;
-            var pos: number;
-            var classes: Array<string>;
+            if (!dotHashRe.test(elem)) {
+                return {};
+            }
 
             var att: {
                 class: Array<string>,
@@ -66,14 +65,10 @@
                 id: ''
             };
 
-            if (!dotHashRe.test(elem)) {
-                return {};
-            }
-
-            pieces = elem.split(dotHashRe);
-            elemType = pieces.shift();
-            pos = elemType.length;
-            classes = att['class'];
+            var pieces: Array<string> = elem.split(dotHashRe);
+            var elemType: string = pieces.shift();
+            var pos: number = elemType.length;
+            var classes: Array<string> = att['class'];
 
             pieces.forEach(function(val: string, idx: number, arr: Array<string>) {
                 if (elem[pos] === '#') {

@@ -53,24 +53,19 @@
         //     p#id.class1.class2
         function notation() {
 
-            var pieces;
-            var elemType;
-            var pos;
-            var classes;
+            if (!dotHashRe.test(elem)) {
+                return {};
+            }
 
             var att = {
                 class: [],
                 id: ''
             };
 
-            if (!dotHashRe.test(elem)) {
-                return {};
-            }
-
-            pieces = elem.split(dotHashRe);
-            elemType = pieces.shift();
-            pos = elemType.length;
-            classes = att['class'];
+            var pieces = elem.split(dotHashRe);
+            var elemType = pieces.shift();
+            var pos = elemType.length;
+            var classes = att['class'];
 
             pieces.forEach(function (val, idx, arr) {
                 if (elem[pos] === '#') {
