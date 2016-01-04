@@ -26,10 +26,12 @@ build:
 	gzip -c9 dombuilder.min.js > dombuilder.min.js.gz
 
 	@ echo "" > tmpl/sizes.tmpl
-	@ echo "|| dombuilder.typed.js  | Main source file     | $$(cat dombuilder.typed.js | wc -c) |" >> tmpl/sizes.tmpl
-	@ echo "|| dombuilder.js        | De-typed source      | $$(cat dombuilder.js | wc -c) |" >> tmpl/sizes.tmpl
-	@ echo "|| dombuilder.min.js    | Mangled and minified | $$(cat dombuilder.min.js | wc -c) |" >> tmpl/sizes.tmpl
-	@ echo "|| dombuilder.min.js.gz | Gzip compressed      | $$(cat dombuilder.min.js.gz | wc -c) |" >> tmpl/sizes.tmpl
+	@ echo "| Filename               | Description          | File sizes |" >> tmpl/sizes.tmpl
+	@ echo "| ---------------------- | -------------------- | ---------- |" >> tmpl/sizes.tmpl
+	@ echo "| \`dombuilder.typed.js\`  | Main source file     | \`$$(cat dombuilder.typed.js | wc -c)\` |" >> tmpl/sizes.tmpl
+	@ echo "| \`dombuilder.js\`        | De-typed source      | \`$$(cat dombuilder.js | wc -c)\` |" >> tmpl/sizes.tmpl
+	@ echo "| \`dombuilder.min.js\`    | Mangled and minified | \`$$(cat dombuilder.min.js | wc -c)\` |" >> tmpl/sizes.tmpl
+	@ echo "| \`dombuilder.min.js.gz\` | Gzip compressed      | \`$$(cat dombuilder.min.js.gz | wc -c)\` |" >> tmpl/sizes.tmpl
 
 	@ rm -f dombuilder.min.js.gz
 
@@ -47,7 +49,7 @@ docs: build
 	rm -Rf docs
 	node_modules/.bin/docco -l parallel dombuilder.js
 	mv docs/dombuilder.html docs/index.html
-	# cat tmpl/README.tmpl | sed -e "s/@@sizes@@/$$(cat tmpl\/sizes.tmpl)/" > README.md
+	@ # cat tmpl/README.tmpl | sed -e "s/@@sizes@@/$$(cat tmpl\/sizes.tmpl)/" > README.md
 
 .PHONY: pushdocs
 pushdocs: docs
