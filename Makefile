@@ -55,7 +55,10 @@ docs: build
 pushdocs: docs
 	rm -Rf /tmp/gh-pages
 	git clone git@github.com:skyzyx/dombuilder.git --branch gh-pages --single-branch /tmp/gh-pages
-	cp -Rf ./docs/ /tmp/gh-pages/
+	rm -Rf /tmp/gh-pages/*
+	cp -Rf ./docs/* /tmp/gh-pages/
+	cp -Rf ./tests/ /tmp/gh-pages/tests/
+	cp -Rf ./dombuilder.min.js /tmp/gh-pages/
 	cd /tmp/gh-pages/ && git add . && git commit -a -m "Automated commit on $$(date)" && git push origin gh-pages
 
 #-------------------------------------------------------------------------------

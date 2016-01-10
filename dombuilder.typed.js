@@ -133,7 +133,7 @@
                     if (key.toString() === 'class') {
                         _.e.className = attr[key];
 
-                    // Support data: {} for data attributes
+                    // Support `data: {}` for data attributes
                     } else if (key.toString() === 'data') {
                         for (k in attr[key]) {
                             if (attr[key].hasOwnProperty(k)) {
