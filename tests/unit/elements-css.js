@@ -65,3 +65,29 @@ test('Generate simple nodes with multiple attributes', function() {
     equal(element.getAttribute('custom'), 'myCustom', 'Element has a custom attribute of myCustom');
 });
 
+/****************************************************************************************/
+
+test('Generate attributes with CSS-style [x=y] syntax', function() {
+
+    expect(2);
+
+    var element = _('a[href=https://google.com]').dom();
+
+    equal(element.tagName.toLowerCase(), 'a', '<a> element created successfully');
+    equal(element.getAttribute('href'), 'https://google.com', 'Link set to google.com');
+});
+
+/****************************************************************************************/
+
+test('Generate more attributes with CSS-style [x=y] syntax', function() {
+
+    expect(5);
+
+    var element = _('a.abc#def[href=#][for=def]').dom();
+
+    equal(element.tagName.toLowerCase(), 'a', '<a> element created successfully');
+    equal(element.className, 'abc', 'Element has a class attribute of abc');
+    equal(element.id, 'def', 'Element has an ID attribute of def');
+    equal(element.getAttribute('href'), '#', 'Element has an href attribute of #');
+    equal(element.getAttribute('for'), 'def', 'Element has a for attribute of def');
+});

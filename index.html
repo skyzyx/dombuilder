@@ -126,9 +126,11 @@ down as small as possible using Uglify.</p>
             
             <div class="content"><div class='highlight'><pre>        <span class="hljs-keyword">var</span> _ = <span class="hljs-keyword">this</span>;
         <span class="hljs-keyword">var</span> d = <span class="hljs-built_in">document</span>;
-        <span class="hljs-keyword">var</span> dotHashRe = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-string">'[.#]'</span>);
+        <span class="hljs-keyword">var</span> dotHashRe = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-regexp">/[\.#]/</span>);
+        <span class="hljs-keyword">var</span> eqRe = <span class="hljs-keyword">new</span> <span class="hljs-built_in">RegExp</span>(<span class="hljs-regexp">/\[([^\]]*)\]/g</span>);
         <span class="hljs-keyword">var</span> key;
-        <span class="hljs-keyword">var</span> k;</pre></div></div>
+        <span class="hljs-keyword">var</span> k;
+        <span class="hljs-keyword">var</span> match;</pre></div></div>
             
         </li>
         
@@ -154,45 +156,23 @@ down as small as possible using Uglify.</p>
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-8">&#182;</a>
               </div>
-              <p>Support CSS/jQuery-style notation for generating elements with IDs and classnames. (Internal-only!)</p>
+              <p>Support CSS/jQuery-style notation for generating elements with IDs, classnames, and simple attributes.</p>
 <pre><code>div#myId
 p#id.class1.class2
+a[href=https://google.com]
 </code></pre>
             </div>
             
             <div class="content"><div class='highlight'><pre>        function notation() {
 
-            if (!dotHashRe.test(elem)) {
+            if (!dotHashRe.test(elem) &amp;&amp; !eqRe.test(elem)) {
                 return {};
             }
 
             var att = {
                 class: [],
                 id: ''
-            };
-
-            var pieces = elem.split(dotHashRe);
-            var elemType = pieces.shift();
-            var pos = elemType.length;
-            var classes = att['class'];
-
-            pieces.forEach(function (val, idx, arr) {
-                if (elem[pos] === '#') {
-                    att.id = val;
-                } else {
-                    classes.push(val);
-                }
-
-                pos += arr[idx].length + 1;
-            });
-
-            att['class'] = classes;
-            if (!att['class'].length) {
-                delete att['class'];
-            }
-
-            return att;
-        }</pre></div></div>
+            };</pre></div></div>
             
         </li>
         
@@ -202,6 +182,68 @@ p#id.class1.class2
               
               <div class="pilwrap ">
                 <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Collect all of the <code>[k=v]</code> blocks.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> kvPair = [];
+            <span class="hljs-keyword">while</span> ((match = eqRe.exec(elem)) !== <span class="hljs-literal">null</span>) {
+                kvPair.push(match[<span class="hljs-number">1</span>].split(<span class="hljs-string">'='</span>));
+            }
+            elem = elem.replace(eqRe, <span class="hljs-string">''</span>);
+
+            kvPair.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">val, idx, arr</span>) </span>{
+                att[arr[idx][<span class="hljs-number">0</span>]] = arr[idx][<span class="hljs-number">1</span>];
+            });</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Support CSS/jQuery-style notation for generating elements with IDs and classnames.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>            <span class="hljs-keyword">var</span> pieces = elem.split(dotHashRe);
+            <span class="hljs-keyword">var</span> elemType = pieces.shift();
+            <span class="hljs-keyword">var</span> pos = elemType.length;
+            <span class="hljs-keyword">var</span> classes = att[<span class="hljs-string">'class'</span>];
+
+            pieces.forEach(<span class="hljs-function"><span class="hljs-keyword">function</span> (<span class="hljs-params">val, idx, arr</span>) </span>{
+                <span class="hljs-keyword">if</span> (elem[pos] === <span class="hljs-string">'#'</span>) {
+                    att.id = val;
+                } <span class="hljs-keyword">else</span> {
+                    classes.push(val);
+                }
+
+                pos += arr[idx].length + <span class="hljs-number">1</span>;
+            });
+
+            att[<span class="hljs-string">'class'</span>] = classes;
+            <span class="hljs-keyword">if</span> (!att[<span class="hljs-string">'class'</span>].length) {
+                <span class="hljs-keyword">delete</span> att[<span class="hljs-string">'class'</span>];
+            }
+            <span class="hljs-keyword">if</span> (att[<span class="hljs-string">'id'</span>] === <span class="hljs-string">''</span>) {
+                <span class="hljs-keyword">delete</span> att[<span class="hljs-string">'id'</span>];
+            }
+
+            <span class="hljs-keyword">return</span> att;
+        }</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
               </div>
               <p>Merge the properties of one object with the properties of a second object. (Internal-only!)</p>
 
@@ -230,11 +272,11 @@ p#id.class1.class2
         </li>
         
         
-        <li id="section-10">
+        <li id="section-12">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-10">&#182;</a>
+                <a class="pilcrow" href="#section-12">&#182;</a>
               </div>
               <p>Merge options into a conglomo-hash!</p>
 
@@ -245,11 +287,11 @@ p#id.class1.class2
         </li>
         
         
-        <li id="section-11">
+        <li id="section-13">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-11">&#182;</a>
+                <a class="pilcrow" href="#section-13">&#182;</a>
               </div>
               <p>Construct the element, loop through the list of attributes and add them to the node.</p>
 
@@ -271,11 +313,11 @@ p#id.class1.class2
         </li>
         
         
-        <li id="section-12">
+        <li id="section-14">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-12">&#182;</a>
+                <a class="pilcrow" href="#section-14">&#182;</a>
               </div>
               <p>Because of the way that IE works, class names need to be added explicitly via the <code>.className</code>
 property instead of using <code>.setAttribute()</code>.</p>
@@ -288,11 +330,11 @@ property instead of using <code>.setAttribute()</code>.</p>
         </li>
         
         
-        <li id="section-13">
+        <li id="section-15">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-13">&#182;</a>
+                <a class="pilcrow" href="#section-15">&#182;</a>
               </div>
               <p>Support <code>data: {}</code> for data attributes</p>
 
@@ -314,11 +356,11 @@ property instead of using <code>.setAttribute()</code>.</p>
         </li>
         
         
-        <li id="section-14">
+        <li id="section-16">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-14">&#182;</a>
+                <a class="pilcrow" href="#section-16">&#182;</a>
               </div>
               <h3 id="-child-or-_-">.child() or ._()</h3>
 <p>The <code>child()</code> method is used to add children to a parent node, or to add a new tag to a
@@ -339,11 +381,11 @@ array of objects. Returns a self-reference to <code>this</code> by default.</p>
         </li>
         
         
-        <li id="section-15">
+        <li id="section-17">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-15">&#182;</a>
+                <a class="pilcrow" href="#section-17">&#182;</a>
               </div>
               <p>If the object isn’t an array, convert it to an array to maintain a single codepath below.</p>
 
@@ -356,11 +398,11 @@ array of objects. Returns a self-reference to <code>this</code> by default.</p>
         </li>
         
         
-        <li id="section-16">
+        <li id="section-18">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-16">&#182;</a>
+                <a class="pilcrow" href="#section-18">&#182;</a>
               </div>
               <p>Loop through the indexed array of children. If the node is a <code>DOMBuilder</code> object, convert it to
 DOM and append it. Otherwise, assume it’s a real DOM node.</p>
@@ -386,11 +428,11 @@ DOM and append it. Otherwise, assume it’s a real DOM node.</p>
         </li>
         
         
-        <li id="section-17">
+        <li id="section-19">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-17">&#182;</a>
+                <a class="pilcrow" href="#section-19">&#182;</a>
               </div>
               <h3 id="-html-or-h-">.html() or .H()</h3>
 <p>The <code>html()</code> method is used for adding text or HTML content to a node. Since it leverages <code>.innerHTML</code>
@@ -419,11 +461,11 @@ _(<span class="hljs-string">'p#abc.def'</span>)._([
         </li>
         
         
-        <li id="section-18">
+        <li id="section-20">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-18">&#182;</a>
+                <a class="pilcrow" href="#section-20">&#182;</a>
               </div>
               <p>No parameters? Read the value instead. Alias for asHTML().</p>
 
@@ -436,11 +478,11 @@ _(<span class="hljs-string">'p#abc.def'</span>)._([
         </li>
         
         
-        <li id="section-19">
+        <li id="section-21">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-19">&#182;</a>
+                <a class="pilcrow" href="#section-21">&#182;</a>
               </div>
               <p>Determine the default value for <code>replace</code>.</p>
 
@@ -451,11 +493,11 @@ _(<span class="hljs-string">'p#abc.def'</span>)._([
         </li>
         
         
-        <li id="section-20">
+        <li id="section-22">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-20">&#182;</a>
+                <a class="pilcrow" href="#section-22">&#182;</a>
               </div>
               <p>Set the value with innerHTML.</p>
 
@@ -473,11 +515,11 @@ _(<span class="hljs-string">'p#abc.def'</span>)._([
         </li>
         
         
-        <li id="section-21">
+        <li id="section-23">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-21">&#182;</a>
+                <a class="pilcrow" href="#section-23">&#182;</a>
               </div>
               <h3 id="-text-or-t-">.text() or .T()</h3>
 <p>The <code>text()</code> method is used for adding plain text content to a node. Since it leverages <code>.textContent</code>
@@ -506,11 +548,11 @@ _(<span class="hljs-string">'p#abc.def'</span>)._([
         </li>
         
         
-        <li id="section-22">
+        <li id="section-24">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-22">&#182;</a>
+                <a class="pilcrow" href="#section-24">&#182;</a>
               </div>
               <p>No parameters? Read the value instead. Alias for asText().</p>
 
@@ -523,11 +565,11 @@ _(<span class="hljs-string">'p#abc.def'</span>)._([
         </li>
         
         
-        <li id="section-23">
+        <li id="section-25">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-23">&#182;</a>
+                <a class="pilcrow" href="#section-25">&#182;</a>
               </div>
               <p>Set the value</p>
 
@@ -546,11 +588,11 @@ _(<span class="hljs-string">'p#abc.def'</span>)._([
         </li>
         
         
-        <li id="section-24">
+        <li id="section-26">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-24">&#182;</a>
+                <a class="pilcrow" href="#section-26">&#182;</a>
               </div>
               <h3 id="-asdom-or-dom-">.asDOM() or .dom()</h3>
 <p>Returns a real DOM node for use with the standard JavaScript DOM methods. When DOMBuilder objects
@@ -573,11 +615,11 @@ in the chain while being passed into a real JavaScript DOM node.</p>
         </li>
         
         
-        <li id="section-25">
+        <li id="section-27">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-25">&#182;</a>
+                <a class="pilcrow" href="#section-27">&#182;</a>
               </div>
               <h3 id="-ashtml-or-html-or-h-">.asHTML() or .html() or .H()</h3>
 <p>Returns the DOM nodes as a string of HTML. It’s as simple as that.</p>
@@ -596,11 +638,11 @@ id.innerHTML = _(<span class="hljs-string">'p#abc.def'</span>).H(<span class="hl
         </li>
         
         
-        <li id="section-26">
+        <li id="section-28">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-26">&#182;</a>
+                <a class="pilcrow" href="#section-28">&#182;</a>
               </div>
               <h3 id="-astext-or-text-or-t-">.asText() or .text() or .T()</h3>
 <p>Returns the DOM nodes as a string of plain text. It’s as simple as that.</p>
@@ -627,11 +669,11 @@ id.innerHTML = _(<span class="hljs-string">'p#abc.def'</span>).H(<span class="hl
         </li>
         
         
-        <li id="section-27">
+        <li id="section-29">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-27">&#182;</a>
+                <a class="pilcrow" href="#section-29">&#182;</a>
               </div>
               <h2 id="expose-to-the-global-scope">Expose to the global scope</h2>
 <p>Pre-instantiate the class on each call so that you never need to use <code>new</code>.</p>
@@ -645,11 +687,11 @@ id.innerHTML = _(<span class="hljs-string">'p#abc.def'</span>).H(<span class="hl
         </li>
         
         
-        <li id="section-28">
+        <li id="section-30">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-28">&#182;</a>
+                <a class="pilcrow" href="#section-30">&#182;</a>
               </div>
               <h2 id="dom-">DOM()</h2>
 <p>This is the function that all other <code>DOMBuilder</code> nodes are passed into, as it returns directly into the
@@ -671,11 +713,11 @@ of writing multiple nodes to the live DOM.</p>
         </li>
         
         
-        <li id="section-29">
+        <li id="section-31">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-29">&#182;</a>
+                <a class="pilcrow" href="#section-31">&#182;</a>
               </div>
               <p>Create a document fragment. Grab and loop through the in-memory DOM nodes, and <em>move</em> them to the</p>
 
@@ -692,11 +734,11 @@ of writing multiple nodes to the live DOM.</p>
         </li>
         
         
-        <li id="section-30">
+        <li id="section-32">
             <div class="annotation">
               
               <div class="pilwrap ">
-                <a class="pilcrow" href="#section-30">&#182;</a>
+                <a class="pilcrow" href="#section-32">&#182;</a>
               </div>
               <p>Return the Document Fragment to the calling method (presumably <code>.appendChild()</code>).</p>
 
