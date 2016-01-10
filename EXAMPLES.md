@@ -127,4 +127,6 @@ div.className = 'sample';
 div.appendChild(p1);
 div.appendChild(p2);
 div.appendChild(ul);
+
+document.body.appendChild(div);
 ```
