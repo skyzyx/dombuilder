@@ -43,6 +43,7 @@
         var d = document;
         var dotHashRe = new RegExp('[.#]');
         var key;
+        var k;
 
         // Set a default internal value
         attr = attr || {};
@@ -127,9 +128,17 @@
                     // property instead of using `.setAttribute()`.
                     if (key.toString() === 'class') {
                         _.e.className = attr[key];
-                    } else {
-                        _.e.setAttribute(key, attr[key]);
-                    }
+
+                        // Support data: {} for data attributes
+                    } else if (key.toString() === 'data') {
+                            for (k in attr[key]) {
+                                if (attr[key].hasOwnProperty(k)) {
+                                    _.e.setAttribute('data-' + k, attr[key][k]);
+                                }
+                            }
+                        } else {
+                            _.e.setAttribute(key, attr[key]);
+                        }
                 }
             }
         }
