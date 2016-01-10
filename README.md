@@ -50,7 +50,7 @@ document.body.appendChild(_.DOM(
         _('p').H('This is a <a href="">sample of the code</a> that you may like.'),
         _('p').H('And another <a href="#"><strong>complex-ish</strong></a> one.'),
         _('ul.sample')._([
-            _('li')._(_('a[href=http://google.com').H('One')),
+            _('li')._(_('a[href=http://google.com]').H('One')),
             _('li')._(_('em').H('Two')),
             _('li')._(_('strong').H('Three'))
         ])
