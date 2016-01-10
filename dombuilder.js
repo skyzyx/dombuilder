@@ -41,20 +41,23 @@
         // down as small as possible using Uglify.
         var _ = this;
         var d = document;
-        var dotHashRe = new RegExp('[.#]');
+        var dotHashRe = new RegExp(/[\.#]/);
+        var eqRe = new RegExp(/\[([^\]]*)\]/g);
         var key;
         var k;
+        var match;
 
         // Set a default internal value
         attr = attr || {};
 
-        // Support CSS/jQuery-style notation for generating elements with IDs and classnames. (Internal-only!)
+        // Support CSS/jQuery-style notation for generating elements with IDs, classnames, and simple attributes.
         //
         //     div#myId
         //     p#id.class1.class2
+        //     a[href=https://google.com]
         function notation() {
 
-            if (!dotHashRe.test(elem)) {
+            if (!dotHashRe.test(elem) && !eqRe.test(elem)) {
                 return {};
             }
 
@@ -63,6 +66,18 @@
                 id: ''
             };
 
+            // Collect all of the `[k=v]` blocks.
+            var kvPair = [];
+            while ((match = eqRe.exec(elem)) !== null) {
+                kvPair.push(match[1].split('='));
+            }
+            elem = elem.replace(eqRe, '');
+
+            kvPair.forEach(function (val, idx, arr) {
+                att[arr[idx][0]] = arr[idx][1];
+            });
+
+            // Support CSS/jQuery-style notation for generating elements with IDs and classnames.
             var pieces = elem.split(dotHashRe);
             var elemType = pieces.shift();
             var pos = elemType.length;
@@ -81,6 +96,9 @@
             att['class'] = classes;
             if (!att['class'].length) {
                 delete att['class'];
+            }
+            if (att['id'] === '') {
+                delete att['id'];
             }
 
             return att;
