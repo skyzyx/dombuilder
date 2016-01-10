@@ -114,7 +114,7 @@ div.className = 'sample';
         li1.appendChild(a3);
         var li2 = document.createElement('li');
             var em = document.createElement('em');
-            a3.appendChild(document.createTextNode('Two'));
+            em.appendChild(document.createTextNode('Two'));
         li2.appendChild(em);
         var li3 = document.createElement('li');
             var strong2 = document.createElement('strong');
