@@ -58,44 +58,33 @@ document.body.appendChild(_.DOM(
 ));
 ```
 
-Here is another example that _does not_ use any of the aforementioned shorthand, which is only _slightly_ shorter than the full-blown DOM syntax.
+### Mapping
+
+You can also do repetitive things more programmatically.
 
 ```javascript
-// Do the generation and write to the live DOM
-document.body.appendChild(DOMBuilder.DOM(
-    DOMBuilder('div', {
-        'id': '#test',
-        'class': ['sample']
-    }).child([
-        DOMBuilder('p').html('This is a ').child(
-            DOMBuilder('a', {
-                'href': '#'
-            }).html('sample of the code')
-        ).html(' that you may like.'),
-        DOMBuilder('p').html('And another ').child(
-            DOMBuilder('a', {
-                'href': '#'
-            }).child(
-                DOMBuilder('strong').html('complex-ish')
-            )
-        ).html(' one.'),
-        DOMBuilder('ul', {
-            'class': ['sample']
-        }).child([
-            DOMBuilder('li').child(
-                DOMBuilder('a', {
-                    'href': 'http://google.com'
-                }).html('One')
-            ),
-            DOMBuilder('li').child(
-                DOMBuilder('em').html('Two')
-            ),
-            DOMBuilder('li').child(
-                DOMBuilder('strong').html('Three')
-            )
-        ])
-    ])
+// Alias to shorter variables.
+var u = _.noConflict(); // Underscore.js
+var _ = DOMBuilder;
+
+// Generate an HTML list from some data
+var data = ['One', 'Two', 'Three', 'Four', 'Five'];
+
+document.body.appendChild(_.DOM(
+    _('ul')._(u.map(data, function(value) {
+        return _('li').H(value);
+    }))
 ));
+```
+
+```html
+<ul>
+    <li>One</li>
+    <li>Two</li>
+    <li>Three</li>
+    <li>Four</li>
+    <li>Five</li>
+</ul>
 ```
 
 
