@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## 1.4 - 2016-01-10
 
 * Switched from the 3-clause BSD license to the MIT license.
 * Updated the build chain to use modern tools.
@@ -11,7 +11,9 @@
     * Updated to latest QUnit release.
 * Switched CHANGELOG to use the format from <http://keepachangelog.com>.
 * Lots of updates to the README and the generated documentation.
-* Introduced [Flow](http://http://flowtype.org), a JavaScript type-checker.
+* Introduced [Flow](http://http://flowtype.org), a JavaScript type-checker, into the build process.
+* Added support for a `data: {}` attribute hash.
+* Added support for `[x=y]` syntax for setting simple attributes.
 
 ## 1.3 - 2011-07-08
 

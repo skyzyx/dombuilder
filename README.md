@@ -11,6 +11,15 @@
 
 ## Usage
 
+### Sugar and Niceties
+
+* You can interleave DOM, `DOMBuilder` and HTML strings together.
+* Supports basic CSS annotation.
+    * `.` for class names.
+    * `#` for IDs.
+    * `[x=y]` for simple attributes.
+* Has readable (`.html()`) and compact (`.H()`) syntaxes.
+
 ### HTML to generate
 
 ```html
@@ -27,7 +36,7 @@
 
 ### DOMBuilder code
 
-This is an example of how to generate it from JavaScript using DOMBuilder. This is using the shortest possible syntax, while still showing how it works. You can interleave DOM, `DOMBuilder` and HTML strings together.
+This is an example of how to generate it from JavaScript using DOMBuilder. This is using the shortest possible syntax, while still showing how it works.
 
 (Notice that this example has aliased `DOMBuilder` to the `_` variable to make invocation shorter. Also note that the `._()` method is shorthand for `.child()`. It’s a lot of underscores, I know, but it makes typing a lot faster.)
 
@@ -41,7 +50,7 @@ document.body.appendChild(_.DOM(
         _('p').H('This is a <a href="">sample of the code</a> that you may like.'),
         _('p').H('And another <a href="#"><strong>complex-ish</strong></a> one.'),
         _('ul.sample')._([
-            _('li')._(_('a', { 'href':'http://google.com' }).H('One')),
+            _('li')._(_('a[href=http://google.com').H('One')),
             _('li')._(_('em').H('Two')),
             _('li')._(_('strong').H('Three'))
         ])
@@ -112,10 +121,10 @@ For a more detailed description of DOMBuilder, see the [documentation](http://sk
 
 | Filename               | Description            | File sizes |
 | ---------------------- | ---------------------- | ---------- |
-| `dombuilder.typed.js`  | Main source file       | `12841` |
-| `dombuilder.js`        | De-typed source        | `12468` |
-| `dombuilder.min.js`    | Mangled and minified   | `1917` |
-| `dombuilder.min.js.gz` | Gzip `-9` compressed   | `866` |
+| `dombuilder.typed.js`  | Main source file       | `13584` |
+| `dombuilder.js`        | De-typed source        | `13146` |
+| `dombuilder.min.js`    | Mangled and minified   | `2109` |
+| `dombuilder.min.js.gz` | Gzip `-9` compressed   | `969` |
 
 
 ## Why not React?
