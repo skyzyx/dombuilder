@@ -95,7 +95,7 @@ DOMBuilder has been _tested successfully_ in the following browsers:
 * Internet Explorer 9+
 * Edge 12+
 * Firefox 4+
-* Safari 5+
+* Safari 4+
 * Chrome/Chromium 15+ (the oldest I could download)
 * Opera 11+/15+
 * Android 4.4+
