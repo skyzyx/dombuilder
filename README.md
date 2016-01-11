@@ -99,7 +99,7 @@ DOMBuilder has been _tested successfully_ in the following browsers:
 * Chrome/Chromium 15+ (the oldest I could download)
 * Opera 11+/15+
 * Android 4.4+
-* iOS 7+
+* iOS 5+
 
 The JavaScript used isn't all that complex, so I would expect that DOMBuilder _supports_ other/older browsers as well. I would encourage you to [run the unit tests in your browser](http://skyzyx.github.com/dombuilder/tests/test-runner.html) and let me know about any failing tests and which browser/version you're running.
 
