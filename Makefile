@@ -21,7 +21,7 @@ build:
 	@ echo "Scrubbing the type information..."
 	babel dombuilder.typed.js > dombuilder.js
 	@ echo "Mangling and minifying..."
-	node_modules/.bin/uglifyjs dombuilder.js --source-map dombuilder.js.map --screw-ie8 --compress --mangle > dombuilder.min.js
+	node_modules/.bin/uglifyjs dombuilder.js --source-map dombuilder.js.map --compress --mangle > dombuilder.min.js
 	@ echo "Gzipping for size..."
 	gzip -c9 dombuilder.min.js > dombuilder.min.js.gz
 

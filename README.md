@@ -112,8 +112,8 @@ For a more detailed description of DOMBuilder, see the [documentation](http://sk
 | ---------------------- | ---------------------- | ---------- |
 | `dombuilder.typed.js`  | Main source file       | `13584` |
 | `dombuilder.js`        | De-typed source        | `13146` |
-| `dombuilder.min.js`    | Mangled and minified   | `2109` |
-| `dombuilder.min.js.gz` | Gzip `-9` compressed   | `969` |
+| `dombuilder.min.js`    | Mangled and minified   | `2123` |
+| `dombuilder.min.js.gz` | Gzip `-9` compressed   | `971` |
 
 
 ## Why not React?
