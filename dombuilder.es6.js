@@ -8,10 +8,7 @@
 // ## Digging into code
 
 // Do everything in a localized scope. We'll expose pieces to the global scope later.
-;(function () {
-
-    'use strict';
-
+;(() => {
     // ## DOMBuilder
     //
     // Accepts a string representation of a tag name for the element parameter, and a JSON hash of key-value
@@ -35,17 +32,17 @@
     //
     // This `X` variable will be exposed to the global scope as `DOMBuilder`.
 
-    var X = function (elem, attr) {
+    const X = function (elem, attr) {
 
         // Internally to DOMBuilder, we use very short variable names so that we can squeeze the file size
         // down as small as possible using Uglify.
-        var _ = this;
-        var d = document;
-        var dotHashRe = new RegExp(/[\.#]/);
-        var eqRe = new RegExp(/\[([^\]]*)\]/g);
-        var key;
-        var k;
-        var match;
+        const _ = this;
+        const d = document;
+        const dotHashRe = new RegExp(/[\.#]/);
+        const eqRe = new RegExp(/\[([^\]]*)\]/g);
+        let key;
+        let k;
+        let match;
 
         // Set a default internal value
         attr = attr || {};
@@ -61,29 +58,29 @@
                 return {};
             }
 
-            var att = {
+            const att = {
                 class: [],
                 id: ''
             };
 
             // Collect all of the `[k=v]` blocks.
-            var kvPair = [];
+            const kvPair = [];
             while ((match = eqRe.exec(elem)) !== null) {
                 kvPair.push(match[1].split('='));
             }
             elem = elem.replace(eqRe, '');
 
-            kvPair.forEach(function (val, idx, arr) {
+            kvPair.forEach((val, idx, arr) => {
                 att[arr[idx][0]] = arr[idx][1];
             });
 
             // Support CSS/jQuery-style notation for generating elements with IDs and classnames.
-            var pieces = elem.split(dotHashRe);
-            var elemType = pieces.shift();
-            var pos = elemType.length;
-            var classes = att['class'];
+            const pieces = elem.split(dotHashRe);
+            const elemType = pieces.shift();
+            let pos = elemType.length;
+            const classes = att['class'];
 
-            pieces.forEach(function (val, idx, arr) {
+            pieces.forEach((val, idx, arr) => {
                 if (elem[pos] === '#') {
                     att.id = val;
                 } else {
@@ -106,9 +103,8 @@
 
         // Merge the properties of one object with the properties of a second object. (Internal-only!)
         function mergeOptions(o1, o2) {
-
-            var o3 = {},
-                attrname;
+            const o3 = {};
+            let attrname;
 
             for (attrname in o1) {
                 if (o1.hasOwnProperty(attrname)) {
@@ -151,7 +147,7 @@
                     } else if (key.toString() === 'data') {
                             for (k in attr[key]) {
                                 if (attr[key].hasOwnProperty(k)) {
-                                    _.e.setAttribute('data-' + k, attr[key][k]);
+                                    _.e.setAttribute(`data-${k}`, attr[key][k]);
                                 }
                             }
                         } else {
@@ -174,7 +170,7 @@
         //             _('em').H('This is italic text.')
         //         ])
         //     ));
-        _.child = _._ = function (obj) {
+        _.child = _._ = obj => {
 
             // If the object isn't an array, convert it to an array to maintain a single codepath below.
             if (typeof obj !== 'object' || typeof obj.length !== 'number' || typeof obj.splice !== 'function') {
@@ -183,7 +179,7 @@
 
             // Loop through the indexed array of children. If the node is a `DOMBuilder` object, convert it to
             // DOM and append it. Otherwise, assume it's a real DOM node.
-            for (var i = 0, max = obj.length; i < max; i++) {
+            for (let i = 0, max = obj.length; i < max; i++) {
 
                 if (typeof obj[i] === 'undefined') {
                     break;
@@ -276,7 +272,7 @@
             if (_.e.innerText) {
                 _.e.innerText = str;
             } else {
-                var text = document.createTextNode(str);
+                const text = document.createTextNode(str);
                 _.e.appendChild(text);
             }
 
@@ -295,10 +291,7 @@
         //             _('em').H('This is italic text.')
         //         ]).dom()
         //     );
-        _.asDOM = _.dom = function () {
-
-            return _.e;
-        };
+        _.asDOM = _.dom = () => _.e;
 
         // ### .asHTML() or .html() or .H()
         //
@@ -306,9 +299,9 @@
         //
         //     var id = document.getElementById('id');
         //     id.innerHTML = _('p#abc.def').H('This is my text.').asHTML();
-        _.asHTML = function () {
+        _.asHTML = () => {
 
-            var t = d.createElement('div');
+            const t = d.createElement('div');
             t.appendChild(_.e);
             return t.innerHTML;
         };
@@ -319,9 +312,9 @@
         //
         //     var id = document.getElementById('id');
         //     id.innerHTML = _('p#abc.def').H('This is my text.').asText();
-        _.asText = function () {
+        _.asText = () => {
 
-            var t = d.createElement('div');
+            const t = d.createElement('div');
             t.appendChild(_.e);
 
             if (t.innerText) {
@@ -337,9 +330,7 @@
     // ## Expose to the global scope
     //
     // Pre-instantiate the class on each call so that you never need to use `new`.
-    window.DOMBuilder = function (elem, attr) {
-        return new X(elem, attr);
-    };
+    window.DOMBuilder = (elem, attr) => new X(elem, attr);
 
     // ## DOM()
     //
@@ -356,12 +347,11 @@
     //         _('p').H('Something simpler.'),
     //         _('p').H('Let\'s add a third paragraph, for kicks.')
     //     ]));
-    window.DOMBuilder.DOM = function (nodes) {
+    window.DOMBuilder.DOM = nodes => {
 
         // Create a document fragment. Grab and loop through the in-memory DOM nodes, and _move_ them to the
 
-        var f = document.createDocumentFragment(),
-            n = new X('div')._(nodes).dom().childNodes;
+        const f = document.createDocumentFragment(), n = new X('div')._(nodes).dom().childNodes;
 
         while (n.length) {
             f.appendChild(n[0]);
