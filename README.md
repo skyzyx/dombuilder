@@ -18,7 +18,7 @@
     * `.` for class names.
     * `#` for IDs.
     * `[x=y]` for simple attributes.
-* Has readable (`.html()`) and compact (`.H()`) syntaxes.
+* Has compact syntax.
 
 ### HTML to generate
 
