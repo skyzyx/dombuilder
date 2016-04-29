@@ -77,6 +77,22 @@ document.body.appendChild(_.DOM(
 ));
 ```
 
+Or in ES6…
+
+```javascript
+// Alias to shorter variables.
+var _ = DOMBuilder;
+
+// Generate an HTML list from some data
+var data = ['One', 'Two', 'Three', 'Four', 'Five'];
+
+document.body.appendChild(_.DOM(
+    _('ul')._(
+        data.map(value => _('li').H(value))
+    )
+));
+```
+
 ```html
 <ul>
     <li>One</li>
@@ -110,10 +126,10 @@ For a more detailed description of DOMBuilder, see the [documentation](http://sk
 
 | Filename               | Description            | File sizes |
 | ---------------------- | ---------------------- | ---------- |
-| `dombuilder.typed.js`  | Main source file       | `13584` |
-| `dombuilder.js`        | De-typed source        | `13146` |
-| `dombuilder.min.js`    | Mangled and minified   | `2123` |
-| `dombuilder.min.js.gz` | Gzip `-9` compressed   | `971` |
+| `dombuilder.ts`        | Main source file       | `5796` |
+| `dombuilder.js`        | De-typed source        | `5764` |
+| `dombuilder.min.js`    | Mangled and minified   | `2340` |
+| `dombuilder.min.js.gz` | Gzip `-9` compressed   | `976` |
 
 
 ## Why not React?
@@ -171,7 +187,7 @@ Alternatively, you can [run the tests for the latest release](http://skyzyx.gith
 
 ## License
 
-DOMBuilder 1.4 is licensed under the MIT license.
+DOMBuilder 2.0 is licensed under the MIT license.
 
 Copyright (c) 2009–2016 Ryan Parman
 

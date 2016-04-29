@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## Unreleased
+
+* Rewrote the source code in [TypeScript](http://www.typescriptlang.org).
+* Got rid of all traces of [Facebook Flow](http://flowtype.org). Even though it was good, TypeScript seems to be a better solution for typed ES6-like code.
+* `make typecheck` has been removed.
+* `make lint` is broken as I move to `tslint`.
+* Removed the older, longer method aliases: `child()`, `html()`, `text()`.
+* Sourcemap is still for the ES5 version of the file and not yet for the TypeScript version of the file.
+* All QUnit tests are broken at the moment.
+* There is no documentation yet in the TypeScript source to generate docs from.
+
 ## 1.4 - 2016-01-10
 
 * Switched from the 3-clause BSD license to the MIT license.

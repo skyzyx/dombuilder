@@ -12,23 +12,19 @@ install:
 lint:
 	node_modules/.bin/eslint dombuilder.js
 
-.PHONY: typecheck
-typecheck:
-	node_modules/.bin/flow check 2>/dev/null
-
 .PHONY: build
 build:
 	@ echo "Scrubbing the type information..."
-	babel dombuilder.typed.js > dombuilder.js
+	node_modules/.bin/tsc dombuilder.ts
 	@ echo "Mangling and minifying..."
 	node_modules/.bin/uglifyjs dombuilder.js --source-map dombuilder.js.map --compress --mangle > dombuilder.min.js
 	@ echo "Gzipping for size..."
 	gzip -c9 dombuilder.min.js > dombuilder.min.js.gz
 
-	@ echo "" > tmpl/sizes.tmpl
+	@ echo -e "" > tmpl/sizes.tmpl
 	@ echo "| Filename               | Description            | File sizes |" >> tmpl/sizes.tmpl
 	@ echo "| ---------------------- | ---------------------- | ---------- |" >> tmpl/sizes.tmpl
-	@ echo "| \`dombuilder.typed.js\`  | Main source file       | \`$$(cat dombuilder.typed.js | wc -c)\` |" >> tmpl/sizes.tmpl
+	@ echo "| \`dombuilder.ts\`        | Main source file       | \`$$(cat dombuilder.ts | wc -c)\` |" >> tmpl/sizes.tmpl
 	@ echo "| \`dombuilder.js\`        | De-typed source        | \`$$(cat dombuilder.js | wc -c)\` |" >> tmpl/sizes.tmpl
 	@ echo "| \`dombuilder.min.js\`    | Mangled and minified   | \`$$(cat dombuilder.min.js | wc -c)\` |" >> tmpl/sizes.tmpl
 	@ echo "| \`dombuilder.min.js.gz\` | Gzip \`-9\` compressed   | \`$$(cat dombuilder.min.js.gz | wc -c)\` |" >> tmpl/sizes.tmpl

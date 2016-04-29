@@ -16,7 +16,7 @@ This is meant to compare the different ways to generate HTML from JavaScript.
 </div>
 ```
 
-## Short-form DOMBuilder code
+## DOMBuilder code
 
 ```javascript
 // Assign to shorter variables.
@@ -44,32 +44,32 @@ document.body.appendChild(DOMBuilder.DOM(
     DOMBuilder('div', {
         'id': '#test',
         'class': ['sample']
-    }).child([
-        DOMBuilder('p').html('This is a ').child(
+    })._([
+        DOMBuilder('p').H('This is a ')._(
             DOMBuilder('a', {
                 'href': '#'
-            }).html('sample of the code')
-        ).html(' that you may like.'),
-        DOMBuilder('p').html('And another ').child(
+            }).H('sample of the code')
+        ).H(' that you may like.'),
+        DOMBuilder('p').H('And another ')._(
             DOMBuilder('a', {
                 'href': '#'
-            }).child(
-                DOMBuilder('strong').html('complex-ish')
+            })._(
+                DOMBuilder('strong').H('complex-ish')
             )
-        ).html(' one.'),
+        ).H(' one.'),
         DOMBuilder('ul', {
             'class': ['sample']
-        }).child([
-            DOMBuilder('li').child(
+        })._([
+            DOMBuilder('li')._(
                 DOMBuilder('a', {
                     'href': 'http://google.com'
-                }).html('One')
+                }).H('One')
             ),
-            DOMBuilder('li').child(
-                DOMBuilder('em').html('Two')
+            DOMBuilder('li')._(
+                DOMBuilder('em').H('Two')
             ),
-            DOMBuilder('li').child(
-                DOMBuilder('strong').html('Three')
+            DOMBuilder('li')._(
+                DOMBuilder('strong').H('Three')
             )
         ])
     ])
