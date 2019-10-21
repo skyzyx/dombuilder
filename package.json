@@ -20,7 +20,7 @@
     "babel-cli": "^6.3.17",
     "bower": "^1.7.2",
     "docco": "^0.7.0",
-    "eslint": "^1.10.3",
+    "eslint": "^6.5.1",
     "js2coffee": "^2.1.0",
     "uglify-js": "^2.6.1"
   },
