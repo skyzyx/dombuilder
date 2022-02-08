@@ -1,3 +1,7 @@
+> **IMPORTANT:** This repository has been archived in favor of [firecracker.js](https://github.com/skyzyx/firecracker.js).
+
+----
+
 # DOMBuilder
 
 **[DOMBuilder](http://github.com/skyzyx/dombuilder/)** is a tiny JavaScript class for generating DOM nodes on-the-fly. It is designed around a few basic goals:
